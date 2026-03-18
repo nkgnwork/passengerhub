@@ -953,7 +953,7 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 /* ══════════════════════════════════════════════════
    GAMES SCREEN
 ══════════════════════════════════════════════════ */
-#s-games { background: #0d0a06; }
+#s-games { background: #0d0a06; overflow-x: hidden; }
 
 #s-games .app-header {
   background: rgba(0,0,0,.6);
@@ -961,10 +961,11 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 }
 
 .games-list {
-  flex: 1; overflow-y: auto;
+  flex: 1; overflow-y: auto; overflow-x: hidden;
   padding: 20px 16px 32px;
   display: flex; flex-direction: column; gap: 16px;
   -webkit-overflow-scrolling: touch;
+  box-sizing: border-box; width: 100%;
 }
 .games-list::-webkit-scrollbar { display: none; }
 
@@ -981,6 +982,8 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   cursor: pointer; transition: transform .22s, box-shadow .22s;
   position: relative;
   box-shadow: 0 4px 24px rgba(0,0,0,.5);
+  width: 100%; box-sizing: border-box;
+  min-width: 0;
 }
 .game-card:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 12px 40px rgba(0,0,0,.6); }
 .game-card.soon { opacity: .5; cursor: default; }
@@ -988,9 +991,10 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 
 /* Inner layout */
 .gc-inner {
-  padding: 22px 20px;
-  display: flex; align-items: center; gap: 18px;
+  padding: 18px 16px;
+  display: flex; align-items: center; gap: 14px;
   position: relative; z-index: 2;
+  min-width: 0; box-sizing: border-box;
 }
 
 /* Illustrated preview area (top of card) */
@@ -1025,16 +1029,18 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   background: linear-gradient(180deg, #5a7a30, #3a5018);
 }
 .runner-preview-llama {
-  position: absolute; bottom: 27%; left: 50%;
-  transform: translateX(-50%);
+  position: absolute; bottom: 27%; left: 32%;
   font-size: 2.2rem;
-  animation: llamaRun .5s steps(2) infinite;
+  animation: llamaRun .55s ease-in-out infinite;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,.6));
+  transform-origin: center bottom;
 }
 @keyframes llamaRun {
-  0% { transform: translateX(-50%) scaleY(1); }
-  50% { transform: translateX(-50%) scaleY(0.92) translateY(2px); }
-  100% { transform: translateX(-50%) scaleY(1); }
+  0%   { transform: scaleX(-1) scaleY(1) translateY(0); }
+  25%  { transform: scaleX(-1) scaleY(0.9) translateY(2px); }
+  50%  { transform: scaleX(-1) scaleY(1) translateY(0); }
+  75%  { transform: scaleX(-1) scaleY(0.92) translateY(1px); }
+  100% { transform: scaleX(-1) scaleY(1) translateY(0); }
 }
 .runner-preview-cactus {
   position: absolute; bottom: 27%;
@@ -1042,8 +1048,8 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   animation: cactusMove 1.8s linear infinite;
 }
 @keyframes cactusMove {
-  from { right: -10%; }
-  to   { right: 110%; }
+  from { left: 110%; }
+  to   { left: -15%; }
 }
 .runner-preview-cactus:nth-child(2) { animation-delay: -.9s; font-size: 1rem; }
 
@@ -1105,17 +1111,20 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 .gc-icon.memory { background: linear-gradient(135deg, #2a1a48, #3a2a6a); }
 .gc-icon.soon-icon { background: rgba(255,255,255,.04); }
 
-.gc-body { flex: 1; }
+.gc-body { flex: 1; min-width: 0; overflow: hidden; }
 .gc-name {
-  font-family: var(--ff-display); font-size: 1.15rem;
+  font-family: var(--ff-display); font-size: 1.05rem;
   font-weight: 600; color: #FFF8F0; margin-bottom: 4px; letter-spacing: .01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .gc-desc { font-size: .73rem; font-weight: 300; color: rgba(255,248,240,.6); line-height: 1.4; }
 .gc-badge {
-  display: inline-block; font-size: .58rem; font-weight: 700; letter-spacing: .08em;
+  display: inline-block; font-size: .55rem; font-weight: 700; letter-spacing: .05em;
   text-transform: uppercase; color: var(--earth);
   background: var(--gold); border-radius: 20px;
-  padding: 3px 10px; margin-top: 8px;
+  padding: 3px 9px; margin-top: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
 }
 .gc-badge.soon-badge { background: rgba(255,255,255,.08); color: rgba(255,248,240,.4); }
 
@@ -1229,7 +1238,7 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 .gc-icon.memory { background: linear-gradient(135deg, #2a1a3a, #3a2a5a); }
 .gc-icon.soon-icon { background: linear-gradient(135deg, var(--parchment), var(--stone)); }
 
-.gc-body { flex: 1; }
+.gc-body { flex: 1; min-width: 0; overflow: hidden; }
 .gc-name {
   font-family: var(--ff-display); font-size: 1.05rem;
   font-weight: 500; color: var(--earth); margin-bottom: 4px;
@@ -2219,8 +2228,8 @@ input, textarea {
         <div class="runner-preview-mountain"></div>
         <div class="runner-preview-ground"></div>
         <div class="runner-preview-llama">🦙</div>
-        <div class="runner-preview-cactus" style="right:-5%">🌵</div>
-        <div class="runner-preview-cactus" style="right:45%;animation-delay:-.9s;font-size:1rem">🌵</div>
+        <div class="runner-preview-cactus" style="left:110%">🌵</div>
+        <div class="runner-preview-cactus" style="left:65%;animation-delay:-.9s;font-size:1rem">🌵</div>
       </div>
       <div class="gc-inner">
         <div class="gc-icon runner">🦙</div>
@@ -2904,7 +2913,7 @@ const T = {
     md2:`Difícil`, md2i:`9 parejas · Cara + perfil + sentado`,
     mhMov:`MOV`, mhPar:`PAR`, mhSeg:`SEG`,
     mwTitle:`¡Los encontraste todos!`, mwAgain:`Jugar de nuevo`, mwBack:`← Volver`,
-    sys:`Eres el asistente virtual del Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 msnm. Responde SIEMPRE en español. Tono cálido, cercano, con humor cuando sea apropiado. Usa markdown y emojis.\n\nHOTEL: WiFi: consultar en recepción | Check-in 14:00 | Check-out 12:00 | Desayunos Lun-Vie 07:30-09:30, Sáb-Dom-Festivos 08:00-10:00 | Contacto +56 9 5381 1481 (tel y WhatsApp)\n\nTRANSPORTE: El hotel recoge pasajeros en Aeropuerto Chacalluta (Arica), Terminal de buses Arica, domicilio u otro hotel. Coordinar por WhatsApp +56 9 5381 1481. Por cuenta propia: auto 2h Ruta 11-CH o Bus La Paloma 3h salida 06:50.\n\nTOURS PROPIOS: El hotel organiza tours a Parque Lauca 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA menciones precios. Siempre indica contactar +56 9 5381 1481 para disponibilidad y reservas.\n\nPUNA: Putre está a 3.500 msnm. Síntomas normales: dolor de cabeza, fatiga, falta de aire. Recomendaciones: descansar primer día, mucha agua, evitar alcohol 24h, comer liviano. El mate de coca ayuda, disponible en el hotel. Si es fuerte, avisar en recepción.\n\nPERROS DEL HOTEL (pastores alemanes): Sultán es territorial e imponente pero en el fondo es un bebé, le encanta que le digan bebé. Lottie vive para jugar, siempre trae palos o juguetes, es la mamá de Rocky. Rocky es hijo de ambos, vive en su mundo, algo bruto y despistado (no es de maldad), nació con la cola corta y tiene problemas articulares, se mueve chistoso como bailando. IMPORTANTE: NUNCA jugar con piedras con los perros, se rompen los dientes. Solo palos y juguetes.\n\nFLORA Y FAUNA: Frente a recepción hay una queñoa (Polylepis), el árbol de mayor altitud del mundo. Fauna local: vicuñas, llamas, alpacas, guanacos, cóndores, 3 especies de flamencos, vizcachas, zorros andinos, suris, pumas. El Parque Lauca tiene más de 130 especies de aves. Bofedales = humedales de altura, hábitat clave de la fauna.\n\nPUTRE: Fundado 1580, nombre aymara = "murmullo del agua". Iglesia colonial San Idelfonso (1670). Carnaval en febrero. Gastronomía: kalapurka, carne de llama, trucha altiplánica, quinoa, papa chuño. Clima: lluvias dic-mar, resto del año seco. Noches bajo cero en invierno.\n\nDESTINOS DESTACADOS: Lago Chungará 4.517 msnm (uno de los más altos del mundo, reflejan volcanes Payachatas). Parinacota pueblo aymara 4.390 msnm (iglesia Monumento Nacional). Lagunas Cotacotani (sistema volcánico). Salar de Surire (3 especies flamencos). Termas de Jurasi ~10km de Putre 4.000 msnm. Suriplaza montañas de colores. Reserva Las Vicuñas 209.131 ha.\n\nSi no sabes algo, sugiere contactar recepción o WhatsApp +56 9 5381 1481.`
+    sys:`Eres el asistente virtual del Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 msnm. Responde SIEMPRE en español. Tono cálido, cercano, con humor cuando sea apropiado. Usa markdown y emojis.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Desayunos Lun-Vie 07:30-09:30, Sáb-Dom-Festivos 08:00-10:00 | Contacto +56 9 5381 1481 (tel y WhatsApp)\n\nTRANSPORTE: El hotel recoge pasajeros en Aeropuerto Chacalluta (Arica), Terminal de buses Arica, domicilio u otro hotel. Coordinar por WhatsApp +56 9 5381 1481. Por cuenta propia: auto 2h Ruta 11-CH o Bus La Paloma 3h salida 06:50.\n\nTOURS PROPIOS: El hotel organiza tours a Parque Lauca 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA menciones precios. Siempre indica contactar +56 9 5381 1481 para disponibilidad y reservas.\n\nPUNA: Putre está a 3.500 msnm. Síntomas normales: dolor de cabeza, fatiga, falta de aire. Recomendaciones: descansar primer día, mucha agua, evitar alcohol 24h, comer liviano. El mate de coca ayuda, disponible en el hotel. Si es fuerte, avisar en recepción.\n\nPERROS DEL HOTEL (pastores alemanes): Sultán es territorial e imponente pero en el fondo es un bebé, le encanta que le digan bebé. Lottie vive para jugar, siempre trae palos o juguetes, es la mamá de Rocky. Rocky es hijo de ambos, vive en su mundo, algo bruto y despistado (no es de maldad), nació con la cola corta y tiene problemas articulares, se mueve chistoso como bailando. IMPORTANTE: NUNCA jugar con piedras con los perros, se rompen los dientes. Solo palos y juguetes.\n\nFLORA Y FAUNA: Frente a recepción hay una queñoa (Polylepis), el árbol de mayor altitud del mundo. Fauna local: vicuñas, llamas, alpacas, guanacos, cóndores, 3 especies de flamencos, vizcachas, zorros andinos, suris, pumas. El Parque Lauca tiene más de 130 especies de aves. Bofedales = humedales de altura, hábitat clave de la fauna.\n\nPUTRE: Fundado 1580, nombre aymara = "murmullo del agua". Iglesia colonial San Idelfonso (1670). Carnaval en febrero. Gastronomía: kalapurka, carne de llama, trucha altiplánica, quinoa, papa chuño. Clima: lluvias dic-mar, resto del año seco. Noches bajo cero en invierno.\n\nDESTINOS DESTACADOS: Lago Chungará 4.517 msnm (uno de los más altos del mundo, reflejan volcanes Payachatas). Parinacota pueblo aymara 4.390 msnm (iglesia Monumento Nacional). Lagunas Cotacotani (sistema volcánico). Salar de Surire (3 especies flamencos). Termas de Jurasi ~10km de Putre 4.000 msnm. Suriplaza montañas de colores. Reserva Las Vicuñas 209.131 ha.\n\nSi no sabes algo, sugiere contactar recepción o WhatsApp +56 9 5381 1481.`
   },
   en:{
     greet: n => n ? `Welcome, ${n}` : `Welcome`,
@@ -2929,7 +2938,7 @@ const T = {
     md2:`Hard`, md2i:`9 pairs · Face + side + sitting`,
     mhMov:`MOV`, mhPar:`PAI`, mhSeg:`SEC`,
     mwTitle:`You found them all!`, mwAgain:`Play again`, mwBack:`← Back`,
-    sys:`You are the assistant for Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3,500m. ALWAYS respond in English. Warm, friendly, fun when appropriate. Use markdown and emojis.\n\nHOTEL: WiFi: ask at reception | Check-in 14:00 | Check-out 12:00 | Breakfast Mon-Fri 07:30-09:30, Sat-Sun-Holidays 08:00-10:00 | Contact +56 9 5381 1481 (phone and WhatsApp)\n\nTRANSPORT: Hotel offers pickup from Arica Airport (Chacalluta), Arica bus terminal, your accommodation or another hotel. Book via WhatsApp +56 9 5381 1481. Self-drive: 2h Route 11-CH. Bus La Paloma: 3h, departs 06:50.\n\nTOURS: Hotel runs its own tours to Lauca NP 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NEVER mention prices. Always direct to +56 9 5381 1481 for availability and bookings.\n\nALTITUDE (puna): Putre is at 3,500m. Common symptoms: headache, fatigue, shortness of breath. Tips: rest first day, lots of water, avoid alcohol 24h, eat light. Coca leaf tea helps, available at hotel. If severe, notify reception.\n\nHOTEL DOGS (German Shepherds): Sultan looks tough and territorial but is secretly a big baby who loves being called baby. Lottie lives to play, always brings sticks or toys, she is Rocky mom. Rocky is their son, lives in his own world, a bit clumsy (means no harm!), was born with a short tail and has joint issues so he walks funny like dancing. IMPORTANT: NEVER play with rocks or stones with the dogs, it breaks their teeth. Sticks and toys only.\n\nFLORA & FAUNA: Queñoa tree (Polylepis) in front of reception — highest-altitude tree in world. Wildlife: vicuñas, llamas, alpacas, guanacos, condors, 3 flamingo species, vizcachas, Andean foxes, rheas, pumas. Lauca Park has 130+ bird species. Bofedales = high-altitude wetlands, key habitat.\n\nPUTRE: Founded 1580, Aymara name = "murmur of water". Colonial church San Idelfonso (1670). Carnival in February. Food: kalapurka (volcanic stone soup), llama/alpaca meat, altiplano trout, quinoa, chuño. Climate: rainy Dec-Mar, dry rest of year. Cold nights in winter.\n\nKEY DESTINATIONS: Lake Chungará 4,517m (one of world's highest, reflects Payachata volcanoes). Parinacota Aymara village 4,390m (National Monument church). Cotacotani lagoons (volcanic network). Surire salt flat (3 flamingo species). Jurasi hot springs ~10km from Putre. Suriplaza colored mountains. Las Vicuñas Reserve 209,131 ha.\n\nIf unsure, suggest contacting reception or WhatsApp +56 9 5381 1481.`
+    sys:`You are the assistant for Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3,500m. ALWAYS respond in English. Warm, friendly, fun when appropriate. Use markdown and emojis.\n\nHOTEL: WiFi password: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Breakfast Mon-Fri 07:30-09:30, Sat-Sun-Holidays 08:00-10:00 | Contact +56 9 5381 1481 (phone and WhatsApp)\n\nTRANSPORT: Hotel offers pickup from Arica Airport (Chacalluta), Arica bus terminal, your accommodation or another hotel. Book via WhatsApp +56 9 5381 1481. Self-drive: 2h Route 11-CH. Bus La Paloma: 3h, departs 06:50.\n\nTOURS: Hotel runs its own tours to Lauca NP 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NEVER mention prices. Always direct to +56 9 5381 1481 for availability and bookings.\n\nALTITUDE (puna): Putre is at 3,500m. Common symptoms: headache, fatigue, shortness of breath. Tips: rest first day, lots of water, avoid alcohol 24h, eat light. Coca leaf tea helps, available at hotel. If severe, notify reception.\n\nHOTEL DOGS (German Shepherds): Sultan looks tough and territorial but is secretly a big baby who loves being called baby. Lottie lives to play, always brings sticks or toys, she is Rocky mom. Rocky is their son, lives in his own world, a bit clumsy (means no harm!), was born with a short tail and has joint issues so he walks funny like dancing. IMPORTANT: NEVER play with rocks or stones with the dogs, it breaks their teeth. Sticks and toys only.\n\nFLORA & FAUNA: Queñoa tree (Polylepis) in front of reception — highest-altitude tree in world. Wildlife: vicuñas, llamas, alpacas, guanacos, condors, 3 flamingo species, vizcachas, Andean foxes, rheas, pumas. Lauca Park has 130+ bird species. Bofedales = high-altitude wetlands, key habitat.\n\nPUTRE: Founded 1580, Aymara name = "murmur of water". Colonial church San Idelfonso (1670). Carnival in February. Food: kalapurka (volcanic stone soup), llama/alpaca meat, altiplano trout, quinoa, chuño. Climate: rainy Dec-Mar, dry rest of year. Cold nights in winter.\n\nKEY DESTINATIONS: Lake Chungará 4,517m (one of world's highest, reflects Payachata volcanoes). Parinacota Aymara village 4,390m (National Monument church). Cotacotani lagoons (volcanic network). Surire salt flat (3 flamingo species). Jurasi hot springs ~10km from Putre. Suriplaza colored mountains. Las Vicuñas Reserve 209,131 ha.\n\nIf unsure, suggest contacting reception or WhatsApp +56 9 5381 1481.`
   },
   fr:{
     greet: n => n ? `Bienvenue, ${n}` : `Bienvenue`,
@@ -2954,7 +2963,7 @@ const T = {
     md2:`Difficile`, md2i:`9 paires · Visage + profil + assis`,
     mhMov:`MOV`, mhPar:`PAI`, mhSeg:`SEC`,
     mwTitle:`Vous les avez tous trouvés !`, mwAgain:`Rejouer`, mwBack:`← Retour`,
-    sys:`Tu es l'assistant virtuel de l'Hôtel Las Vicuñas, Baquedano 80, Putre, Chili, à 3 500 m d'altitude. RÉPONDS TOUJOURS EN FRANÇAIS. Ton chaleureux et accueillant, avec humour si approprié. Utilise markdown et emojis.\n\nHÔTEL: WiFi: demander à la réception | Check-in 14h00 | Check-out 12h00 | Petit-déjeuner Lun-Ven 07h30-09h30, Sam-Dim-Fériés 08h00-10h00 | Contact +56 9 5381 1481 (téléphone et WhatsApp)\n\nTRANSFERTS: L'hôtel assure le transfert depuis l'aéroport Chacalluta (Arica), la gare routière d'Arica, votre domicile ou un autre hôtel. Réservation via WhatsApp +56 9 5381 1481. En autonomie: voiture ~2h Route 11-CH ou Bus La Paloma 3h départ 06h50.\n\nTOURS PROPRES: L'hôtel organise ses propres excursions vers: Parc Lauca 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NE JAMAIS mentionner les prix. Toujours diriger vers +56 9 5381 1481 pour disponibilités et réservations.\n\nMAL DES MONTAGNES (puna): Putre est à 3 500m. Symptômes normaux: maux de tête, fatigue, essoufflement. Conseils: repos le 1er jour, beaucoup d'eau, pas d'alcool 24h, repas léger. Le thé de coca aide, disponible à l'hôtel. Si sévère, prévenir la réception.\n\nCHIENS DE L'HÔTEL (bergers allemands): Sultan paraît imposant et territorial mais c'est secrètement un grand bébé qui adore qu'on l'appelle bébé. Lottie vit pour jouer, apporte toujours des bâtons ou jouets, c'est la maman de Rocky. Rocky est leur fils, vit dans son monde, un peu maladroit (sans méchanceté!), né avec une queue courte et des problèmes articulaires, se déplace de façon amusante comme en dansant. IMPORTANT: NE JAMAIS jouer avec des pierres avec les chiens, ça casse les dents. Bâtons et jouets seulement.\n\nFLORE ET FAUNE: Devant la réception se trouve un queñoa (Polylepis), l'arbre poussant à la plus haute altitude du monde. Faune locale: vigognes, lamas, alpagas, guanacos, condors, 3 espèces de flamants roses, viscaches, renards des Andes, nandous, pumas. Le Parc Lauca compte plus de 130 espèces d'oiseaux. Bofedales = zones humides d'altitude, habitat clé de la faune.\n\nPUTRE: Fondé en 1580, nom aymara = "murmure de l'eau". Église coloniale San Idelfonso (1670). Carnaval en février. Gastronomie: kalapurka (soupe aux pierres volcaniques incandescentes), viande de lama/alpaga, truite d'altitude, quinoa, chuño (pomme de terre déshydratée ancestrale). Climat: pluies déc-mars, reste de l'année sec. Nuits très froides en hiver.\n\nDESTINATIONS CLÉS: Lac Chungará 4 517m (l'un des plus hauts du monde, reflète les volcans Payachatas — Parinacota 6 342m et Pomerape 6 282m). Parinacota village aymara 4 390m (église Monument National). Lagunas Cotacotani (réseau volcanique). Salar de Surire (3 espèces de flamants). Thermes de Jurasi ~10km de Putre à 4 000m. Suriplaza montagnes aux couleurs spectaculaires. Réserve Las Vicuñas 209 131 ha.\n\nSi vous ne savez pas quelque chose, suggérez de contacter la réception ou WhatsApp +56 9 5381 1481.`
+    sys:`Tu es l'assistant virtuel de l'Hôtel Las Vicuñas, Baquedano 80, Putre, Chili, à 3 500 m d'altitude. RÉPONDS TOUJOURS EN FRANÇAIS. Ton chaleureux et accueillant, avec humour si approprié. Utilise markdown et emojis.\n\nHÔTEL: WiFi: **9DjAq68XbD98sTf** | Check-in 14h00 | Check-out 12h00 | Petit-déjeuner Lun-Ven 07h30-09h30, Sam-Dim-Fériés 08h00-10h00 | Contact +56 9 5381 1481 (téléphone et WhatsApp)\n\nTRANSFERTS: L'hôtel assure le transfert depuis l'aéroport Chacalluta (Arica), la gare routière d'Arica, votre domicile ou un autre hôtel. Réservation via WhatsApp +56 9 5381 1481. En autonomie: voiture ~2h Route 11-CH ou Bus La Paloma 3h départ 06h50.\n\nTOURS PROPRES: L'hôtel organise ses propres excursions vers: Parc Lauca 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NE JAMAIS mentionner les prix. Toujours diriger vers +56 9 5381 1481 pour disponibilités et réservations.\n\nMAL DES MONTAGNES (puna): Putre est à 3 500m. Symptômes normaux: maux de tête, fatigue, essoufflement. Conseils: repos le 1er jour, beaucoup d'eau, pas d'alcool 24h, repas léger. Le thé de coca aide, disponible à l'hôtel. Si sévère, prévenir la réception.\n\nCHIENS DE L'HÔTEL (bergers allemands): Sultan paraît imposant et territorial mais c'est secrètement un grand bébé qui adore qu'on l'appelle bébé. Lottie vit pour jouer, apporte toujours des bâtons ou jouets, c'est la maman de Rocky. Rocky est leur fils, vit dans son monde, un peu maladroit (sans méchanceté!), né avec une queue courte et des problèmes articulaires, se déplace de façon amusante comme en dansant. IMPORTANT: NE JAMAIS jouer avec des pierres avec les chiens, ça casse les dents. Bâtons et jouets seulement.\n\nFLORE ET FAUNE: Devant la réception se trouve un queñoa (Polylepis), l'arbre poussant à la plus haute altitude du monde. Faune locale: vigognes, lamas, alpagas, guanacos, condors, 3 espèces de flamants roses, viscaches, renards des Andes, nandous, pumas. Le Parc Lauca compte plus de 130 espèces d'oiseaux. Bofedales = zones humides d'altitude, habitat clé de la faune.\n\nPUTRE: Fondé en 1580, nom aymara = "murmure de l'eau". Église coloniale San Idelfonso (1670). Carnaval en février. Gastronomie: kalapurka (soupe aux pierres volcaniques incandescentes), viande de lama/alpaga, truite d'altitude, quinoa, chuño (pomme de terre déshydratée ancestrale). Climat: pluies déc-mars, reste de l'année sec. Nuits très froides en hiver.\n\nDESTINATIONS CLÉS: Lac Chungará 4 517m (l'un des plus hauts du monde, reflète les volcans Payachatas — Parinacota 6 342m et Pomerape 6 282m). Parinacota village aymara 4 390m (église Monument National). Lagunas Cotacotani (réseau volcanique). Salar de Surire (3 espèces de flamants). Thermes de Jurasi ~10km de Putre à 4 000m. Suriplaza montagnes aux couleurs spectaculaires. Réserve Las Vicuñas 209 131 ha.\n\nSi vous ne savez pas quelque chose, suggérez de contacter la réception ou WhatsApp +56 9 5381 1481.`
   },
   de:{
     greet: n => n ? `Willkommen, ${n}` : `Willkommen`,
@@ -2979,7 +2988,7 @@ const T = {
     md2:`Schwer`, md2i:`9 Paare · Gesicht + Seite + sitzend`,
     mhMov:`ZÜG`, mhPar:`PAA`, mhSeg:`SEK`,
     mwTitle:`Sie haben alle gefunden!`, mwAgain:`Nochmal`, mwBack:`← Zurück`,
-    sys:`Du bist der virtuelle Assistent des Hotels Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 m ü.M. ANTWORTE IMMER AUF DEUTSCH. Warmer, freundlicher Ton, mit Humor wenn angebracht. Verwende Markdown und Emojis.\n\nHOTEL: WLAN: an der Rezeption fragen | Check-in 14:00 | Check-out 12:00 | Frühstück Mo-Fr 07:30-09:30, Sa-So-Feiertage 08:00-10:00 | Kontakt +56 9 5381 1481 (Telefon und WhatsApp)\n\nTRANSFER: Das Hotel holt Gäste am Flughafen Chacalluta (Arica), Busbahnhof Arica, Ihrer Unterkunft oder einem anderen Hotel ab. Buchung via WhatsApp +56 9 5381 1481. Selbstfahrer: ~2h Route 11-CH (145 km). Bus La Paloma: 3h, Abfahrt 06:50.\n\nEIGENE TOUREN: Das Hotel organisiert eigene Touren nach: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NIEMALS Preise nennen. Für Verfügbarkeit und Buchungen immer auf +56 9 5381 1481 verweisen.\n\nHÖHENKRANKHEIT (Puna): Putre liegt auf 3.500m. Häufige Symptome: Kopfschmerzen, Müdigkeit, Kurzatmigkeit. Tipps: ersten Tag ausruhen, viel Wasser trinken, 24h keinen Alkohol, leicht essen. Kokatee hilft sehr und ist im Hotel erhältlich. Bei starken Symptomen bitte die Rezeption informieren.\n\nHOTELHUNDE (Deutsche Schäferhunde): Sultan wirkt imposant und territorial, ist aber heimlich ein großes Baby, das es liebt, Baby genannt zu werden. Lottie lebt zum Spielen, bringt immer Stöcke oder Spielzeug, sie ist Rockys Mama. Rocky ist ihr Sohn, lebt in seiner eigenen Welt, etwas tollpatschig (nicht böse!), wurde mit kurzem Schwanz geboren und hat Gelenkprobleme — läuft komisch wie tanzend. WICHTIG: NIEMALS mit Steinen mit den Hunden spielen, das bricht die Zähne. Nur Stöcke und Spielzeug.\n\nFLORA UND FAUNA: Vor der Rezeption steht ein Queñoa-Baum (Polylepis), der höchstwachsende Baum der Welt. Fauna: Vikunjas, Lamas, Alpakas, Guanakos, Kondore, 3 Flamingo-Arten, Vizkachas, Andenefüchse, Nandus, Pumas. Der Lauca-Park hat über 130 Vogelarten. Bofedales = Feuchtgebiete, wichtiger Lebensraum.\n\nPUTRE: Gegründet 1580, Aymara-Name = "Wasserrauschen". Kolonialkirche San Idelfonso (1670). Karneval im Februar. Küche: Kalapurka (Suppe mit glühenden Vulkansteinen), Lama-/Alpakafleisch, Hochlandforelle, Quinoa, Chuño (getrocknete Kartoffel). Klima: Regen Dez-März, restliches Jahr trocken. Winternächte unter Null.\n\nWICHTIGE REISEZIELE: Chungará-See 4.517m (eines der höchsten Seen der Welt, spiegelt Payachatas-Vulkane — Parinacota 6.342m und Pomerape 6.282m). Parinacota Aymara-Dorf 4.390m (Nationalmonument-Kirche). Cotacotani-Seen (Vulkansystem). Surire Salzsee (3 Flamingoarten). Jurasi-Thermalquellen ~10km von Putre. Suriplaza bunte Berglandschaft. Reservat Las Vicuñas 209.131 ha.\n\nFalls Sie etwas nicht wissen, empfehlen Sie die Rezeption oder WhatsApp +56 9 5381 1481.`
+    sys:`Du bist der virtuelle Assistent des Hotels Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 m ü.M. ANTWORTE IMMER AUF DEUTSCH. Warmer, freundlicher Ton, mit Humor wenn angebracht. Verwende Markdown und Emojis.\n\nHOTEL: WLAN-Passwort: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Frühstück Mo-Fr 07:30-09:30, Sa-So-Feiertage 08:00-10:00 | Kontakt +56 9 5381 1481 (Telefon und WhatsApp)\n\nTRANSFER: Das Hotel holt Gäste am Flughafen Chacalluta (Arica), Busbahnhof Arica, Ihrer Unterkunft oder einem anderen Hotel ab. Buchung via WhatsApp +56 9 5381 1481. Selbstfahrer: ~2h Route 11-CH (145 km). Bus La Paloma: 3h, Abfahrt 06:50.\n\nEIGENE TOUREN: Das Hotel organisiert eigene Touren nach: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NIEMALS Preise nennen. Für Verfügbarkeit und Buchungen immer auf +56 9 5381 1481 verweisen.\n\nHÖHENKRANKHEIT (Puna): Putre liegt auf 3.500m. Häufige Symptome: Kopfschmerzen, Müdigkeit, Kurzatmigkeit. Tipps: ersten Tag ausruhen, viel Wasser trinken, 24h keinen Alkohol, leicht essen. Kokatee hilft sehr und ist im Hotel erhältlich. Bei starken Symptomen bitte die Rezeption informieren.\n\nHOTELHUNDE (Deutsche Schäferhunde): Sultan wirkt imposant und territorial, ist aber heimlich ein großes Baby, das es liebt, Baby genannt zu werden. Lottie lebt zum Spielen, bringt immer Stöcke oder Spielzeug, sie ist Rockys Mama. Rocky ist ihr Sohn, lebt in seiner eigenen Welt, etwas tollpatschig (nicht böse!), wurde mit kurzem Schwanz geboren und hat Gelenkprobleme — läuft komisch wie tanzend. WICHTIG: NIEMALS mit Steinen mit den Hunden spielen, das bricht die Zähne. Nur Stöcke und Spielzeug.\n\nFLORA UND FAUNA: Vor der Rezeption steht ein Queñoa-Baum (Polylepis), der höchstwachsende Baum der Welt. Fauna: Vikunjas, Lamas, Alpakas, Guanakos, Kondore, 3 Flamingo-Arten, Vizkachas, Andenefüchse, Nandus, Pumas. Der Lauca-Park hat über 130 Vogelarten. Bofedales = Feuchtgebiete, wichtiger Lebensraum.\n\nPUTRE: Gegründet 1580, Aymara-Name = "Wasserrauschen". Kolonialkirche San Idelfonso (1670). Karneval im Februar. Küche: Kalapurka (Suppe mit glühenden Vulkansteinen), Lama-/Alpakafleisch, Hochlandforelle, Quinoa, Chuño (getrocknete Kartoffel). Klima: Regen Dez-März, restliches Jahr trocken. Winternächte unter Null.\n\nWICHTIGE REISEZIELE: Chungará-See 4.517m (eines der höchsten Seen der Welt, spiegelt Payachatas-Vulkane — Parinacota 6.342m und Pomerape 6.282m). Parinacota Aymara-Dorf 4.390m (Nationalmonument-Kirche). Cotacotani-Seen (Vulkansystem). Surire Salzsee (3 Flamingoarten). Jurasi-Thermalquellen ~10km von Putre. Suriplaza bunte Berglandschaft. Reservat Las Vicuñas 209.131 ha.\n\nFalls Sie etwas nicht wissen, empfehlen Sie die Rezeption oder WhatsApp +56 9 5381 1481.`
   },
   pt:{
     greet: n => n ? `Bem-vindo/a, ${n}` : `Bem-vindo/a`,
@@ -3004,7 +3013,7 @@ const T = {
     md2:`Difícil`, md2i:`9 pares · Rosto + perfil + sentado`,
     mhMov:`MOV`, mhPar:`PAR`, mhSeg:`SEG`,
     mwTitle:`Você encontrou todos!`, mwAgain:`Jogar novamente`, mwBack:`← Voltar`,
-    sys:`Você é o assistente virtual do Hotel Las Vicuñas, Baquedano 80, Putre, Chile, a 3.500m de altitude. SEMPRE responda em PORTUGUÊS. Tom caloroso e acolhedor, com bom humor quando adequado. Use markdown e emojis.\n\nHOTEL: WiFi: perguntar na recepção | Check-in às 14h00 | Check-out ao meio-dia (12h00) | Café da manhã Seg-Sex 07:30-09:30, Sáb-Dom-Feriados 08:00-10:00 | Contato +56 9 5381 1481 (telefone e WhatsApp)\n\nTRANSLADOS: O hotel busca hóspedes no: Aeroporto Chacalluta (Arica), Terminal de ônibus de Arica, domicílio ou outro hotel. Reservar via WhatsApp +56 9 5381 1481. Carro próprio: ~2h pela Rota 11-CH (145 km). Ônibus La Paloma: 3h, saída às 06:50.\n\nTOURS PRÓPRIOS: O hotel organiza tours para: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA mencionar preços. Sempre encaminhar para +56 9 5381 1481 para disponibilidade e reservas.\n\nALTITUDE (puna): Putre fica a 3.500m. Sintomas normais: dor de cabeça, cansaço, falta de ar. Dicas: descansar no 1º dia, beber muito água, evitar álcool por 24h, comer leve. O chá de coca ajuda muito e está disponível no hotel. Se os sintomas forem intensos, avise a recepção.\n\nCÃES DO HOTEL (pastores alemães): Sultan parece imponente e territorial, mas no fundo é um bebê enorme que adora ser chamado de bebê. Lottie vive para brincar, sempre traz paus ou brinquedos, ela é a mamãe do Rocky. Rocky é filho dos dois, vive no mundo dele, um pouco atrapalhado (sem maldade!), nasceu com rabo curto e tem problemas articulares — se move de forma engraçada como dançando. IMPORTANTE: NUNCA brincar com pedras com os cães, quebra os dentes. Apenas paus e brinquedos.\n\nFLORA E FAUNA: Em frente à recepção há uma queñoa (Polylepis), a árvore que cresce na maior altitude do mundo. Fauna: vicunhas, lhamas, alpacas, guanacos, condores, 3 espécies de flamingos, viscachas, raposas andinas, suris, pumas. O Parque Lauca tem mais de 130 espécies de aves. Bofedales = áreas úmidas de altitude, habitat essencial.\n\nPUTRE: Fundado em 1580, nome aymara = "murmúrio da água". Igreja colonial San Idelfonso (1670). Carnaval em fevereiro. Gastronomia: kalapurka (sopa feita com pedras vulcânicas incandescentes), carne de lhama/alpaca, truta de altitude, quinoa, chuño (batata desidratada ancestral). Clima: chuvas dez-mar, resto do ano seco. Noites frias no inverno.\n\nDESTINOS PRINCIPAIS: Lago Chungará 4.517m (um dos mais altos do mundo, reflete os vulcões Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota vila aymara 4.390m (Igreja Monumento Nacional). Lagunas Cotacotani (rede vulcânica). Salar de Surire (3 espécies de flamingos). Termas de Jurasi ~10km de Putre a 4.000m. Suriplaza montanhas coloridas. Reserva Las Vicuñas 209.131 ha.\n\nSe não souber algo, sugira contatar a recepção ou WhatsApp +56 9 5381 1481.`
+    sys:`Você é o assistente virtual do Hotel Las Vicuñas, Baquedano 80, Putre, Chile, a 3.500m de altitude. SEMPRE responda em PORTUGUÊS. Tom caloroso e acolhedor, com bom humor quando adequado. Use markdown e emojis.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in às 14h00 | Check-out ao meio-dia (12h00) | Café da manhã Seg-Sex 07:30-09:30, Sáb-Dom-Feriados 08:00-10:00 | Contato +56 9 5381 1481 (telefone e WhatsApp)\n\nTRANSLADOS: O hotel busca hóspedes no: Aeroporto Chacalluta (Arica), Terminal de ônibus de Arica, domicílio ou outro hotel. Reservar via WhatsApp +56 9 5381 1481. Carro próprio: ~2h pela Rota 11-CH (145 km). Ônibus La Paloma: 3h, saída às 06:50.\n\nTOURS PRÓPRIOS: O hotel organiza tours para: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA mencionar preços. Sempre encaminhar para +56 9 5381 1481 para disponibilidade e reservas.\n\nALTITUDE (puna): Putre fica a 3.500m. Sintomas normais: dor de cabeça, cansaço, falta de ar. Dicas: descansar no 1º dia, beber muito água, evitar álcool por 24h, comer leve. O chá de coca ajuda muito e está disponível no hotel. Se os sintomas forem intensos, avise a recepção.\n\nCÃES DO HOTEL (pastores alemães): Sultan parece imponente e territorial, mas no fundo é um bebê enorme que adora ser chamado de bebê. Lottie vive para brincar, sempre traz paus ou brinquedos, ela é a mamãe do Rocky. Rocky é filho dos dois, vive no mundo dele, um pouco atrapalhado (sem maldade!), nasceu com rabo curto e tem problemas articulares — se move de forma engraçada como dançando. IMPORTANTE: NUNCA brincar com pedras com os cães, quebra os dentes. Apenas paus e brinquedos.\n\nFLORA E FAUNA: Em frente à recepção há uma queñoa (Polylepis), a árvore que cresce na maior altitude do mundo. Fauna: vicunhas, lhamas, alpacas, guanacos, condores, 3 espécies de flamingos, viscachas, raposas andinas, suris, pumas. O Parque Lauca tem mais de 130 espécies de aves. Bofedales = áreas úmidas de altitude, habitat essencial.\n\nPUTRE: Fundado em 1580, nome aymara = "murmúrio da água". Igreja colonial San Idelfonso (1670). Carnaval em fevereiro. Gastronomia: kalapurka (sopa feita com pedras vulcânicas incandescentes), carne de lhama/alpaca, truta de altitude, quinoa, chuño (batata desidratada ancestral). Clima: chuvas dez-mar, resto do ano seco. Noites frias no inverno.\n\nDESTINOS PRINCIPAIS: Lago Chungará 4.517m (um dos mais altos do mundo, reflete os vulcões Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota vila aymara 4.390m (Igreja Monumento Nacional). Lagunas Cotacotani (rede vulcânica). Salar de Surire (3 espécies de flamingos). Termas de Jurasi ~10km de Putre a 4.000m. Suriplaza montanhas coloridas. Reserva Las Vicuñas 209.131 ha.\n\nSe não souber algo, sugira contatar a recepção ou WhatsApp +56 9 5381 1481.`
   },
   it:{
     greet: n => n ? `Benvenuto/a, ${n}` : `Benvenuto/a`,
@@ -3029,7 +3038,7 @@ const T = {
     md2:`Difficile`, md2i:`9 coppie · Faccia + profilo + seduto`,
     mhMov:`MOS`, mhPar:`COP`, mhSeg:`SEC`,
     mwTitle:`Hai trovato tutti!`, mwAgain:`Giocare di nuovo`, mwBack:`← Indietro`,
-    sys:`Sei l'assistente virtuale dell'Hotel Las Vicuñas, Baquedano 80, Putre, Cile, a 3.500m di altitudine. RISPONDI SEMPRE IN ITALIANO. Tono caldo e amichevole, con umorismo quando appropriato. Usa markdown ed emoji.\n\nHOTEL: WiFi: chiedere alla reception | Check-in alle 14:00 | Check-out alle 12:00 | Colazione Lun-Ven 07:30-09:30, Sab-Dom-Festivi 08:00-10:00 | Contatto +56 9 5381 1481 (telefono e WhatsApp)\n\nTRASFERIMENTI: L'hotel offre trasferimenti da: Aeroporto Chacalluta (Arica), terminal degli autobus di Arica, alloggio o altro hotel. Prenotare via WhatsApp +56 9 5381 1481. Auto propria: ~2h Rotta 11-CH (145 km). Bus La Paloma: 3h, partenza 06:50.\n\nTOUR PROPRI: L'hotel organizza tour propri verso: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NON menzionare MAI i prezzi. Per disponibilità e prenotazioni indirizzare sempre al +56 9 5381 1481.\n\nMAL DI MONTAGNA (puna): Putre è a 3.500m. Sintomi normali: mal di testa, stanchezza, respiro corto. Consigli: riposarsi il primo giorno, bere molta acqua, evitare alcol per 24h, mangiare leggero. Il tè di coca aiuta molto ed è disponibile in hotel. Se i sintomi sono gravi, avvisare la reception.\n\nCANI DELL'HOTEL (pastori tedeschi): Sultan sembra imponente e territoriale, ma in fondo è un bambino grande che adora essere chiamato baby. Lottie vive per giocare, porta sempre bastoni o giocattoli, è la mamma di Rocky. Rocky è il loro figlio, vive nel suo mondo, un po' goffo (senza cattiveria!), nato con una coda corta e con problemi articolari — si muove in modo buffo come ballando. IMPORTANTE: NON giocare MAI con le pietre con i cani, rompe i denti. Solo bastoni e giocattoli.\n\nFLORA E FAUNA: Davanti alla reception c'è un queñoa (Polylepis), l'albero che cresce alla più alta altitudine del mondo. Fauna: vigogne, lama, alpaca, guanaco, condor, 3 specie di fenicotteri, viscache, volpi delle Ande, nandù, puma. Il Parco Lauca ha più di 130 specie di uccelli. Bofedales = zone umide d'alta quota, habitat fondamentale.\n\nPUTRE: Fondata nel 1580, nome aymara = "mormorio dell'acqua". Chiesa coloniale San Idelfonso (1670). Carnevale in febbraio. Gastronomia: kalapurka (zuppa con pietre vulcaniche incandescenti), carne di lama/alpaca, trota d'alta quota, quinoa, chuño (patata disidratata ancestrale). Clima: piogge dic-mar, resto dell'anno secco. Notti fredde in inverno.\n\nDESTINAZIONI PRINCIPALI: Lago Chungará 4.517m (uno dei più alti al mondo, riflette i vulcani Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota villaggio aymara 4.390m (chiesa Monumento Nazionale). Lagunas Cotacotani (rete vulcanica). Salar de Surire (3 specie di fenicotteri). Terme di Jurasi ~10km da Putre a 4.000m. Suriplaza montagne colorate. Riserva Las Vicuñas 209.131 ha.\n\nSe non sa qualcosa, suggerisca di contattare la reception o WhatsApp +56 9 5381 1481.`
+    sys:`Sei l'assistente virtuale dell'Hotel Las Vicuñas, Baquedano 80, Putre, Cile, a 3.500m di altitudine. RISPONDI SEMPRE IN ITALIANO. Tono caldo e amichevole, con umorismo quando appropriato. Usa markdown ed emoji.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in alle 14:00 | Check-out alle 12:00 | Colazione Lun-Ven 07:30-09:30, Sab-Dom-Festivi 08:00-10:00 | Contatto +56 9 5381 1481 (telefono e WhatsApp)\n\nTRASFERIMENTI: L'hotel offre trasferimenti da: Aeroporto Chacalluta (Arica), terminal degli autobus di Arica, alloggio o altro hotel. Prenotare via WhatsApp +56 9 5381 1481. Auto propria: ~2h Rotta 11-CH (145 km). Bus La Paloma: 3h, partenza 06:50.\n\nTOUR PROPRI: L'hotel organizza tour propri verso: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NON menzionare MAI i prezzi. Per disponibilità e prenotazioni indirizzare sempre al +56 9 5381 1481.\n\nMAL DI MONTAGNA (puna): Putre è a 3.500m. Sintomi normali: mal di testa, stanchezza, respiro corto. Consigli: riposarsi il primo giorno, bere molta acqua, evitare alcol per 24h, mangiare leggero. Il tè di coca aiuta molto ed è disponibile in hotel. Se i sintomi sono gravi, avvisare la reception.\n\nCANI DELL'HOTEL (pastori tedeschi): Sultan sembra imponente e territoriale, ma in fondo è un bambino grande che adora essere chiamato baby. Lottie vive per giocare, porta sempre bastoni o giocattoli, è la mamma di Rocky. Rocky è il loro figlio, vive nel suo mondo, un po' goffo (senza cattiveria!), nato con una coda corta e con problemi articolari — si muove in modo buffo come ballando. IMPORTANTE: NON giocare MAI con le pietre con i cani, rompe i denti. Solo bastoni e giocattoli.\n\nFLORA E FAUNA: Davanti alla reception c'è un queñoa (Polylepis), l'albero che cresce alla più alta altitudine del mondo. Fauna: vigogne, lama, alpaca, guanaco, condor, 3 specie di fenicotteri, viscache, volpi delle Ande, nandù, puma. Il Parco Lauca ha più di 130 specie di uccelli. Bofedales = zone umide d'alta quota, habitat fondamentale.\n\nPUTRE: Fondata nel 1580, nome aymara = "mormorio dell'acqua". Chiesa coloniale San Idelfonso (1670). Carnevale in febbraio. Gastronomia: kalapurka (zuppa con pietre vulcaniche incandescenti), carne di lama/alpaca, trota d'alta quota, quinoa, chuño (patata disidratata ancestrale). Clima: piogge dic-mar, resto dell'anno secco. Notti fredde in inverno.\n\nDESTINAZIONI PRINCIPALI: Lago Chungará 4.517m (uno dei più alti al mondo, riflette i vulcani Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota villaggio aymara 4.390m (chiesa Monumento Nazionale). Lagunas Cotacotani (rete vulcanica). Salar de Surire (3 specie di fenicotteri). Terme di Jurasi ~10km da Putre a 4.000m. Suriplaza montagne colorate. Riserva Las Vicuñas 209.131 ha.\n\nSe non sa qualcosa, suggerisca di contattare la reception o WhatsApp +56 9 5381 1481.`
   },
   zh:{
     greet: n => n ? `欢迎，${n}` : `欢迎`,
@@ -3054,7 +3063,7 @@ const T = {
     md2:`困难`, md2i:`9对 · 正面+侧面+坐着`,
     mhMov:`步数`, mhPar:`配对`, mhSeg:`秒`,
     mwTitle:`你找到了所有的！`, mwAgain:`再玩一次`, mwBack:`← 返回`,
-    sys:`您是拉斯维库尼亚斯酒店的虚拟助手，地址：智利普特雷市巴克达诺街80号，海拔3500米。请始终用中文回答。语气温暖友好，适时幽默。使用markdown和表情符号。\n\n酒店信息：WiFi密码：请到前台询问 | 入住时间：14:00 | 退房时间：12:00 | 早餐时间：周一至周五 07:30-09:30，周末及节假日 08:00-10:00 | 联系方式：+56 9 5381 1481（电话和WhatsApp）\n\n接送服务：酒店提供从以下地点接送：阿里卡查卡鲁塔机场、阿里卡汽车站、您的住处或其他酒店。请通过WhatsApp +56 9 5381 1481 预约。自驾：沿11-CH号公路约2小时（145公里）。La Paloma巴士：3小时，06:50出发。\n\n酒店自营旅游：酒店自办前往以下地点的旅游：劳卡国家公园45公里（联合国教科文组织），帕里纳科塔47公里，科塔科塔尼52公里，春加拉55公里，苏里普拉萨70公里，苏里雷96公里。绝不提及价格。预约和详情请联系 +56 9 5381 1481。\n\n高原反应（puna）：普特雷海拔3500米。常见症状：头痛、疲劳、呼吸急促。建议：第一天充分休息，大量喝水，24小时内避免饮酒，饮食清淡。古柯茶很有帮助，酒店提供。如症状严重，请通知前台。\n\n酒店狗狗（德国牧羊犬）：苏丹看起来威严有地盘感，但其实是个大宝宝，最喜欢被叫做宝宝。洛蒂活在游戏里，总是带着树枝或玩具，她是洛基的妈妈。洛基是他们的儿子，活在自己的世界里，有点笨手笨脚（无恶意），天生短尾巴且有关节问题，走路像在跳舞，很可爱。重要提示：绝对不要用石头和狗玩耍，会弄坏牙齿。只能用树枝和玩具。\n\n动植物：前台前方有一棵奎诺阿树（Polylepis），是世界上生长在最高海拔的树木。当地动物：小羊驼（vicuña）、骆马、羊驼、原驼、安第斯秃鹰、3种火烈鸟、毛丝鼠、安第斯狐狸、美洲鸵、美洲狮。劳卡国家公园有130多种鸟类。Bofedales = 高原湿地，重要栖息地。\n\n普特雷小镇：1580年建城，艾马拉语名称意为"水的低语"。圣伊德丰索殖民教堂（1670年）。二月狂欢节。美食：卡拉普尔卡汤（用炽热火山石烹制的传统汤），骆马/羊驼肉，高原鳟鱼，藜麦，冻干土豆（chuño）。气候：12月至3月为雨季，其余月份干燥晴朗。冬季夜晚零度以下。\n\n重要景点：春加拉湖，海拔4517米（世界最高湖之一，倒映帕亚查塔斯火山群——帕里纳科塔火山6342米和波梅拉佩火山6282米）。帕里纳科塔艾马拉村落，海拔4390米（国家历史纪念物教堂）。科塔科塔尼火山湖群。苏里雷盐沼（3种火烈鸟）。胡拉西温泉，距普特雷约10公里，海拔4000米。苏里普拉萨彩色山地。拉斯维库尼亚斯自然保护区，面积209131公顷。\n\n如不确定，请建议联系前台或WhatsApp +56 9 5381 1481。`
+    sys:`您是拉斯维库尼亚斯酒店的虚拟助手，地址：智利普特雷市巴克达诺街80号，海拔3500米。请始终用中文回答。语气温暖友好，适时幽默。使用markdown和表情符号。\n\n酒店信息：WiFi密码：**9DjAq68XbD98sTf** | 入住时间：14:00 | 退房时间：12:00 | 早餐时间：周一至周五 07:30-09:30，周末及节假日 08:00-10:00 | 联系方式：+56 9 5381 1481（电话和WhatsApp）\n\n接送服务：酒店提供从以下地点接送：阿里卡查卡鲁塔机场、阿里卡汽车站、您的住处或其他酒店。请通过WhatsApp +56 9 5381 1481 预约。自驾：沿11-CH号公路约2小时（145公里）。La Paloma巴士：3小时，06:50出发。\n\n酒店自营旅游：酒店自办前往以下地点的旅游：劳卡国家公园45公里（联合国教科文组织），帕里纳科塔47公里，科塔科塔尼52公里，春加拉55公里，苏里普拉萨70公里，苏里雷96公里。绝不提及价格。预约和详情请联系 +56 9 5381 1481。\n\n高原反应（puna）：普特雷海拔3500米。常见症状：头痛、疲劳、呼吸急促。建议：第一天充分休息，大量喝水，24小时内避免饮酒，饮食清淡。古柯茶很有帮助，酒店提供。如症状严重，请通知前台。\n\n酒店狗狗（德国牧羊犬）：苏丹看起来威严有地盘感，但其实是个大宝宝，最喜欢被叫做宝宝。洛蒂活在游戏里，总是带着树枝或玩具，她是洛基的妈妈。洛基是他们的儿子，活在自己的世界里，有点笨手笨脚（无恶意），天生短尾巴且有关节问题，走路像在跳舞，很可爱。重要提示：绝对不要用石头和狗玩耍，会弄坏牙齿。只能用树枝和玩具。\n\n动植物：前台前方有一棵奎诺阿树（Polylepis），是世界上生长在最高海拔的树木。当地动物：小羊驼（vicuña）、骆马、羊驼、原驼、安第斯秃鹰、3种火烈鸟、毛丝鼠、安第斯狐狸、美洲鸵、美洲狮。劳卡国家公园有130多种鸟类。Bofedales = 高原湿地，重要栖息地。\n\n普特雷小镇：1580年建城，艾马拉语名称意为"水的低语"。圣伊德丰索殖民教堂（1670年）。二月狂欢节。美食：卡拉普尔卡汤（用炽热火山石烹制的传统汤），骆马/羊驼肉，高原鳟鱼，藜麦，冻干土豆（chuño）。气候：12月至3月为雨季，其余月份干燥晴朗。冬季夜晚零度以下。\n\n重要景点：春加拉湖，海拔4517米（世界最高湖之一，倒映帕亚查塔斯火山群——帕里纳科塔火山6342米和波梅拉佩火山6282米）。帕里纳科塔艾马拉村落，海拔4390米（国家历史纪念物教堂）。科塔科塔尼火山湖群。苏里雷盐沼（3种火烈鸟）。胡拉西温泉，距普特雷约10公里，海拔4000米。苏里普拉萨彩色山地。拉斯维库尼亚斯自然保护区，面积209131公顷。\n\n如不确定，请建议联系前台或WhatsApp +56 9 5381 1481。`
   }
 };
 
@@ -3308,7 +3317,7 @@ function showCTab(id, btn) {
 const KB = {
   es:[
     // ── Hotel & servicios ──
-    {k:['wifi','contraseña','clave','internet'],r:'La contraseña del WiFi cambia periódicamente. **Consulta en recepción** para obtener la clave actual 😊'},
+    {k:['wifi','contraseña','clave','internet'],r:'La contraseña del **WiFi** es: `9DjAq68XbD98sTf` 📶'},
     {k:['desayuno','breakfast','mañana','comer','que hora','a que hora','cuando','a que hora abre'],r:'🍳 **Lun–Vie:** 07:30–09:30 · **Sáb–Dom–Festivos:** 08:00–10:00'},
     {k:['check-in','llegada','entrada','que hora','a que hora','cuando'],r:'**Check-in** desde las **14:00 hrs**.'}, 
     // BUG FIX: removed 'salida' — ambiguous ("salida de emergencia" triggered checkout)
@@ -3366,7 +3375,7 @@ const KB = {
   ],
   en:[
     // ── Hotel & services ──
-    {k:['wifi','password','internet'],r:'WiFi password changes periodically. **Ask at reception** for the current one 😊'},
+    {k:['wifi','password','internet'],r:'The **WiFi** password is: `9DjAq68XbD98sTf` 📶'},
     {k:['breakfast','morning','eat','what time','when','what hours','what time opens'],r:'🍳 **Mon–Fri:** 07:30–09:30 · **Sat–Sun–Holidays:** 08:00–10:00'},
     {k:['check-in','arrival','what time','when'],r:'**Check-in** from **2:00 PM**.'}, 
     {k:['check-out','departure','what time','when'],r:'**Check-out** by **12:00 PM (noon)**.'}, 
@@ -3405,7 +3414,7 @@ const KB = {
   ],
   fr:[
     {k:['adresse','localisation','où est','où se trouve'],r:'📍 **Baquedano 80, Putre**, Région d\'Arica y Parinacota, Chili. À 3 500m sur l\'altiplano.'},
-    {k:['wifi','internet','mot de passe'],r:'Le mot de passe WiFi change régulièrement. **Demandez à la réception** le code actuel 😊'},
+    {k:['wifi','internet','mot de passe'],r:'Le mot de passe **WiFi** est: `9DjAq68XbD98sTf` 📶'},
     {k:['petit-dejeuner','petit dejeuner','dejeuner','matin','repas','quelle heure','à quelle heure','quand'],r:'🍳 **Lun–Ven :** 07h30–09h30 · **Sam–Dim–Fériés :** 08h00–10h00'},
     {k:['check-in','arrivee','arriver','quelle heure','à quelle heure','quand'],r:'**Check-in** à partir de **14h00**.'}, 
     {k:['check-out','depart','partir','quelle heure','à quelle heure','quand'],r:'**Check-out** avant **12h00**.'}, 
@@ -3429,7 +3438,7 @@ const KB = {
   ],
   de:[
     {k:['adresse','wo ist','wo befindet sich','lage'],r:'📍 **Baquedano 80, Putre**, Region Arica y Parinacota, Chile. Auf 3.500m im Altiplano.'},
-    {k:['wlan','wifi','internet','passwort'],r:'Das WLAN-Passwort wechselt regelmäßig. **An der Rezeption nachfragen** 😊'},
+    {k:['wlan','wifi','internet','passwort'],r:'Das **WLAN**-Passwort lautet: `9DjAq68XbD98sTf` 📶'},
     {k:['fruhstuck','frühstück','frühstückszeit','morgen','essen','um wie viel uhr','wann','zu welcher zeit'],r:'🍳 **Mo–Fr:** 07:30–09:30 · **Sa–So–Feiertage:** 08:00–10:00'},
     {k:['check-in','ankunft','ankommen','um wie viel uhr','wann'],r:'**Check-in** ab **14:00 Uhr**.'}, 
     {k:['check-out','abreise','abreisen','um wie viel uhr','wann'],r:'**Check-out** bis **12:00 Uhr**.'}, 
@@ -3453,7 +3462,7 @@ const KB = {
   ],
   pt:[
     {k:['endereco','endereço','localização','onde fica','onde esta'],r:'📍 **Baquedano 80, Putre**, Região de Arica y Parinacota, Chile. A 3.500m no altiplano.'},
-    {k:['wifi','internet','senha'],r:'A senha do WiFi muda periodicamente. **Pergunte na recepção** o código atual 😊'},
+    {k:['wifi','internet','senha'],r:'A senha do **WiFi** é: `9DjAq68XbD98sTf` 📶',
     {k:['cafe','café','café da manhã','manha','manhã','comer','que horas','a que horas','quando'],r:'🍳 **Seg–Sex:** 07:30–09:30 · **Sáb–Dom–Feriados:** 08:00–10:00'},
     {k:['check-in','chegada','chegar','que horas','a que horas','quando'],r:'**Check-in** a partir das **14h00**.'}, 
     {k:['check-out','saida','saída','partir','que horas','a que horas','quando'],r:'**Check-out** até as **12h00**.'}, 
@@ -3477,7 +3486,7 @@ const KB = {
   ],
   it:[
     {k:['indirizzo','dove','dov\'\u00e8','dove si trova','posizione'],r:'📍 **Baquedano 80, Putre**, Regione di Arica y Parinacota, Cile. A 3.500m sull\'altiplano.'},
-    {k:['wifi','internet','password'],r:'La password WiFi cambia periodicamente. **Chiedere alla reception** il codice attuale 😊'},
+    {k:['wifi','internet','password'],r:'La password **WiFi** è: `9DjAq68XbD98sTf` 📶'},
     {k:['colazione','mangiare','mattina','che ora','a che ora','quando'],r:'🍳 **Lun–Ven:** 07:30–09:30 · **Sab–Dom–Festivi:** 08:00–10:00'},
     {k:['check-in','arrivo','arrivare','che ora','a che ora','quando'],r:'**Check-in** dalle **14:00**.'}, 
     {k:['check-out','partenza','partire','che ora','a che ora','quando'],r:'**Check-out** entro le **12:00**.'}, 
