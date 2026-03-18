@@ -995,6 +995,8 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   display: flex; align-items: center; gap: 14px;
   position: relative; z-index: 2;
   min-width: 0; box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 100%);
+  backdrop-filter: blur(1px);
 }
 
 /* Illustrated preview area (top of card) */
@@ -1114,17 +1116,19 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 .gc-body { flex: 1; min-width: 0; overflow: hidden; }
 .gc-name {
   font-family: var(--ff-display); font-size: 1.05rem;
-  font-weight: 600; color: #FFF8F0; margin-bottom: 4px; letter-spacing: .01em;
+  font-weight: 700; color: #FFFFFF; margin-bottom: 4px; letter-spacing: .01em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-shadow: 0 1px 8px rgba(0,0,0,.8), 0 0 20px rgba(0,0,0,.5);
 }
-.gc-desc { font-size: .73rem; font-weight: 300; color: rgba(255,248,240,.6); line-height: 1.4; }
+.gc-desc { font-size: .73rem; font-weight: 400; color: rgba(255,255,255,.85); line-height: 1.4; text-shadow: 0 1px 4px rgba(0,0,0,.7); }
 .gc-badge {
   display: inline-block; font-size: .55rem; font-weight: 700; letter-spacing: .05em;
-  text-transform: uppercase; color: var(--earth);
+  text-transform: uppercase; color: #1a0800;
   background: var(--gold); border-radius: 20px;
   padding: 3px 9px; margin-top: 6px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   max-width: 100%;
+  box-shadow: 0 1px 6px rgba(0,0,0,.4);
 }
 .gc-badge.soon-badge { background: rgba(255,255,255,.08); color: rgba(255,248,240,.4); }
 
@@ -1132,12 +1136,6 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 .game-card:hover .gc-arrow { transform: translateX(4px); opacity: 1; }
 
 /* Gradient overlay on cards */
-.gc-inner::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,.3) 0%, transparent 100%);
-  pointer-events: none; z-index: 1;
-}
 .gc-inner > * { position: relative; z-index: 2; }
 
 /* ── FAUNA SCREEN ── */
@@ -3242,7 +3240,7 @@ async function fetchWikiThumb(title, destId) {
     );
     if(!r.ok) return null;
     const d = await r.json();
-    return d.thumbnail?.source || null;
+    return (d.thumbnail && d.thumbnail.source) ? d.thumbnail.source : null;
   } catch { return null; }
 }
 
@@ -3462,7 +3460,7 @@ const KB = {
   ],
   pt:[
     {k:['endereco','endereço','localização','onde fica','onde esta'],r:'📍 **Baquedano 80, Putre**, Região de Arica y Parinacota, Chile. A 3.500m no altiplano.'},
-    {k:['wifi','internet','senha'],r:'A senha do **WiFi** é: `9DjAq68XbD98sTf` 📶',
+    {k:['wifi','internet','senha'],r:'A senha do **WiFi** é: `9DjAq68XbD98sTf` 📶'},
     {k:['cafe','café','café da manhã','manha','manhã','comer','que horas','a que horas','quando'],r:'🍳 **Seg–Sex:** 07:30–09:30 · **Sáb–Dom–Feriados:** 08:00–10:00'},
     {k:['check-in','chegada','chegar','que horas','a que horas','quando'],r:'**Check-in** a partir das **14h00**.'}, 
     {k:['check-out','saida','saída','partir','que horas','a que horas','quando'],r:'**Check-out** até as **12h00**.'}, 
@@ -3629,8 +3627,8 @@ async function send() {
         system:(T[lang]||T.es).sys,messages:chatHist})
     });
     const data=await res.json();
-    if(!res.ok) throw new Error(data?.error?.message||'HTTP '+res.status);
-    const reply=data.content?.[0]?.text; if(!reply) throw new Error('empty');
+    if(!res.ok) throw new Error((data && data.error && data.error.message) || ('HTTP '+res.status));
+    var reply=(data.content && data.content[0] && data.content[0].text) || ''; if(!reply) throw new Error('empty');
     chatHist.push({role:'assistant',content:reply});
     showTyp(false); addMsg('bot',reply);
   } catch(e) {
@@ -3737,7 +3735,7 @@ async function sendFauna(){
     });
     const data=await res.json();
     if(!res.ok) throw new Error('API error');
-    const reply=data.content?.[0]?.text||findFaunaKB(txt);
+    var reply=(data.content && data.content[0] && data.content[0].text) || findFaunaKB(txt);
     faunaChatHist.push({role:'assistant',content:reply});
     addFaunaMsg('bot',reply);
   }catch(e){
@@ -3786,79 +3784,112 @@ const TOURS_DATA = {
   excursiones: [
     {
       id:'chungara-full', icon:'🏔️',
-      name:{es:'Lago Chungará — Día Completo',en:'Lake Chungará — Full Day'},
-      type:{es:'Excursión',en:'Excursion'},
-      duration:{es:'6 horas',en:'6 hours'},
-      includes:{es:'Snack',en:'Snack'},
-      route:{es:['Putre','Pueblo de Parinacota (iglesia colonial s. XVII)','Lagunas de Cotacotani','Lago Chungará (4.520 msnm)','Lagunas de Caquena','Regreso a Putre'],
-             en:['Putre','Parinacota Village (17th century colonial church)','Cotacotani Lagoons','Lake Chungará (4,520m)','Caquena Lagoons','Return to Putre']},
-      flora:{es:'Queñoa (Polylepis), llareta, bofedales, cola de zorro',en:'Queñoa (Polylepis), llareta, wetlands, foxtail grass'},
-      fauna:{es:'3 especies de flamencos, vicuñas, taguas gigantes, guallatas (ganso andino), vizcachas',en:'3 flamingo species, vicuñas, giant coots, Andean geese, vizcachas'}
+      name:{es:'Lago Chungará — Día Completo',en:'Lake Chungará — Full Day',fr:'Lac Chungará — Journée Complète',de:'Chungará-See — Ganztag',pt:'Lago Chungará — Dia Completo',it:'Lago Chungará — Giornata Intera',zh:'春加拉湖 — 全天游'},
+      type:{es:'Excursión',en:'Excursion',fr:'Excursion',de:'Ausflug',pt:'Excursão',it:'Escursione',zh:'游览'},
+      duration:{es:'6 horas',en:'6 hours',fr:'6 heures',de:'6 Stunden',pt:'6 horas',it:'6 ore',zh:'6小时'},
+      includes:{es:'Snack',en:'Snack',fr:'Collation',de:'Snack',pt:'Lanche',it:'Snack',zh:'小食'},
+      route:{
+        es:['Putre','Pueblo de Parinacota (iglesia colonial s. XVII)','Lagunas de Cotacotani','Lago Chungará (4.520 msnm)','Lagunas de Caquena','Regreso a Putre'],
+        en:['Putre','Parinacota Village (17th century colonial church)','Cotacotani Lagoons','Lake Chungará (4,520m)','Caquena Lagoons','Return to Putre'],
+        fr:['Putre','Village de Parinacota (église coloniale XVIIe s.)','Lagunes de Cotacotani','Lac Chungará (4.520 m)','Lagunes de Caquena','Retour à Putre'],
+        de:['Putre','Dorf Parinacota (Kolonialkirche 17. Jh.)','Cotacotani-Seen','Chungará-See (4.520 m)','Caquena-Seen','Rückkehr nach Putre'],
+        pt:['Putre','Vilarejo de Parinacota (igreja colonial séc. XVII)','Lagoas de Cotacotani','Lago Chungará (4.520 m)','Lagoas de Caquena','Retorno a Putre'],
+        it:['Putre','Villaggio di Parinacota (chiesa coloniale XVII sec.)','Lagune di Cotacotani','Lago Chungará (4.520 m)','Lagune di Caquena','Ritorno a Putre'],
+        zh:['普特雷','帕里纳科塔村(17世纪殖民教堂)','科塔科塔尼湖群','春加拉湖(4520米)','卡克纳湖群','返回普特雷']
+      },
+      flora:{es:'Queñoa (Polylepis), llareta, bofedales, cola de zorro',en:'Queñoa (Polylepis), llareta, wetlands, foxtail grass',fr:'Queñoa (Polylepis), llareta, zones humides, herbe queue de renard',de:'Queñoa (Polylepis), Llareta, Feuchtgebiete, Fuchsschwanzgras',pt:'Queñoa (Polylepis), llareta, bofedales, cola de zorro',it:'Queñoa (Polylepis), llareta, zone umide, erba coda di volpe',zh:'奎诺阿树、拉雷塔、高原湿地、狐尾草'},
+      fauna:{es:'3 especies de flamencos, vicuñas, taguas gigantes, guallatas, vizcachas',en:'3 flamingo species, vicuñas, giant coots, Andean geese, vizcachas',fr:'3 espèces de flamants, vigognes, foulques géantes, oies des Andes, viscaches',de:'3 Flamingo-Arten, Vikunjas, Riesenbläßhühner, Andengänse, Vizkachas',pt:'3 espécies de flamingos, vicunhas, taguas gigantes, gansos andinos, viscachas',it:'3 specie di fenicotteri, vigogne, folaghe giganti, oche andine, viscache',zh:'3种火烈鸟、小羊驼、大骨顶鸡、安第斯鹅、毛丝鼠'}
     },
     {
       id:'chungara-short', icon:'⛰️',
-      name:{es:'Lago Chungará — Medio Día',en:'Lake Chungará — Half Day'},
-      type:{es:'Excursión corta',en:'Short trip'},
-      duration:{es:'3 a 4 horas',en:'3 to 4 hours'},
-      includes:{es:'Snack',en:'Snack'},
-      route:{es:['Putre','Pueblo de Parinacota','Lago Chungará (4.520 msnm)','Regreso a Putre'],
-             en:['Putre','Parinacota Village','Lake Chungará (4,520m)','Return to Putre']},
-      flora:{es:'Queñoa, llareta, bofedales',en:'Queñoa, llareta, wetlands'},
-      fauna:{es:'Flamencos, vicuñas, guallatas, patos silvestres',en:'Flamingos, vicuñas, Andean geese, wild ducks'}
+      name:{es:'Lago Chungará — Medio Día',en:'Lake Chungará — Half Day',fr:'Lac Chungará — Demi-journée',de:'Chungará-See — Halbtag',pt:'Lago Chungará — Meio Dia',it:'Lago Chungará — Mezza Giornata',zh:'春加拉湖 — 半日游'},
+      type:{es:'Excursión corta',en:'Short trip',fr:'Courte excursion',de:'Kurzer Ausflug',pt:'Excursão curta',it:'Escursione breve',zh:'短途游'},
+      duration:{es:'3 a 4 horas',en:'3 to 4 hours',fr:'3 à 4 heures',de:'3 bis 4 Stunden',pt:'3 a 4 horas',it:'3-4 ore',zh:'3-4小时'},
+      includes:{es:'Snack',en:'Snack',fr:'Collation',de:'Snack',pt:'Lanche',it:'Snack',zh:'小食'},
+      route:{
+        es:['Putre','Pueblo de Parinacota','Lago Chungará (4.520 msnm)','Regreso a Putre'],
+        en:['Putre','Parinacota Village','Lake Chungará (4,520m)','Return to Putre'],
+        fr:['Putre','Village de Parinacota','Lac Chungará (4.520 m)','Retour à Putre'],
+        de:['Putre','Dorf Parinacota','Chungará-See (4.520 m)','Rückkehr nach Putre'],
+        pt:['Putre','Vilarejo de Parinacota','Lago Chungará (4.520 m)','Retorno a Putre'],
+        it:['Putre','Villaggio di Parinacota','Lago Chungará (4.520 m)','Ritorno a Putre'],
+        zh:['普特雷','帕里纳科塔村','春加拉湖(4520米)','返回普特雷']
+      },
+      flora:{es:'Queñoa, llareta, bofedales',en:'Queñoa, llareta, wetlands',fr:'Queñoa, llareta, zones humides',de:'Queñoa, Llareta, Feuchtgebiete',pt:'Queñoa, llareta, bofedales',it:'Queñoa, llareta, zone umide',zh:'奎诺阿树、拉雷塔、高原湿地'},
+      fauna:{es:'Flamencos, vicuñas, guallatas, patos silvestres',en:'Flamingos, vicuñas, Andean geese, wild ducks',fr:'Flamants, vigognes, oies des Andes, canards sauvages',de:'Flamingos, Vikunjas, Andengänse, Wildenten',pt:'Flamingos, vicunhas, gansos andinos, patos selvagens',it:'Fenicotteri, vigogne, oche andine, anatre selvatiche',zh:'火烈鸟、小羊驼、安第斯鹅、野鸭'}
     },
     {
       id:'surire', icon:'🦩',
-      name:{es:'Salar de Surire / Polloquere / Guallatire',en:'Surire Salt Flat / Polloquere / Guallatire'},
-      type:{es:'Excursión larga',en:'Long trip'},
-      duration:{es:'6 horas',en:'6 hours'},
-      includes:{es:'Picnic',en:'Picnic'},
-      route:{es:['Putre','Pueblo de Guallatire (iglesia y volcán)','Salar de Surire (4.245 msnm, Monumento Natural)','Termas de Polloquere (aguas termales naturales)','Regreso a Putre'],
-             en:['Putre','Guallatire Village (church & volcano)','Surire Salt Flat (4,245m, Natural Monument)','Polloquere Hot Springs (natural thermal waters)','Return to Putre']},
-      flora:{es:'Llareta (planta milenaria), queñoa, bofedales, tola, cola de zorro',en:'Llareta (millennial plant), queñoa, wetlands, tola, foxtail grass'},
-      fauna:{es:'3 especies de flamencos, vicuñas, suris (ñandú andino), zorros andinos, vizcachas',en:'3 flamingo species, vicuñas, rheas (Andean ostrich), Andean foxes, vizcachas'}
+      name:{es:'Salar de Surire / Polloquere / Guallatire',en:'Surire Salt Flat / Polloquere / Guallatire',fr:'Salar de Surire / Polloquere / Guallatire',de:'Surire-Salzsee / Polloquere / Guallatire',pt:'Salar de Surire / Polloquere / Guallatire',it:'Salar de Surire / Polloquere / Guallatire',zh:'苏里雷盐沼 / 波洛克雷 / 瓜亚提雷'},
+      type:{es:'Excursión larga',en:'Long trip',fr:'Longue excursion',de:'Langer Ausflug',pt:'Excursão longa',it:'Escursione lunga',zh:'长途游'},
+      duration:{es:'6 horas',en:'6 hours',fr:'6 heures',de:'6 Stunden',pt:'6 horas',it:'6 ore',zh:'6小时'},
+      includes:{es:'Picnic',en:'Picnic',fr:'Pique-nique',de:'Picknick',pt:'Piquenique',it:'Picnic',zh:'野餐'},
+      route:{
+        es:['Putre','Pueblo de Guallatire (iglesia y volcán)','Salar de Surire (4.245 msnm, Monumento Natural)','Termas de Polloquere','Regreso a Putre'],
+        en:['Putre','Guallatire Village (church & volcano)','Surire Salt Flat (4,245m, Natural Monument)','Polloquere Hot Springs','Return to Putre'],
+        fr:['Putre','Village de Guallatire (église et volcan)','Salar de Surire (4.245 m, Monument Naturel)','Sources thermales de Polloquere','Retour à Putre'],
+        de:['Putre','Dorf Guallatire (Kirche und Vulkan)','Surire-Salzsee (4.245 m, Naturdenkmal)','Polloquere-Thermalquellen','Rückkehr nach Putre'],
+        pt:['Putre','Vilarejo de Guallatire (igreja e vulcão)','Salar de Surire (4.245 m, Monumento Natural)','Termas de Polloquere','Retorno a Putre'],
+        it:['Putre','Villaggio di Guallatire (chiesa e vulcano)','Salar de Surire (4.245 m, Monumento Naturale)','Terme di Polloquere','Ritorno a Putre'],
+        zh:['普特雷','瓜亚提雷村(教堂与火山)','苏里雷盐沼(4245米，自然纪念地)','波洛克雷温泉','返回普特雷']
+      },
+      flora:{es:'Llareta (planta milenaria), queñoa, bofedales, tola, cola de zorro',en:'Llareta (millennial plant), queñoa, wetlands, tola, foxtail grass',fr:'Llareta (plante millénaire), queñoa, zones humides, tola',de:'Llareta (jahrtausendealte Pflanze), Queñoa, Feuchtgebiete, Tola',pt:'Llareta (planta milenar), queñoa, bofedales, tola',it:'Llareta (pianta millenaria), queñoa, zone umide, tola',zh:'拉雷塔(千年植物)、奎诺阿树、湿地、托拉草'},
+      fauna:{es:'3 especies de flamencos, vicuñas, suris, zorros andinos, vizcachas',en:'3 flamingo species, vicuñas, rheas, Andean foxes, vizcachas',fr:'3 espèces de flamants, vigognes, nandous, renards andins, viscaches',de:'3 Flamingo-Arten, Vikunjas, Nandus, Andenefüchse, Vizkachas',pt:'3 espécies de flamingos, vicunhas, suris, raposas andinas, viscachas',it:'3 specie di fenicotteri, vigogne, nandù, volpi andine, viscache',zh:'3种火烈鸟、小羊驼、美洲鸵、安第斯狐狸、毛丝鼠'}
     },
     {
       id:'visviri', icon:'🗿',
-      name:{es:'Visviri — Hito Tripartito',en:'Visviri — Tripartite Border'},
-      type:{es:'Excursión larga',en:'Long trip'},
-      duration:{es:'8 horas',en:'8 hours'},
-      includes:{es:'Snack',en:'Snack'},
-      route:{es:['Putre','Altiplano profundo','Visviri (pueblo fronterizo)','Hito Tripartito (frontera Chile-Perú-Bolivia)','Regreso a Putre'],
-             en:['Putre','Deep Altiplano','Visviri (border town)','Tripartite Border (Chile-Peru-Bolivia)','Return to Putre']},
-      flora:{es:'Bofedales extensos, cola de zorro, tola, yareta',en:'Extensive wetlands, foxtail grass, tola, yareta'},
-      fauna:{es:'Llamas, alpacas, vicuñas, cóndores, águilas, perdices de la puna',en:'Llamas, alpacas, vicuñas, condors, eagles, puna partridges'}
-    },
-    {
-      id:'arica', icon:'🏛️',
-      name:{es:'Arica Histórico',en:'Historic Arica'},
-      type:{es:'Excursión cultural',en:'Cultural trip'},
-      duration:{es:'6 horas',en:'6 hours'},
-      includes:{es:'Snack',en:'Snack'},
-      route:{es:['Putre','Descenso por Ruta 11-CH (paisajes del desierto)','Museo Arqueológico San Miguel de Azapa (momias Chinchorro)','Morro de Arica (monumento histórico)','Cuevas de Anzota (formaciones costeras)','Regreso a Putre'],
-             en:['Putre','Descent via Route 11-CH (desert landscapes)','San Miguel de Azapa Archaeological Museum (Chinchorro mummies)','Morro de Arica (historic monument)','Anzota Caves (coastal formations)','Return to Putre']},
-      flora:{es:'Transición de altiplano a desierto costero, cactus candelabro, vegetación de oasis',en:'Transition from altiplano to coastal desert, candelabra cactus, oasis vegetation'},
-      fauna:{es:'Lobos marinos, pelícanos, gaviotas, aves costeras, lagartijas del desierto',en:'Sea lions, pelicans, seagulls, coastal birds, desert lizards'}
+      name:{es:'Visviri — Hito Tripartito',en:'Visviri — Tripartite Border',fr:'Visviri — Borne Tripartite',de:'Visviri — Dreiländereck',pt:'Visviri — Marco Tripartite',it:'Visviri — Confine Tripartito',zh:'维斯维里 — 三国界碑'},
+      type:{es:'Excursión larga',en:'Long trip',fr:'Longue excursion',de:'Langer Ausflug',pt:'Excursão longa',it:'Escursione lunga',zh:'长途游'},
+      duration:{es:'8 horas',en:'8 hours',fr:'8 heures',de:'8 Stunden',pt:'8 horas',it:'8 ore',zh:'8小时'},
+      includes:{es:'Snack',en:'Snack',fr:'Collation',de:'Snack',pt:'Lanche',it:'Snack',zh:'小食'},
+      route:{
+        es:['Putre','Altiplano profundo','Visviri (pueblo fronterizo)','Hito Tripartito (Chile-Perú-Bolivia)','Regreso a Putre'],
+        en:['Putre','Deep Altiplano','Visviri (border town)','Tripartite Border (Chile-Peru-Bolivia)','Return to Putre'],
+        fr:['Putre','Altiplano profond','Visviri (ville frontalière)','Borne Tripartite (Chili-Pérou-Bolivie)','Retour à Putre'],
+        de:['Putre','Tiefes Altiplano','Visviri (Grenzstadt)','Dreiländereck (Chile-Peru-Bolivien)','Rückkehr nach Putre'],
+        pt:['Putre','Altiplano profundo','Visviri (cidade fronteiriça)','Marco Tripartite (Chile-Peru-Bolívia)','Retorno a Putre'],
+        it:['Putre','Altiplano profondo','Visviri (città di confine)','Confine Tripartito (Cile-Perù-Bolivia)','Ritorno a Putre'],
+        zh:['普特雷','深部高原','维斯维里(边境小镇)','三国界碑(智利-秘鲁-玻利维亚)','返回普特雷']
+      },
+      flora:{es:'Bofedales extensos, cola de zorro, tola, yareta',en:'Extensive wetlands, foxtail grass, tola, yareta',fr:'Vastes zones humides, herbe queue de renard, tola, yareta',de:'Ausgedehnte Feuchtgebiete, Fuchsschwanzgras, Tola, Yareta',pt:'Bofedales extensos, cola de zorro, tola, yareta',it:'Vaste zone umide, erba coda di volpe, tola, yareta',zh:'广阔湿地、狐尾草、托拉草、亚雷塔草'},
+      fauna:{es:'Llamas, alpacas, vicuñas, cóndores, águilas, perdices de la puna',en:'Llamas, alpacas, vicuñas, condors, eagles, puna partridges',fr:'Lamas, alpagas, vigognes, condors, aigles, perdrix de la puna',de:'Lamas, Alpakas, Vikunjas, Kondore, Adler, Puna-Rebhühner',pt:'Lhamas, alpacas, vicunhas, condores, águias, perdizes da puna',it:'Lama, alpaca, vigogne, condor, aquile, pernici della puna',zh:'骆马、羊驼、小羊驼、安第斯秃鹰、鹰、高原鹧鸪'}
     }
   ],
   traslados: [
-    {id:'aero-putre',name:{es:'Aeropuerto Chacalluta → Putre',en:'Chacalluta Airport → Putre'},duration:{es:'3 horas',en:'3 hours'},icon:'✈️'},
-    {id:'putre-aero',name:{es:'Putre → Aeropuerto Chacalluta',en:'Putre → Chacalluta Airport'},duration:{es:'3 horas',en:'3 hours'},icon:'✈️'},
-    {id:'colchane-iqq',name:{es:'Putre → Colchane → Iquique',en:'Putre → Colchane → Iquique'},duration:{es:'10 horas',en:'10 hours'},icon:'🚐'},
-    {id:'colchane-iqq-aero',name:{es:'Putre → Colchane → Aeropuerto Iquique',en:'Putre → Colchane → Iquique Airport'},duration:{es:'10 horas',en:'10 hours'},icon:'✈️'},
-    {id:'colchane-arica',name:{es:'Putre → Colchane → Huara → Arica',en:'Putre → Colchane → Huara → Arica'},duration:{es:'10 horas',en:'10 hours'},icon:'🚐'},
-    {id:'otro',name:{es:'Otro destino (por km)',en:'Other destination (per km)'},duration:{es:'Consultar',en:'Ask us'},icon:'📍'}
+    {
+      icon:'✈️',
+      name:{es:'Aeropuerto Chacalluta (Arica)',en:'Chacalluta Airport (Arica)',fr:'Aéroport Chacalluta (Arica)',de:'Flughafen Chacalluta (Arica)',pt:'Aeroporto Chacalluta (Arica)',it:'Aeroporto Chacalluta (Arica)',zh:'查卡鲁塔机场(阿里卡)'},
+      duration:{es:'~2 horas',en:'~2 hours',fr:'~2 heures',de:'~2 Stunden',pt:'~2 horas',it:'~2 ore',zh:'约2小时'}
+    },
+    {
+      icon:'🚌',
+      name:{es:'Terminal de buses Arica',en:'Arica Bus Terminal',fr:'Terminal de bus d\'Arica',de:'Busbahnhof Arica',pt:'Terminal de ônibus de Arica',it:'Terminal autobus di Arica',zh:'阿里卡汽车站'},
+      duration:{es:'~2 horas',en:'~2 hours',fr:'~2 heures',de:'~2 Stunden',pt:'~2 horas',it:'~2 ore',zh:'约2小时'}
+    },
+    {
+      icon:'🏨',
+      name:{es:'Domicilio u otro hotel en Arica',en:'Home or other hotel in Arica',fr:'Domicile ou autre hôtel à Arica',de:'Unterkunft oder anderes Hotel in Arica',pt:'Domicílio ou outro hotel em Arica',it:'Domicilio o altro hotel ad Arica',zh:'阿里卡住所或其他酒店'},
+      duration:{es:'~2 horas',en:'~2 hours',fr:'~2 heures',de:'~2 Stunden',pt:'~2 horas',it:'~2 ore',zh:'约2小时'}
+    }
   ],
   especiales: [
     {
       id:'tacna', icon:'🌎',
-      name:{es:'Putre → Visviri → Tacna (Perú) → Arica',en:'Putre → Visviri → Tacna (Peru) → Arica'},
-      type:{es:'Viaje internacional',en:'International trip'},
-      duration:{es:'6 horas',en:'6 hours'},
-      includes:{es:'Snack',en:'Snack'},
-      route:{es:['Putre','Cruce altiplánico','Visviri / Hito Tripartito','Tacna, Perú (tiempo libre para compras y gastronomía)','Retorno por Arica'],
-             en:['Putre','Altiplano crossing','Visviri / Tripartite Border','Tacna, Peru (free time for shopping & cuisine)','Return via Arica']},
-      flora:{es:'Paisaje altiplánico, bofedales, transición a valles peruanos',en:'Altiplano landscape, wetlands, transition to Peruvian valleys'},
-      fauna:{es:'Vicuñas, llamas, cóndores, aves altiplánicas',en:'Vicuñas, llamas, condors, altiplano birds'}
+      name:{es:'Putre → Visviri → Tacna (Perú) → Arica',en:'Putre → Visviri → Tacna (Peru) → Arica',fr:'Putre → Visviri → Tacna (Pérou) → Arica',de:'Putre → Visviri → Tacna (Peru) → Arica',pt:'Putre → Visviri → Tacna (Peru) → Arica',it:'Putre → Visviri → Tacna (Perù) → Arica',zh:'普特雷→维斯维里→塔克纳(秘鲁)→阿里卡'},
+      type:{es:'Viaje internacional',en:'International trip',fr:'Voyage international',de:'Internationale Reise',pt:'Viagem internacional',it:'Viaggio internazionale',zh:'国际旅行'},
+      duration:{es:'6 horas',en:'6 hours',fr:'6 heures',de:'6 Stunden',pt:'6 horas',it:'6 ore',zh:'6小时'},
+      includes:{es:'Snack',en:'Snack',fr:'Collation',de:'Snack',pt:'Lanche',it:'Snack',zh:'小食'},
+      route:{
+        es:['Putre','Cruce altiplánico','Visviri / Hito Tripartito','Tacna, Perú (tiempo libre)','Retorno por Arica'],
+        en:['Putre','Altiplano crossing','Visviri / Tripartite Border','Tacna, Peru (free time)','Return via Arica'],
+        fr:['Putre','Traversée de l\'altiplano','Visviri / Borne Tripartite','Tacna, Pérou (temps libre)','Retour via Arica'],
+        de:['Putre','Altiplano-Überquerung','Visviri / Dreiländereck','Tacna, Peru (freie Zeit)','Rückkehr über Arica'],
+        pt:['Putre','Travessia do altiplano','Visviri / Marco Tripartite','Tacna, Peru (tempo livre)','Retorno via Arica'],
+        it:['Putre','Attraversamento altiplano','Visviri / Confine Tripartito','Tacna, Perù (tempo libero)','Ritorno via Arica'],
+        zh:['普特雷','穿越高原','维斯维里/三国界碑','塔克纳，秘鲁(自由活动)','经阿里卡返回']
+      },
+      flora:{es:'Paisaje altiplánico, bofedales, transición a valles peruanos',en:'Altiplano landscape, wetlands, transition to Peruvian valleys',fr:'Paysage altiplano, zones humides, transition vers les vallées péruviennes',de:'Altiplano-Landschaft, Feuchtgebiete, Übergang zu peruanischen Tälern',pt:'Paisagem altiplánica, bofedales, transição para vales peruanos',it:'Paesaggio altiplano, zone umide, transizione alle valli peruviane',zh:'高原风光、湿地、秘鲁河谷过渡带'},
+      fauna:{es:'Vicuñas, llamas, cóndores, aves altiplánicas',en:'Vicuñas, llamas, condors, altiplano birds',fr:'Vigognes, lamas, condors, oiseaux de l\'altiplano',de:'Vikunjas, Lamas, Kondore, Altiplano-Vögel',pt:'Vicunhas, lhamas, condores, aves altiplánicas',it:'Vigogne, lama, condor, uccelli dell\'altiplano',zh:'小羊驼、骆马、安第斯秃鹰、高原鸟类'}
     }
   ]
 };
@@ -3886,12 +3917,21 @@ document.addEventListener('click', function(e) {
 
 function buildTourCard(t) {
   var l = lang;
-  var waMsg = l==='es' ? 'Hola! Me interesa el tour: '+t.name.es+'. Podrían darme más información?' : 'Hi! I am interested in the tour: '+(t.name.en||t.name.es)+'. Could you give me more info?';
+  // Labels per language
+  var LBL = {
+    route:   {es:'📍 Ruta',en:'📍 Route',fr:'📍 Itinéraire',de:'📍 Route',pt:'📍 Rota',it:'📍 Percorso',zh:'📍 路线'},
+    flora:   {es:'🌿 Flora',en:'🌿 Flora',fr:'🌿 Flore',de:'🌿 Flora',pt:'🌿 Flora',it:'🌿 Flora',zh:'🌿 植物'},
+    fauna:   {es:'🦙 Fauna',en:'🦙 Fauna',fr:'🦙 Faune',de:'🦙 Fauna',pt:'🦙 Fauna',it:'🦙 Fauna',zh:'🦙 动物'},
+    consult: {es:'📱 Consultar este tour',en:'📱 Ask about this tour',fr:'📱 Renseignements',de:'📱 Tour anfragen',pt:'📱 Consultar este tour',it:'📱 Informazioni',zh:'📱 咨询此行程'}
+  };
+  function lbl(obj){ return obj[l] || obj.en; }
+  var n = t.name[l] || t.name.es;
+  var waMsg = lbl({es:'Hola! Me interesa el tour: '+t.name.es+'. Info?',en:'Hi! Interested in tour: '+(t.name.en||t.name.es)+'.',fr:'Bonjour! Intéressé par: '+(t.name.fr||t.name.en||t.name.es)+'.',de:'Hallo! Interesse an: '+(t.name.de||t.name.en||t.name.es)+'.',pt:'Olá! Interesse em: '+(t.name.pt||t.name.en||t.name.es)+'.',it:'Ciao! Interessato a: '+(t.name.it||t.name.en||t.name.es)+'.',zh:'你好！我对以下行程感兴趣：'+(t.name.zh||t.name.en||t.name.es)+'。'});
   var waUrl = 'https://wa.me/56953811481?text='+encodeURIComponent(waMsg);
   var routeHtml = '';
   if(t.route) {
-    var steps = t.route[l] || t.route.es;
-    routeHtml = '<div class="tour-section-label">'+(l==='es'?'📍 Ruta':'📍 Route')+'</div>';
+    var steps = t.route[l] || t.route.en || t.route.es;
+    routeHtml = '<div class="tour-section-label">'+lbl(LBL.route)+'</div>';
     for(var i=0;i<steps.length;i++){
       routeHtml += '<div class="tour-route-step"><div class="tour-route-dot"></div><span class="tour-route">'+steps[i]+'</span></div>';
     }
@@ -3899,15 +3939,15 @@ function buildTourCard(t) {
   var ffHtml = '';
   if(t.flora || t.fauna) {
     ffHtml = '<div class="tour-flora-fauna">';
-    if(t.flora) ffHtml += '<div class="tour-ff-box"><div class="tour-ff-title flora">🌿 '+(l==='es'?'Flora':'Flora')+'</div><div class="tour-ff-list">'+(t.flora[l]||t.flora.es)+'</div></div>';
-    if(t.fauna) ffHtml += '<div class="tour-ff-box"><div class="tour-ff-title fauna">🦙 '+(l==='es'?'Fauna':'Fauna')+'</div><div class="tour-ff-list">'+(t.fauna[l]||t.fauna.es)+'</div></div>';
+    if(t.flora) ffHtml += '<div class="tour-ff-box"><div class="tour-ff-title flora">'+lbl(LBL.flora)+'</div><div class="tour-ff-list">'+(t.flora[l]||t.flora.en||t.flora.es)+'</div></div>';
+    if(t.fauna) ffHtml += '<div class="tour-ff-box"><div class="tour-ff-title fauna">'+lbl(LBL.fauna)+'</div><div class="tour-ff-list">'+(t.fauna[l]||t.fauna.en||t.fauna.es)+'</div></div>';
     ffHtml += '</div>';
   }
   return '<div class="tour-card" id="tc-'+t.id+'">' +
     '<div class="tour-card-header" data-tour="'+t.id+'" style="cursor:pointer">'+
       '<div class="tour-icon">'+t.icon+'</div>' +
       '<div class="tour-info">' +
-        '<div class="tour-name">'+(t.name[l]||t.name.es)+'</div>' +
+        '<div class="tour-name">'+n+'</div>' +
         '<div class="tour-meta">' +
           '<span class="tour-badge duration">⏱ '+(t.duration[l]||t.duration.es)+'</span>' +
           (t.includes ? '<span class="tour-badge includes">🍽 '+(t.includes[l]||t.includes.es)+'</span>' : '') +
@@ -3918,7 +3958,7 @@ function buildTourCard(t) {
     '</div>' +
     '<div class="tour-details">' +
       routeHtml + ffHtml +
-      '<div class="tour-cta"><a class="tour-whatsapp-btn" href="'+waUrl+'" target="_blank" rel="noopener">📱 '+(l==='es'?'Consultar este tour':'Ask about this tour')+'</a></div>' +
+      '<div class="tour-cta"><a class="tour-whatsapp-btn" href="'+waUrl+'" target="_blank" rel="noopener">'+lbl(LBL.consult)+'</a></div>' +
     '</div>' +
   '</div>';
 }
@@ -3951,11 +3991,31 @@ function renderTours() {
   TOURS_DATA.especiales.forEach(function(t){ specEl.innerHTML += buildTourCard(t); });
   specEl.innerHTML += '<div class="transfers-info" style="margin-top:6px;border-left-color:var(--gold)"><div class="transfers-title">'+(l==='es'?'🌎 Otros destinos':'🌎 Other destinations')+'</div><p style="font-size:.78rem;color:var(--text-mid);line-height:1.5">'+(l==='es'?'Consulta por otros destinos dentro y fuera de Chile. Organizamos viajes a medida según tus intereses.':'Ask about other destinations within and outside Chile. We organize custom trips based on your interests.')+'</p><div class="tour-cta" style="margin-top:12px"><a class="tour-whatsapp-btn" href="https://wa.me/56953811481?text='+encodeURIComponent(l==='es'?'Hola! Me interesa un viaje especial. Podrían asesorarme?':'Hi! I am interested in a special trip. Could you advise me?')+'" target="_blank" rel="noopener">📱 '+(l==='es'?'Consultar':'Ask us')+'</a></div></div>';
   // Update tabs text
-  document.getElementById('ttab-exc').textContent = l==='es'?'Excursiones':'Excursions';
-  document.getElementById('ttab-trans').textContent = l==='es'?'Traslados':'Transfers';
-  document.getElementById('ttab-special').textContent = l==='es'?'Especiales':'Special';
-  document.getElementById('tours-title').textContent = l==='es'?'Tours & Excursiones':'Tours & Excursions';
-  document.getElementById('tours-subtitle').textContent = l==='es'?'Descubre el altiplano con nosotros':'Discover the altiplano with us';
+  var TLBL = {
+    exc:     {es:'Excursiones',en:'Excursions',fr:'Excursions',de:'Ausflüge',pt:'Excursões',it:'Escursioni',zh:'游览'},
+    trans:   {es:'Traslados',en:'Transfers',fr:'Transferts',de:'Transfers',pt:'Traslados',it:'Trasferimenti',zh:'接送'},
+    special: {es:'Especiales',en:'Special',fr:'Spéciaux',de:'Spezial',pt:'Especiais',it:'Speciali',zh:'特别'},
+    title:   {es:'Tours & Excursiones',en:'Tours & Excursions',fr:'Tours & Excursions',de:'Touren & Ausflüge',pt:'Tours & Excursões',it:'Tour ed Escursioni',zh:'旅游与游览'},
+    subtitle:{es:'Descubre el altiplano con nuestros tours propios',en:'Discover the altiplano with our own tours',fr:'Découvrez l\'altiplano avec nos excursions',de:'Das Altiplano mit unseren Touren entdecken',pt:'Descubra o altiplano com os nossos tours',it:'Scopri l\'altiplano con i nostri tour',zh:'与我们的专属旅游探索高原'},
+    vip:     {es:'🚐 Traslados VIP',en:'🚐 VIP Transfers',fr:'🚐 Transferts VIP',de:'🚐 VIP-Transfers',pt:'🚐 Traslados VIP',it:'🚐 Trasferimenti VIP',zh:'🚐 VIP接送'},
+    coord:   {es:'📱 Coordinar traslado',en:'📱 Book transfer',fr:'📱 Réserver transfert',de:'📱 Transfer buchen',pt:'📱 Reservar traslado',it:'📱 Prenota trasferimento',zh:'📱 预订接送'},
+    other:   {es:'🌎 Otros destinos',en:'🌎 Other destinations',fr:'🌎 Autres destinations',de:'🌎 Andere Reiseziele',pt:'🌎 Outros destinos',it:'🌎 Altre destinazioni',zh:'🌎 其他目的地'},
+    otherTxt:{es:'Consulta por otros destinos dentro y fuera de Chile.',en:'Ask about other destinations within and outside Chile.',fr:'Renseignez-vous sur d\'autres destinations au Chili et à l\'étranger.',de:'Fragen Sie nach weiteren Reisezielen in und außerhalb Chiles.',pt:'Consulte outros destinos dentro e fora do Chile.',it:'Richiedi informazioni su altre destinazioni in e fuori dal Cile.',zh:'询问智利境内外的其他目的地。'},
+    ask:     {es:'📱 Consultar',en:'📱 Ask us',fr:'📱 Nous contacter',de:'📱 Anfragen',pt:'📱 Consultar',it:'📱 Chiedici',zh:'📱 咨询'}
+  };
+  function tl(obj){ return obj[l] || obj.en; }
+  document.getElementById('ttab-exc').textContent     = tl(TLBL.exc);
+  document.getElementById('ttab-trans').textContent   = tl(TLBL.trans);
+  document.getElementById('ttab-special').textContent = tl(TLBL.special);
+  document.getElementById('tours-title').textContent  = tl(TLBL.title);
+  document.getElementById('tours-subtitle').textContent = tl(TLBL.subtitle);
+  // Rebuild traslados panel with correct language
+  var transEl2 = document.getElementById('tpanel-trans');
+  var th = '<div class="transfers-info"><div class="transfers-title">'+tl(TLBL.vip)+'</div>';
+  TOURS_DATA.traslados.forEach(function(t){ th += buildTransferItem(t); });
+  var waCoord = 'https://wa.me/56953811481?text='+encodeURIComponent(tl({es:'Hola! Necesito un traslado. Info?',en:'Hi! I need a transfer. Info?',fr:'Bonjour! J\'ai besoin d\'un transfert.',de:'Hallo! Ich benötige einen Transfer.',pt:'Olá! Preciso de traslado.',it:'Ciao! Ho bisogno di un trasferimento.',zh:'你好！我需要接送服务。'}));
+  th += '<div class="tour-cta" style="margin-top:16px"><a class="tour-whatsapp-btn" href="'+waCoord+'" target="_blank" rel="noopener">'+tl(TLBL.coord)+'</a></div></div>';
+  transEl2.innerHTML = th;
 }
 
 renderSuggs();
@@ -4359,12 +4419,13 @@ function collectHitTest(lx, ly, lw, lh){
           showScreenMsg('🌿 ¡Slow-Mo!');
           pcolor='rgba(60,180,80,';
           break;
-        case 'vicuna':
+        case 'vicuna': {
           const pts=50*Math.max(1,combo);
           score+=pts;
           showScreenMsg('🦙 +'+pts+' pts!');
           pcolor='rgba(200,160,0,';
           break;
+        }
         case 'life':
           if(lives < MAX_LIVES){ lives++; updateLivesHUD(); }
           showScreenMsg('❤️ +1 Vida!');
@@ -5110,7 +5171,7 @@ function startGame(){
 
 function startFinal(){
   isFinalLevel = true;
-  diff = {...DIFFICULTIES[5]}; // final config
+  diff = Object.assign({}, DIFFICULTIES[5]); // final config (ES5 safe)
   completed[4]=true;
   initGame();
   document.getElementById('sc-start').classList.add('gone');
@@ -5921,8 +5982,8 @@ function memConfetti(){
   const canvas=document.getElementById('mem-confetti');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
-  const W=canvas.width=canvas.parentElement?.clientWidth||400;
-  const H=canvas.height=canvas.parentElement?.clientHeight||600;
+  const W=canvas.width=(canvas.parentElement && canvas.parentElement.clientWidth)||400;
+  const H=canvas.height=(canvas.parentElement && canvas.parentElement.clientHeight)||600;
   const colors=['#cc2200','#0066cc','#ffcc00','#c8a97a','#4ea065','#e8d4b0','#ff6b35'];
   const pieces=[];
   for(let i=0;i<120;i++) pieces.push({x:Math.random()*W,y:Math.random()*H*-1,w:Math.random()*8+4,h:Math.random()*6+3,c:colors[Math.floor(Math.random()*colors.length)],vx:(Math.random()-.5)*3,vy:Math.random()*3+2,r:Math.random()*360,rv:(Math.random()-.5)*8});
