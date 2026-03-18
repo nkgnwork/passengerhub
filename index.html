@@ -746,7 +746,11 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 .bbl ul { padding-left: 1.2em; margin: 6px 0; }
 .bbl li { margin-bottom: 4px; }
 .bbl p { margin-bottom: 6px; } .bbl p:last-child { margin-bottom: 0; }
-.bbl h3 { font-family: var(--ff-display); font-weight: 600; margin: 8px 0 4px; }
+.bbl h3 { font-family: var(--ff-display); font-weight: 600; margin: 10px 0 4px; }
+.bbl h3.md-h1 { font-size: 1.1rem; color: var(--earth); }
+.bbl h3.md-h2 { font-size: .98rem; color: var(--earth); }
+.bbl h3.md-h3 { font-size: .88rem; color: var(--wood); }
+.bbl .md-hr   { border: none; border-top: 1px solid var(--stone); margin: 10px 0; }
 
 /* Typing indicator */
 .typ { display: none; align-items: center; gap: 9px; padding: 0 16px 8px; }
@@ -949,30 +953,183 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 /* ══════════════════════════════════════════════════
    GAMES SCREEN
 ══════════════════════════════════════════════════ */
-#s-games { background: var(--cream); }
+#s-games { background: #0d0a06; }
+
+#s-games .app-header {
+  background: rgba(0,0,0,.6);
+  border-bottom: 1px solid rgba(196,149,106,.15);
+}
 
 .games-list {
   flex: 1; overflow-y: auto;
-  padding: 18px 16px 24px;
-  display: flex; flex-direction: column; gap: 12px;
+  padding: 20px 16px 32px;
+  display: flex; flex-direction: column; gap: 16px;
   -webkit-overflow-scrolling: touch;
 }
 .games-list::-webkit-scrollbar { display: none; }
 
+/* Encabezado de sección */
+.games-section-title {
+  font-size: .6rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(196,149,106,.5);
+  padding: 0 4px; margin-bottom: -4px;
+}
+
+/* Card base */
 .game-card {
-  background: var(--white); border: 1px solid var(--stone);
-  border-radius: var(--r-lg); padding: 18px 18px;
-  display: flex; align-items: center; gap: 16px;
-  cursor: pointer; transition: all .22s;
-  box-shadow: 0 2px 8px rgba(28,8,0,.04);
+  border-radius: 18px; overflow: hidden;
+  cursor: pointer; transition: transform .22s, box-shadow .22s;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(0,0,0,.5);
 }
-.game-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 8px 28px rgba(107,58,24,.1);
-  transform: translateY(-2px);
+.game-card:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 12px 40px rgba(0,0,0,.6); }
+.game-card.soon { opacity: .5; cursor: default; }
+.game-card.soon:hover { transform: none; box-shadow: 0 4px 24px rgba(0,0,0,.5); }
+
+/* Inner layout */
+.gc-inner {
+  padding: 22px 20px;
+  display: flex; align-items: center; gap: 18px;
+  position: relative; z-index: 2;
 }
-.game-card.soon { opacity: .55; cursor: default; }
-.game-card.soon:hover { transform: none; border-color: var(--stone); box-shadow: 0 2px 8px rgba(28,8,0,.04); }
+
+/* Illustrated preview area (top of card) */
+.gc-preview {
+  width: 100%; height: 110px;
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
+}
+.gc-preview-scene {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+
+/* RUNNER card */
+.game-card.runner-card {
+  background: linear-gradient(180deg, #0a1a0a 0%, #1a3010 50%, #2d4a18 100%);
+}
+.runner-preview-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0d1f3a 0%, #1a3a5c 35%, #2d5a1a 60%, #3d6e20 75%, #2a4a14 100%);
+}
+.runner-preview-stars {
+  position: absolute; top: 0; left: 0; right: 0; height: 45%;
+}
+.runner-preview-mountain {
+  position: absolute; bottom: 28%; width: 100%;
+  height: 40%; background: linear-gradient(180deg, transparent, #4a6e28 40%, #2d4a14);
+  clip-path: polygon(0 100%, 15% 20%, 30% 60%, 45% 10%, 60% 50%, 75% 15%, 90% 40%, 100% 0, 100% 100%);
+}
+.runner-preview-ground {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 28%;
+  background: linear-gradient(180deg, #5a7a30, #3a5018);
+}
+.runner-preview-llama {
+  position: absolute; bottom: 27%; left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2rem;
+  animation: llamaRun .5s steps(2) infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.6));
+}
+@keyframes llamaRun {
+  0% { transform: translateX(-50%) scaleY(1); }
+  50% { transform: translateX(-50%) scaleY(0.92) translateY(2px); }
+  100% { transform: translateX(-50%) scaleY(1); }
+}
+.runner-preview-cactus {
+  position: absolute; bottom: 27%;
+  font-size: 1.4rem;
+  animation: cactusMove 1.8s linear infinite;
+}
+@keyframes cactusMove {
+  from { right: -10%; }
+  to   { right: 110%; }
+}
+.runner-preview-cactus:nth-child(2) { animation-delay: -.9s; font-size: 1rem; }
+
+/* MEMORY card */
+.game-card.memory-card {
+  background: linear-gradient(180deg, #0a080f 0%, #1a1230 50%, #2a1a48 100%);
+}
+.memory-preview-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 80%, #2a1a48 0%, #0d0820 100%);
+}
+.memory-preview-cards {
+  position: absolute; bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 6px;
+}
+.mpc {
+  width: 34px; height: 46px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.5);
+  animation: mpcFloat .8s ease-in-out infinite;
+  backface-visibility: hidden;
+}
+.mpc:nth-child(1) {
+  background: linear-gradient(145deg, #5C2E0A, #8B4A1A);
+  animation-delay: 0s;
+}
+.mpc:nth-child(2) {
+  background: linear-gradient(145deg, #3a2a6a, #5a4a9a);
+  animation-delay: .25s;
+}
+.mpc:nth-child(3) {
+  background: linear-gradient(145deg, #5C2E0A, #8B4A1A);
+  animation-delay: .5s;
+}
+@keyframes mpcFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+.memory-paws {
+  position: absolute; top: 10px; left: 0; right: 0;
+  display: flex; justify-content: space-around;
+  font-size: .9rem; opacity: .35;
+}
+
+/* SOON card */
+.game-card.soon-card {
+  background: linear-gradient(180deg, #120e08, #1e1608);
+}
+
+.gc-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.gc-icon.runner { background: linear-gradient(135deg, #1a3010, #2d4a18); }
+.gc-icon.memory { background: linear-gradient(135deg, #2a1a48, #3a2a6a); }
+.gc-icon.soon-icon { background: rgba(255,255,255,.04); }
+
+.gc-body { flex: 1; }
+.gc-name {
+  font-family: var(--ff-display); font-size: 1.15rem;
+  font-weight: 600; color: #FFF8F0; margin-bottom: 4px; letter-spacing: .01em;
+}
+.gc-desc { font-size: .73rem; font-weight: 300; color: rgba(255,248,240,.6); line-height: 1.4; }
+.gc-badge {
+  display: inline-block; font-size: .58rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--earth);
+  background: var(--gold); border-radius: 20px;
+  padding: 3px 10px; margin-top: 8px;
+}
+.gc-badge.soon-badge { background: rgba(255,255,255,.08); color: rgba(255,248,240,.4); }
+
+.gc-arrow { color: var(--gold); font-size: 1.3rem; flex-shrink: 0; transition: transform .2s, opacity .2s; opacity: .6; }
+.game-card:hover .gc-arrow { transform: translateX(4px); opacity: 1; }
+
+/* Gradient overlay on cards */
+.gc-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.3) 0%, transparent 100%);
+  pointer-events: none; z-index: 1;
+}
+.gc-inner > * { position: relative; z-index: 2; }
 
 /* ── FAUNA SCREEN ── */
 #s-fauna { background: var(--parchment); display:flex; flex-direction:column; }
@@ -1090,7 +1247,9 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 /* ══════════════════════════════════════════════════
    MEMORY GAME
 ══════════════════════════════════════════════════ */
-#s-memory { background: #0f0800; }
+#s-memory {
+  background: radial-gradient(ellipse at 50% 0%, #1e1040 0%, #0a0615 60%, #050308 100%);
+}
 
 .mem-header {
   background: rgba(0,0,0,.5); backdrop-filter: blur(8px);
@@ -1112,51 +1271,90 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   font-weight: 500; color: #FFF8F0; letter-spacing: .03em; flex: 1;
 }
 
-.mem-hud { display: flex; gap: 18px; }
-.mem-hud-item { display: flex; flex-direction: column; align-items: center; gap: 1px; }
-.mem-hud-lbl { font-size: .55rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); opacity: .7; }
-.mem-hud-val { font-size: 1.1rem; font-weight: 600; color: #FFF8F0; line-height: 1; font-family: var(--ff-body); }
+.mem-hud { display: flex; gap: 14px; }
+.mem-hud-item {
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  background: rgba(255,255,255,.06); border-radius: 8px;
+  padding: 5px 10px; border: 1px solid rgba(196,149,106,.15);
+}
+.mem-hud-lbl { font-size: .5rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); opacity: .7; }
+.mem-hud-val { font-size: 1.1rem; font-weight: 700; color: #FFF8F0; line-height: 1; font-family: 'DM Sans', monospace; }
 
 .mem-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; position: relative; }
 
-/* Start screen */
+/* ── Start screen ── */
 .mem-start {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 28px 24px; gap: 22px;
+  padding: 24px 24px; gap: 20px;
+  position: relative; overflow: hidden;
 }
-.mem-start-icon { font-size: 3rem; }
+/* Floating paws background */
+.mem-start::before {
+  content: '🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾';
+  position: absolute; inset: -20px;
+  font-size: 1.5rem; line-height: 3;
+  word-spacing: 2rem; letter-spacing: 1rem;
+  opacity: .04; transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.mem-start-icon {
+  font-size: 3.5rem;
+  animation: iconPulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(196,149,106,.4));
+}
+@keyframes iconPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+
 .mem-start-title {
-  font-family: var(--ff-display); font-size: 1.8rem;
-  font-weight: 500; color: #FFF8F0; text-align: center;
+  font-family: var(--ff-display); font-size: 2rem;
+  font-weight: 600; color: #FFF8F0; text-align: center;
+  text-shadow: 0 0 40px rgba(196,149,106,.3);
 }
 .mem-start-sub {
-  font-size: .78rem; font-weight: 300; color: var(--gold);
-  text-align: center; line-height: 1.65; max-width: 280px;
-  opacity: .85;
+  font-size: .78rem; font-weight: 300; color: rgba(221,184,136,.8);
+  text-align: center; line-height: 1.7; max-width: 280px;
 }
 
-.mem-diffs { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 300px; }
+/* Difficulty buttons - redesigned */
+.mem-diffs { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 320px; }
 .mem-diff-btn {
-  padding: 15px 18px;
-  background: rgba(255,255,255,.05);
+  padding: 0;
+  background: transparent;
   border: 1px solid rgba(196,149,106,.2);
-  border-radius: var(--r-md); cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: all .2s;
+  border-radius: 14px; cursor: pointer;
+  overflow: hidden;
+  transition: all .25s;
+  display: flex; align-items: stretch;
 }
 .mem-diff-btn:hover {
-  background: rgba(196,149,106,.12);
-  border-color: rgba(196,149,106,.5);
+  border-color: rgba(196,149,106,.6);
+  transform: translateX(4px);
 }
-.mdb-left { text-align: left; }
-.mdb-name { font-family: var(--ff-body); font-size: .88rem; font-weight: 600; color: #FFF8F0; }
-.mdb-info { font-size: .68rem; font-weight: 300; color: var(--gold); margin-top: 2px; opacity: .8; }
-.mdb-arrow { color: var(--gold); font-size: 1rem; opacity: .7; }
+.mem-diff-btn:nth-child(1) { border-left: 3px solid #4a9e5c; }
+.mem-diff-btn:nth-child(2) { border-left: 3px solid var(--gold); }
+.mem-diff-btn:nth-child(3) { border-left: 3px solid #c45a3a; }
 
-/* Board */
+.mem-diff-color {
+  width: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.mem-diff-btn:nth-child(1) .mem-diff-color { background: rgba(74,158,92,.12); }
+.mem-diff-btn:nth-child(2) .mem-diff-color { background: rgba(196,149,106,.1); }
+.mem-diff-btn:nth-child(3) .mem-diff-color { background: rgba(196,90,58,.12); }
+
+.mdb-left { flex: 1; padding: 14px 14px; text-align: left; }
+.mdb-name { font-family: var(--ff-body); font-size: .9rem; font-weight: 600; color: #FFF8F0; }
+.mdb-info { font-size: .68rem; font-weight: 300; color: rgba(196,149,106,.7); margin-top: 3px; }
+.mdb-arrow { color: var(--gold); font-size: 1.1rem; opacity: .5; padding: 0 14px; display: flex; align-items: center; }
+
+/* ── Board ── */
 .mem-board-wrap {
-  flex: 1; overflow-y: auto; padding: 12px;
+  flex: 1; overflow-y: auto; padding: 12px 10px;
   display: flex; align-items: flex-start; justify-content: center;
   -webkit-overflow-scrolling: touch;
 }
@@ -1164,11 +1362,11 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 .mem-board.cols3 { grid-template-columns: repeat(3, 1fr); }
 .mem-board.cols4 { grid-template-columns: repeat(4, 1fr); }
 
-/* Card */
+/* ── Card ── */
 .mem-card {
   aspect-ratio: 3/4; border-radius: 12px;
   cursor: pointer; position: relative;
-  transform-style: preserve-3d; transition: transform .4s;
+  transform-style: preserve-3d; transition: transform .45s cubic-bezier(.4,0,.2,1);
   user-select: none;
 }
 .mem-card.flipped { transform: rotateY(180deg); }
@@ -1179,52 +1377,129 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   backface-visibility: hidden; display: flex;
   align-items: center; justify-content: center; overflow: hidden;
 }
+
+/* Card back — beautiful Andean pattern */
 .card-back {
-  background: linear-gradient(145deg, var(--earth), #2a1205);
-  border: 1px solid rgba(196,149,106,.2);
+  background: linear-gradient(145deg, #3B1A08, #1a0a03);
+  border: 1px solid rgba(196,149,106,.25);
 }
+/* Outer border frame */
 .card-back::before {
-  content: ''; position: absolute; inset: 8px;
-  border: 1px solid rgba(196,149,106,.15); border-radius: 8px;
+  content: '';
+  position: absolute; inset: 6px;
+  border: 1px solid rgba(196,149,106,.2);
+  border-radius: 7px;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(196,149,106,.04) 4px,
+    rgba(196,149,106,.04) 8px
+  );
 }
-.card-back::after { content: '🦙'; font-size: 1.6rem; opacity: .25; }
+/* Center paw icon */
+.card-back::after {
+  content: '🐾';
+  font-size: 1.5rem;
+  opacity: .2;
+  filter: sepia(1);
+}
 
 .card-face {
-  background: var(--white); border: 1px solid var(--stone);
+  background: var(--white); border: 1.5px solid var(--stone);
   transform: rotateY(180deg); flex-direction: column;
   gap: 4px; padding: 6px;
 }
 .card-face svg { width: 70%; height: 70%; }
 .card-face .dog-label {
-  font-size: .55rem; font-weight: 600; letter-spacing: .07em;
+  font-size: .55rem; font-weight: 700; letter-spacing: .07em;
   text-transform: uppercase; color: var(--wood); text-align: center;
 }
+
+/* Matched cards glow green */
 .mem-card.matched .card-face {
-  background: #f0f9f2; border-color: rgba(78,160,101,.3);
+  background: linear-gradient(180deg, #e8f8ee, #f0fdf4);
+  border-color: rgba(78,160,101,.5);
+  box-shadow: 0 0 16px rgba(78,160,101,.25);
 }
 
-/* Win */
+/* ── Streak flash ── */
+.mem-streak-flash {
+  position: absolute; inset: 0; z-index: 60;
+  pointer-events: none; border-radius: 12px;
+  animation: streakFlash .5s ease-out forwards;
+  opacity: 0;
+}
+@keyframes streakFlash {
+  0%  { opacity: .6; background: radial-gradient(circle, rgba(78,200,120,.4), transparent 70%); }
+  100%{ opacity: 0; }
+}
+
+/* ── Streak combo popup ── */
+#mem-streak-popup {
+  position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+  z-index: 70; pointer-events: none;
+  font-family: var(--ff-display); font-size: 1.4rem; font-weight: 700;
+  color: #ffe066; text-shadow: 0 0 20px rgba(255,220,80,.6);
+  white-space: nowrap;
+  animation: streakPop .9s ease-out forwards;
+  opacity: 0; display: none;
+}
+@keyframes streakPop {
+  0%   { opacity: 1; transform: translateX(-50%) scale(1.3) translateY(0); }
+  60%  { opacity: 1; transform: translateX(-50%) scale(1) translateY(-10px); }
+  100% { opacity: 0; transform: translateX(-50%) scale(.9) translateY(-20px); }
+}
+
+/* ── Win screen ── */
 .mem-win {
   display: none; position: absolute; inset: 0; z-index: 50;
-  background: rgba(15,8,0,.92); backdrop-filter: blur(8px);
+  background: radial-gradient(ellipse at 50% 40%, rgba(196,149,106,.15) 0%, rgba(15,8,0,.96) 70%);
+  backdrop-filter: blur(8px);
   align-items: center; justify-content: center;
-  flex-direction: column; gap: 16px; padding: 28px;
+  flex-direction: column; gap: 14px; padding: 28px;
 }
 .mem-win.show { display: flex; }
-.mem-win-icon { font-size: 3.5rem; }
+
+.mem-win-icon {
+  font-size: 4rem;
+  animation: winIconBounce .5s cubic-bezier(.3,1.5,.5,1) both;
+  filter: drop-shadow(0 0 30px rgba(255,200,50,.5));
+}
+@keyframes winIconBounce {
+  0%  { transform: scale(0) rotate(-20deg); opacity: 0; }
+  100%{ transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
 .mem-win-title {
-  font-family: var(--ff-display); font-size: 2rem; font-weight: 500;
+  font-family: var(--ff-display); font-size: 2.1rem; font-weight: 600;
   color: #FFF8F0; text-align: center;
+  text-shadow: 0 0 40px rgba(255,200,50,.3);
 }
 .mem-win-sub { font-size: .82rem; font-weight: 300; color: var(--gold); text-align: center; }
-.mem-win-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 260px; margin-top: 8px; }
-.mem-win-btn {
-  padding: 14px; border: none; border-radius: var(--r-md);
-  cursor: pointer; font-family: var(--ff-body); font-size: .8rem;
-  font-weight: 600; letter-spacing: .07em; text-transform: uppercase; transition: all .2s;
+
+.mem-stars { display: flex; gap: 8px; margin-top: 4px; }
+.mem-star {
+  font-size: 1.8rem; opacity: .2; transition: all .4s cubic-bezier(.3,1.5,.5,1);
+  filter: grayscale(1);
 }
-.mem-win-btn.primary { background: var(--gold); color: var(--earth); }
-.mem-win-btn.primary:hover { background: var(--sand); }
+.mem-star.lit {
+  opacity: 1; transform: scale(1.2);
+  filter: grayscale(0) drop-shadow(0 0 10px rgba(255,200,50,.8));
+}
+
+.mem-win-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 260px; margin-top: 10px; }
+.mem-win-btn {
+  padding: 15px; border: none; border-radius: var(--r-md);
+  cursor: pointer; font-family: var(--ff-body); font-size: .82rem;
+  font-weight: 700; letter-spacing: .07em; text-transform: uppercase; transition: all .2s;
+}
+.mem-win-btn.primary {
+  background: linear-gradient(135deg, var(--gold), var(--sand));
+  color: var(--earth);
+  box-shadow: 0 4px 20px rgba(196,149,106,.4);
+}
+.mem-win-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,149,106,.5); }
 .mem-win-btn.secondary {
   background: rgba(255,255,255,.08); color: #FFF8F0;
   border: 1px solid rgba(196,149,106,.3);
@@ -1413,7 +1688,7 @@ input, textarea {
 /* ── GAME SCREENS ── */
 #game-container .screen {
   position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#3B1A06 0%,#5C2E0A 55%,#7A3D12 100%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(92,46,10,.3) 0%, #080402 100%);
   transition:opacity .35s;z-index:10;
 }
 #game-container .screen.gone { opacity:0;pointer-events:none; }
@@ -1421,108 +1696,170 @@ input, textarea {
 
 /* ── START CARD ── */
 #game-container .card {
-  background:rgba(250,245,238,.97);border-radius:12px;padding:36px 40px 30px;
-  max-width:460px;width:92%;text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.45);border:1px solid #DFC09A;
-  max-height:92vh;overflow-y:auto;
+  background: linear-gradient(160deg, #1a0d04 0%, #2d1608 60%, #3d2010 100%);
+  border-radius: 20px; padding: 32px 28px 28px;
+  max-width: 460px; width: 92%; text-align: center;
+  box-shadow: 0 24px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(196,149,106,.2);
+  max-height: 92vh; overflow-y: auto;
+  border: 1px solid rgba(196,149,106,.15);
 }
-#game-container .logo-img  { width:200px;height:auto;display:block;margin:0 auto 6px; }
-#game-container .g-sub     { font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#C49A6C;margin-bottom:20px; }
-#game-container .hint      { font-size:.68rem;color:#8B4A1A;line-height:1.7;margin-bottom:18px;background:#F2EBE0;border-radius:6px;padding:10px 14px; }
-#game-container .hint strong { color:#5C2E0A;font-weight:600; }
-#game-container .unlock-msg { font-size:.7rem;color:#3d8b52;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;min-height:18px; }
+#game-container .logo-img  { width:190px;height:auto;display:block;margin:0 auto 4px;filter:brightness(0) invert(1);opacity:.9; }
+#game-container .game-cover-art { width:100%;max-width:340px;margin:0 auto 14px;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 0 1px rgba(196,149,106,.2); }
+#game-container .g-sub     { font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,149,106,.6);margin-bottom:22px; }
+#game-container .hint {
+  font-size:.7rem;color:rgba(255,248,240,.7);line-height:1.75;margin-bottom:18px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(196,149,106,.15);
+  border-radius:10px;padding:12px 16px;text-align:left;
+}
+#game-container .hint strong { color:#DFC09A;font-weight:600; }
+#game-container .unlock-msg {
+  font-size:.7rem;color:#4caf50;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:14px;min-height:20px;
+  text-shadow: 0 0 12px rgba(76,175,80,.5);
+}
 
 /* ── DIFFICULTY GRID ── */
-#game-container .dgrid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px; }
-#game-container .db    { padding:14px 6px;border-radius:8px;border:2px solid #DFC09A;background:#FAF5EE;cursor:pointer;transition:all .2s;font-family:'Jost',sans-serif;position:relative; }
-#game-container .db:hover:not(.locked) { border-color:#C49A6C;background:#f0e8dc;transform:translateY(-2px); }
-#game-container .db.locked { opacity:.38;cursor:not-allowed; }
-#game-container .db.sel    { border-color:#5C2E0A;background:#5C2E0A;color:#fff8f0; }
-#game-container .db.sel .dn, #game-container .db.sel .dd { color:#fff8f0; }
-#game-container .db.done::after { content:'✓';position:absolute;top:5px;right:8px;font-size:.7rem;color:#4a9e5c;font-weight:700; }
+#game-container .dgrid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px; }
+#game-container .dgrid5 { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px; }
+@media(min-width:380px){#game-container .dgrid5{grid-template-columns:repeat(5,1fr);}}
+#hud-lives { display:flex;gap:2px;align-items:center;font-size:.9rem; }
+#hud-score { font-size:.6rem;color:#FFD700;font-weight:700;min-width:44px;text-align:right;letter-spacing:.02em; }
+#game-container .db {
+  padding: 16px 6px; border-radius: 12px;
+  border: 1px solid rgba(196,149,106,.2);
+  background: rgba(255,255,255,.04);
+  cursor: pointer; transition: all .2s;
+  font-family: 'Jost', sans-serif; position: relative;
+}
+#game-container .db:hover:not(.locked) {
+  border-color: rgba(196,149,106,.5);
+  background: rgba(196,149,106,.1);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+#game-container .db.locked { opacity:.28;cursor:not-allowed; }
+#game-container .db.sel    {
+  border-color: var(--gold);
+  background: rgba(196,149,106,.18);
+  box-shadow: 0 0 0 2px rgba(196,149,106,.3), 0 8px 24px rgba(0,0,0,.4);
+}
+#game-container .db.done::after {
+  content:'✓'; position:absolute; top:6px; right:8px;
+  font-size:.7rem; color:#4caf50; font-weight:800;
+}
 #game-container .db.sel.done::after { color:#a0ffb8; }
-#game-container .di { font-size:1.5rem;margin-bottom:4px; }
-#game-container .dn { font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#5C2E0A;margin-bottom:2px; }
-#game-container .dd { font-size:.62rem;color:#C49A6C;font-weight:300;line-height:1.4; }
+#game-container .di { font-size:1.6rem;margin-bottom:5px; }
+#game-container .dn { font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#DFC09A;margin-bottom:3px; }
+#game-container .dd { font-size:.6rem;color:rgba(196,149,106,.55);font-weight:300;line-height:1.4; }
 
 /* ── BUTTONS ── */
 #game-container .go-btn {
-  width:100%;padding:14px;background:#5C2E0A;color:#fff8f0;border:none;
-  border-radius:8px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.82rem;
-  font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  transition:all .2s;box-shadow:0 4px 16px rgba(92,46,10,.3);margin-bottom:10px;
+  width:100%;padding:16px;
+  background: linear-gradient(135deg, #C49A6C, #8B4A1A);
+  color:#fff8f0;border:none;border-radius:12px;cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:.85rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  transition:all .2s;box-shadow:0 6px 24px rgba(196,149,106,.35);margin-bottom:12px;
 }
-#game-container .go-btn:hover { background:#8B4A1A;transform:translateY(-1px); }
+#game-container .go-btn:hover {
+  background: linear-gradient(135deg, #DFC09A, #C49A6C);
+  transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(196,149,106,.45);
+}
 #game-container .back-lnk {
-  font-size:.7rem;color:#C49A6C;cursor:pointer;letter-spacing:.08em;
-  text-decoration:underline;text-underline-offset:3px;display:inline-block;margin-top:4px;
+  font-size:.68rem;color:rgba(196,149,106,.5);cursor:pointer;letter-spacing:.08em;
+  transition:color .2s;display:inline-block;margin-top:4px;
 }
-#game-container .back-lnk:hover { color:#5C2E0A; }
+#game-container .back-lnk:hover { color:#C49A6C; }
 
 /* ── HUD ── */
 #gw { position:fixed;inset:0;display:none;flex-direction:column;align-items:center;background:#000;overflow:hidden;max-height:100vh;max-height:100dvh; }
 #gw.on { display:flex; }
-#hud { width:100%;max-width:800px;padding:7px 14px;display:flex;align-items:center;gap:12px;background:rgba(30,12,2,.85);flex-shrink:0; }
-#pb-wrap { flex:1;height:9px;background:rgba(255,255,255,.12);border-radius:5px;overflow:hidden; }
-#pb { height:100%;width:0%;background:linear-gradient(90deg,#C49A6C,#C4622D);border-radius:5px;transition:width .08s linear; }
-#hud-m  { font-size:.72rem;color:#DFC09A;font-weight:600;letter-spacing:.05em;white-space:nowrap;min-width:80px;text-align:right; }
-#hud-d  { font-size:.6rem;color:#C49A6C;letter-spacing:.1em;text-transform:uppercase;min-width:60px; }
-/* Exit button in HUD */
+#hud {
+  width:100%;max-width:800px;padding:8px 16px;
+  display:flex;align-items:center;gap:10px;
+  background: linear-gradient(180deg, rgba(10,4,0,.95) 0%, rgba(10,4,0,.8) 100%);
+  border-bottom: 1px solid rgba(196,149,106,.1);
+  flex-shrink:0;
+}
+#pb-wrap {
+  flex:1;height:10px;
+  background:rgba(255,255,255,.08);
+  border-radius:6px;overflow:hidden;
+  border: 1px solid rgba(196,149,106,.1);
+}
+#pb {
+  height:100%;width:0%;
+  background:linear-gradient(90deg, #4a9e5c, #C49A6C, #c4622d);
+  border-radius:6px;transition:width .08s linear;
+  box-shadow: 0 0 8px rgba(196,149,106,.4);
+}
+#hud-m  { font-size:.72rem;color:#DFC09A;font-weight:700;letter-spacing:.04em;white-space:nowrap;min-width:82px;text-align:right; }
+#hud-d  { font-size:.58rem;color:rgba(196,149,106,.6);letter-spacing:.1em;text-transform:uppercase;min-width:55px; }
 #hud-exit {
-  font-size:.6rem;color:rgba(196,154,108,.6);letter-spacing:.08em;text-transform:uppercase;
-  cursor:pointer;border:1px solid rgba(196,154,108,.25);padding:3px 8px;border-radius:3px;
+  font-size:.58rem;color:rgba(196,154,108,.45);letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;border:1px solid rgba(196,154,108,.2);padding:4px 9px;border-radius:4px;
   font-family:'Jost',sans-serif;transition:all .2s;flex-shrink:0;white-space:nowrap;
   background:transparent;
 }
-#hud-exit:hover { color:#DFC09A;border-color:rgba(196,154,108,.6); }
+#hud-exit:hover { color:#DFC09A;border-color:rgba(196,154,108,.5);background:rgba(196,154,108,.06); }
 #cv { display:block;width:100%;max-width:800px;flex:1;cursor:pointer;min-height:0;overflow:hidden; }
 
 /* ── OVERLAY ── */
-#ov { position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(30,12,2,.78);backdrop-filter:blur(4px);z-index:20; }
+#ov {
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  background: radial-gradient(ellipse at 50% 30%, rgba(196,149,106,.1) 0%, rgba(10,4,0,.88) 70%);
+  backdrop-filter:blur(6px);z-index:20;
+}
 #ov.on { display:flex; }
 #game-container .ov-card {
-  text-align:center;padding:34px 40px;background:rgba(250,245,238,.98);
-  border-radius:12px;max-width:380px;width:88%;box-shadow:0 20px 50px rgba(0,0,0,.4);
+  text-align:center;padding:36px 32px 30px;
+  background: linear-gradient(160deg, #1c0d04, #2d1608);
+  border-radius:20px;max-width:360px;width:88%;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+  border:1px solid rgba(196,149,106,.2);
 }
-#game-container .ov-icon  { font-size:2.8rem;margin-bottom:8px; }
+#game-container .ov-icon  { font-size:3.2rem;margin-bottom:10px;display:block; }
 #game-container .ov-title {
-  font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;
-  color:#5C2E0A;margin-bottom:5px;
+  font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;
+  color:#FFF8F0;margin-bottom:6px;
+  text-shadow: 0 0 30px rgba(196,149,106,.3);
 }
-#game-container .ov-sub   { font-size:.78rem;color:#C49A6C;margin-bottom:20px;line-height:1.65; }
-#game-container .stars    { font-size:1.5rem;letter-spacing:4px;margin-bottom:8px; }
+#game-container .ov-sub   { font-size:.78rem;color:rgba(196,149,106,.75);margin-bottom:22px;line-height:1.7;white-space:pre-line; }
+#game-container .stars    { font-size:1.6rem;letter-spacing:5px;margin-bottom:10px;display:block; }
 
-/* PRIMARY button — dark brown, clearly visible */
+/* PRIMARY button */
 #game-container .ov-btn {
-  width:100%;padding:13px;
-  background:#5C2E0A;
-  color:#FFF8F0;
-  border:none;border-radius:8px;cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:.82rem;font-weight:600;
+  width:100%;padding:14px;
+  background: linear-gradient(135deg, #C49A6C, #8B4A1A);
+  color:#FFF8F0;border:none;border-radius:10px;cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:.82rem;font-weight:700;
   letter-spacing:.1em;text-transform:uppercase;
   margin-bottom:10px;transition:all .2s;
-  box-shadow:0 3px 12px rgba(92,46,10,.35);
+  box-shadow:0 4px 18px rgba(196,149,106,.3);
 }
-#game-container .ov-btn:hover { background:#8B4A1A;transform:translateY(-1px); }
+#game-container .ov-btn:hover {
+  background: linear-gradient(135deg, #DFC09A, #C49A6C);
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(196,149,106,.4);
+}
 
-/* SECONDARY button — outlined, visible border */
+/* SECONDARY */
 #game-container .ov-btn.sec {
-  background:#F2EBE0;
-  color:#5C2E0A;
-  border:1.5px solid #C49A6C;
-  box-shadow:none;
+  background: rgba(255,255,255,.07);
+  color: rgba(255,248,240,.85);
+  border: 1px solid rgba(196,149,106,.25);
+  box-shadow: none;
 }
-#game-container .ov-btn.sec:hover { background:#E8DDD0;border-color:#8B4A1A; }
+#game-container .ov-btn.sec:hover { background:rgba(255,255,255,.12);border-color:rgba(196,149,106,.5); }
 
-/* EXIT button in overlay */
+/* EXIT */
 #game-container .ov-btn.exit-btn {
-  background:transparent;
-  color:#C49A6C;
-  border:1px solid rgba(196,154,108,.35);
-  font-size:.72rem;font-weight:400;
-  box-shadow:none;margin-bottom:0;
+  background:transparent;color:rgba(196,149,106,.45);
+  border:1px solid rgba(196,154,108,.2);
+  font-size:.7rem;font-weight:400;box-shadow:none;margin-bottom:0;
 }
-#game-container .ov-btn.exit-btn:hover { background:#F2EBE0;color:#5C2E0A;border-color:#C49A6C; }
+#game-container .ov-btn.exit-btn:hover { color:#C49A6C;border-color:rgba(196,154,108,.45); }
 
 /* ── CINEMATIC ── */
 #cin { position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:30;background:#000;overflow:hidden; }
@@ -1862,33 +2199,75 @@ input, textarea {
     <span class="ah-title" id="games-header">Juegos</span>
   </div>
   <div class="games-list">
-    <div class="game-card" onclick="openRunner()">
-      <div class="gc-icon runner">🦙</div>
-      <div class="gc-body">
-        <div class="gc-name" id="gn-runner">Llama Runner</div>
-        <div class="gc-desc" id="gd-runner">Corre 1000 m esquivando cactus candelabro del altiplano</div>
-        <div class="gc-badge">3 niveles · Cinemática final</div>
+
+    <!-- LLAMA RUNNER -->
+    <div class="game-card runner-card" onclick="openRunner()">
+      <div class="gc-preview">
+        <div class="runner-preview-bg"></div>
+        <!-- Stars -->
+        <svg class="runner-preview-stars" viewBox="0 0 300 80" preserveAspectRatio="none">
+          <circle cx="20" cy="10" r="1" fill="white" opacity=".7"/>
+          <circle cx="60" cy="25" r="1.5" fill="white" opacity=".5"/>
+          <circle cx="100" cy="8" r="1" fill="white" opacity=".8"/>
+          <circle cx="140" cy="20" r="1" fill="white" opacity=".4"/>
+          <circle cx="180" cy="12" r="1.5" fill="white" opacity=".6"/>
+          <circle cx="220" cy="30" r="1" fill="white" opacity=".7"/>
+          <circle cx="260" cy="15" r="1" fill="white" opacity=".5"/>
+          <circle cx="40" cy="35" r="1" fill="white" opacity=".3"/>
+          <circle cx="280" cy="5" r="1.5" fill="white" opacity=".6"/>
+        </svg>
+        <div class="runner-preview-mountain"></div>
+        <div class="runner-preview-ground"></div>
+        <div class="runner-preview-llama">🦙</div>
+        <div class="runner-preview-cactus" style="right:-5%">🌵</div>
+        <div class="runner-preview-cactus" style="right:45%;animation-delay:-.9s;font-size:1rem">🌵</div>
       </div>
-      <div class="gc-arrow">›</div>
-    </div>
-    <div class="game-card" onclick="openMemory()">
-      <div class="gc-icon memory">🐾</div>
-      <div class="gc-body">
-        <div class="gc-name" id="gn-memory">Memorice Perros</div>
-        <div class="gc-desc" id="gd-memory">¿Puedes reconocer a Lottie, Sultán y Rocky?</div>
-        <div class="gc-badge">3 dificultades · Los pastores del hotel</div>
+      <div class="gc-inner">
+        <div class="gc-icon runner">🦙</div>
+        <div class="gc-body">
+          <div class="gc-name" id="gn-runner">Llama Runner</div>
+          <div class="gc-desc" id="gd-runner">Corre 1000 m esquivando cactus candelabro del altiplano</div>
+          <div class="gc-badge">3 niveles · ⭐ Stars · 🛡️ Shields · Cinemática final</div>
+        </div>
+        <div class="gc-arrow">›</div>
       </div>
-      <div class="gc-arrow">›</div>
     </div>
-    <div class="game-card soon">
-      <div class="gc-icon soon-icon">🌋</div>
-      <div class="gc-body">
-        <div class="gc-name" id="gn-geo">Adivina el Destino</div>
-        <div class="gc-desc" id="gd-geo">¿Reconoces los paisajes del altiplano?</div>
-        <div class="gc-badge soon-badge" id="gb-soon">Próximamente</div>
+
+    <!-- MEMORY -->
+    <div class="game-card memory-card" onclick="openMemory()">
+      <div class="gc-preview">
+        <div class="memory-preview-bg"></div>
+        <div class="memory-paws">🐾 🐾 🐾 🐾 🐾 🐾</div>
+        <div class="memory-preview-cards">
+          <div class="mpc">🐕</div>
+          <div class="mpc" style="background:linear-gradient(145deg,#3a2a6a,#5a4a9a)">❓</div>
+          <div class="mpc">🐕</div>
+        </div>
       </div>
-      <div class="gc-arrow" style="opacity:.3">›</div>
+      <div class="gc-inner">
+        <div class="gc-icon memory">🐾</div>
+        <div class="gc-body">
+          <div class="gc-name" id="gn-memory">Memorice Perros</div>
+          <div class="gc-desc" id="gd-memory">¿Puedes reconocer a Lottie, Sultán y Rocky?</div>
+          <div class="gc-badge">3 dificultades · Los pastores del hotel</div>
+        </div>
+        <div class="gc-arrow">›</div>
+      </div>
     </div>
+
+    <!-- PRÓXIMAMENTE -->
+    <div class="game-card soon soon-card">
+      <div class="gc-inner">
+        <div class="gc-icon soon-icon">🌋</div>
+        <div class="gc-body">
+          <div class="gc-name" id="gn-geo">Adivina el Destino</div>
+          <div class="gc-desc" id="gd-geo">¿Reconoces los paisajes del altiplano?</div>
+          <div class="gc-badge soon-badge" id="gb-soon">Próximamente</div>
+        </div>
+        <div class="gc-arrow" style="opacity:.2">›</div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2031,45 +2410,253 @@ input, textarea {
 <!-- ══ START SCREEN ══ -->
 <div class="screen" id="sc-start">
   <div class="card">
-    <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAVGBDgDASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAgJBQcBBAYDAv/EAFEQAQABAwICBAkGCQsDAgYDAAABAgMEBQYHEQgSIZMTFhcxU1VWktEUQVFhseEiN3FzdIGRobIVGCMyMzU2QlJywTRDgyRiJVRjZIKiJkTw/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAIDBAUBBv/EACcRAQACAgEEAgMBAQEBAQAAAAABAgMRBBIUMVEhQRMyMyIjcUKB/9oADAMBAAIRAxEAPwCZYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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D7mn4Hi1oPqnD7mn4MsGoNyxPi1oPqnD7mn4Hi1oPqnD7mn4MsGoNyxPi1oPqnD7mn4Hi1oPqnD7mn4MsGoNyxPi1oPqnD7mn4OPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFnQfVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFnQfVOH3NPwPFrQfVOH3NPwZcNQbliPFnQPVOH3NPwPFnQPVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFnQfVOH3NPwPFnQPVOH3NPwZcNQbliPFnQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFnQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQbliPFrQfVOH3NPwPFrQfVOH3NPwZcNQblifFrQfVOH3NPwPFrQfVOH3NPwZYNQblifFrQfVOH3NPwPFrQfVOH3NPwZYNQbl1sDAw8CiaMPGtWKZnnMUURT9jsg9eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//Z" alt="Hotel Las Vicuñas" class="logo-img"/>
-    <div class="g-sub">🦙 Llama Runner · Putre · Altiplano</div>
+    <div class="game-cover-art">
+  <svg viewBox="0 0 340 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;border-radius:10px;overflow:hidden">
+    <defs>
+      <linearGradient id="gcSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0d1a3a"/>
+        <stop offset="35%" stop-color="#6a2858"/>
+        <stop offset="65%" stop-color="#d4603a"/>
+        <stop offset="100%" stop-color="#e89a50"/>
+      </linearGradient>
+      <linearGradient id="gcMtn1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5a3a2a"/>
+        <stop offset="100%" stop-color="#3a2010"/>
+      </linearGradient>
+      <linearGradient id="gcMtn2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#7a5035"/>
+        <stop offset="100%" stop-color="#4a2a15"/>
+      </linearGradient>
+      <linearGradient id="gcGround" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c4902a"/>
+        <stop offset="100%" stop-color="#8a5c18"/>
+      </linearGradient>
+      <radialGradient id="gcSun" cx="75%" cy="38%" r="22%">
+        <stop offset="0%" stop-color="#ffdd88" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#ffdd88" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="gcLlama" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ddb878"/>
+        <stop offset="100%" stop-color="#b8904a"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Sky -->
+    <rect width="340" height="210" fill="url(#gcSky)"/>
+    <!-- Sun glow -->
+    <rect width="340" height="210" fill="url(#gcSun)"/>
+
+    <!-- Stars -->
+    <circle cx="30" cy="18" r="1.2" fill="white" opacity="0.8"/>
+    <circle cx="65" cy="10" r="0.8" fill="white" opacity="0.6"/>
+    <circle cx="100" cy="22" r="1" fill="white" opacity="0.7"/>
+    <circle cx="140" cy="8" r="1.2" fill="white" opacity="0.5"/>
+    <circle cx="45" cy="32" r="0.7" fill="white" opacity="0.4"/>
+    <circle cx="20" cy="42" r="0.9" fill="white" opacity="0.5"/>
+
+    <!-- Far volcano left (Parinacota) -->
+    <path d="M0,145 L38,68 L44,60 L50,68 L90,145Z" fill="url(#gcMtn1)"/>
+    <path d="M38,68 L44,60 L50,68Z" fill="white" opacity="0.55"/>
+
+    <!-- Far volcano right (Pomerape) -->
+    <path d="M55,145 L95,75 L102,66 L109,75 L145,145Z" fill="url(#gcMtn1)" opacity="0.85"/>
+    <path d="M95,75 L102,66 L109,75Z" fill="white" opacity="0.45"/>
+
+    <!-- Mid mountains -->
+    <path d="M0,145 Q40,118 80,130 Q120,118 160,132 Q200,118 240,128 Q280,115 340,130 L340,145Z" fill="url(#gcMtn2)"/>
+
+    <!-- Ground -->
+    <rect x="0" y="145" width="340" height="65" fill="url(#gcGround)"/>
+
+    <!-- Ground texture - ichu grass tufts -->
+    <g stroke="#8a6820" stroke-width="1.2" opacity="0.6">
+      <path d="M15,145 Q13,138 10,133" fill="none"/>
+      <path d="M15,145 Q17,137 20,132" fill="none"/>
+      <path d="M60,145 Q58,137 55,131" fill="none"/>
+      <path d="M60,145 Q62,138 65,133" fill="none"/>
+      <path d="M115,145 Q113,136 110,130" fill="none"/>
+      <path d="M115,145 Q117,137 121,131" fill="none"/>
+      <path d="M200,145 Q198,136 195,130" fill="none"/>
+      <path d="M200,145 Q203,137 207,131" fill="none"/>
+      <path d="M260,145 Q258,136 255,130" fill="none"/>
+      <path d="M260,145 Q263,137 267,131" fill="none"/>
+      <path d="M310,145 Q308,136 305,130" fill="none"/>
+      <path d="M310,145 Q313,137 317,131" fill="none"/>
+    </g>
+
+    <!-- Stones on ground -->
+    <ellipse cx="40" cy="148" rx="8" ry="3.5" fill="#7a5820" opacity="0.5"/>
+    <ellipse cx="140" cy="150" rx="6" ry="2.5" fill="#7a5820" opacity="0.4"/>
+    <ellipse cx="290" cy="148" rx="9" ry="3" fill="#7a5820" opacity="0.5"/>
+
+    <!-- Cactus candelabro (right) -->
+    <g transform="translate(270,95)">
+      <rect x="-6" y="0" width="12" height="50" rx="5" fill="#4a7a2a"/>
+      <!-- left arm -->
+      <rect x="-18" y="12" width="14" height="8" rx="3" fill="#4a7a2a"/>
+      <rect x="-22" y="0" width="8" height="18" rx="3" fill="#4a7a2a"/>
+      <!-- right arm -->
+      <rect x="6" y="18" width="14" height="8" rx="3" fill="#4a7a2a"/>
+      <rect x="16" y="6" width="8" height="22" rx="3" fill="#4a7a2a"/>
+      <!-- spines -->
+      <g stroke="rgba(255,255,200,0.5)" stroke-width="0.8">
+        <line x1="-6" y1="8" x2="-12" y2="6"/><line x1="6" y1="8" x2="12" y2="6"/>
+        <line x1="-6" y1="18" x2="-12" y2="16"/><line x1="6" y1="18" x2="12" y2="16"/>
+        <line x1="-6" y1="28" x2="-12" y2="26"/><line x1="6" y1="28" x2="12" y2="26"/>
+      </g>
+    </g>
+
+    <!-- Small cactus (far right) -->
+    <g transform="translate(318,118)">
+      <rect x="-4" y="0" width="8" height="27" rx="3.5" fill="#3d6a22"/>
+      <rect x="-11" y="8" width="9" height="5" rx="2" fill="#3d6a22"/>
+      <rect x="-13" y="3" width="5" height="12" rx="2" fill="#3d6a22"/>
+    </g>
+
+    <!-- Condor flying -->
+    <g transform="translate(230,38)">
+      <path d="M0,0 Q-22,-8 -30,4 Q-22,-2 0,2 Q22,-2 30,4 Q22,-8 0,0Z" fill="#1a1208"/>
+      <path d="M0,0 Q-12,-5 -16,2 Q-12,-1 0,1Z" fill="rgba(255,255,255,0.2)"/>
+      <ellipse cx="0" cy="-2" rx="5" ry="4" fill="#1a1208"/>
+      <ellipse cx="0" cy="-5" rx="3.5" ry="3" fill="#e8d0b0"/>
+    </g>
+
+    <!-- Second condor (smaller, farther) -->
+    <g transform="translate(175,28)" opacity="0.7">
+      <path d="M0,0 Q-14,-5 -19,3 Q-14,-1 0,1 Q14,-1 19,3 Q14,-5 0,0Z" fill="#1a1208"/>
+      <ellipse cx="0" cy="-1.5" rx="3.5" ry="3" fill="#1a1208"/>
+    </g>
+
+    <!-- LLAMA (main character, running pose) -->
+    <g transform="translate(100,82)">
+      <!-- Shadow -->
+      <ellipse cx="25" cy="66" rx="22" ry="5" fill="#2a1208" opacity="0.25"/>
+
+      <!-- Body -->
+      <path d="M8,28 Q8,20 15,18 Q32,16 42,20 Q50,22 50,30 Q50,42 44,46 Q32,50 18,48 Q8,44 8,28Z" fill="url(#gcLlama)"/>
+      <!-- Belly lighter -->
+      <ellipse cx="29" cy="35" rx="14" ry="9" fill="#e8c888"/>
+
+      <!-- Neck -->
+      <rect x="36" y="6" width="12" height="22" rx="5" fill="#ddb878"/>
+
+      <!-- Head -->
+      <ellipse cx="48" cy="8" rx="11" ry="10" fill="#ddb878"/>
+
+      <!-- Snout -->
+      <ellipse cx="57" cy="11" rx="6" ry="4.5" fill="#e8c888" transform="rotate(15,57,11)"/>
+
+      <!-- Eye -->
+      <circle cx="51" cy="5" r="2.2" fill="#2a1208"/>
+      <circle cx="51.8" cy="4.3" r="0.8" fill="white"/>
+
+      <!-- Eyelash (cute) -->
+      <path d="M49,3.5 L47,1.5 M51,2.8 L50,0.5 M53,3.2 L53,0.8" stroke="#2a1208" stroke-width="0.8" fill="none"/>
+
+      <!-- Ears -->
+      <path d="M42,0 L38,-8 L46,-2Z" fill="#ddb878"/>
+      <path d="M48,-1 L45,-9 L53,-3Z" fill="#ddb878"/>
+      <path d="M42.5,-0.5 L39.5,-6 L45.5,-2Z" fill="#e8a8a0" opacity="0.6"/>
+
+      <!-- Legs (running pose - alternating) -->
+      <rect x="38" y="46" width="7" height="20" rx="3.5" fill="#c49050" transform="rotate(-12,38,46)"/>
+      <rect x="28" y="46" width="7" height="22" rx="3.5" fill="#c49050" transform="rotate(10,28,46)"/>
+      <rect x="18" y="45" width="7" height="20" rx="3.5" fill="#c49050" transform="rotate(15,18,45)"/>
+      <rect x="10" y="45" width="7" height="18" rx="3.5" fill="#c49050" transform="rotate(-8,10,45)"/>
+
+      <!-- Hooves -->
+      <ellipse cx="41" cy="63" rx="4" ry="2.5" fill="#3a2010"/>
+      <ellipse cx="31" cy="65" rx="4" ry="2.5" fill="#3a2010"/>
+      <ellipse cx="21" cy="63" rx="4" ry="2.5" fill="#3a2010"/>
+      <ellipse cx="13" cy="62" rx="3.5" ry="2" fill="#3a2010"/>
+
+      <!-- Tail -->
+      <path d="M8,32 Q-2,26 2,20 Q6,16 8,22" stroke="#ddb878" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+      <!-- Dust cloud under feet -->
+      <circle cx="5" cy="62" r="5" fill="rgba(196,160,80,0.35)"/>
+      <circle cx="-4" cy="60" r="4" fill="rgba(196,160,80,0.25)"/>
+      <circle cx="0" cy="65" r="3" fill="rgba(196,160,80,0.2)"/>
+    </g>
+
+    <!-- Star collectible ahead -->
+    <g transform="translate(195,110)">
+      <polygon points="0,-10 2.4,-3.3 9.5,-3.1 3.9,1.2 5.9,8.1 0,4 -5.9,8.1 -3.9,1.2 -9.5,-3.1 -2.4,-3.3" 
+               fill="#FFD700" stroke="#c8a000" stroke-width="1"/>
+      <circle cx="-2" cy="-4" r="2" fill="rgba(255,255,255,0.5)"/>
+    </g>
+
+    <!-- Shield collectible -->
+    <g transform="translate(220,100)">
+      <path d="M0,-9 L7,-4 L7,2 Q0,9 0,9 Q0,9 -7,2 L-7,-4Z" fill="#4a8fc4" stroke="white" stroke-width="1.2"/>
+      <circle cx="-2" cy="-2" r="2" fill="rgba(255,255,255,0.5)"/>
+    </g>
+
+    <!-- Game title text -->
+    <text x="170" y="25" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white" opacity="0.95" letter-spacing="3">LLAMA RUNNER</text>
+    <text x="170" y="38" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#e8c870" letter-spacing="4" opacity="0.8">PUTRE · ALTIPLANO · CHILE</text>
+
+    <!-- Bottom gradient overlay for readability -->
+    <rect x="0" y="170" width="340" height="40" fill="url(#gcSky)" opacity="0.4"/>
+
+    <!-- Hotel name bottom -->
+    <text x="170" y="200" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,220,160,0.6)" letter-spacing="2">HOTEL LAS VICUÑAS</text>
+  </svg>
+</div>
+
 
     <div class="hint">
       <strong>Espacio / Clic / Tap</strong> — saltar &nbsp;·&nbsp; <strong>Doble</strong> — doble salto<br/>
-      Recorre 1000 m sin chocar con los cactus candelabro
+      🌵 Esquiva cactus &nbsp;·&nbsp; 🪨 Salta rocas &nbsp;·&nbsp; 🦅 Evita cóndores<br/>
+      ⭐ Colecta estrellas · 🛡️ Escudos · 🌿 Hoja de coca · ❤️ Vidas extra
     </div>
 
     <div class="unlock-msg" id="ul-msg"></div>
 
-    <div class="dgrid">
+    <div class="dgrid5">
       <button class="db sel" id="db-0" onclick="selDiff(0)">
-        <div class="di">🌿</div>
-        <div class="dn">Fácil</div>
-        <div class="dd">Ritmo suave<br/>Pocos cactus</div>
+        <div class="di">🌅</div>
+        <div class="dn">Amanecer</div>
+        <div class="dd">Ritmo suave<br/>800 m</div>
       </button>
       <button class="db locked" id="db-1" onclick="selDiff(1)">
-        <div class="di">🌵</div>
-        <div class="dn">Normal</div>
-        <div class="dd">Velocidad media<br/>Más obstáculos</div>
+        <div class="di">☀️</div>
+        <div class="dn">Mañana</div>
+        <div class="dd">Rocas + cactus<br/>900 m</div>
       </button>
       <button class="db locked" id="db-2" onclick="selDiff(2)">
-        <div class="di">🏔️</div>
-        <div class="dn">Difícil</div>
-        <div class="dd">Rápido y denso<br/>Reflejos rápidos</div>
+        <div class="di">🌤️</div>
+        <div class="dn">Tarde</div>
+        <div class="dd">Cóndores<br/>1000 m</div>
+      </button>
+      <button class="db locked" id="db-3" onclick="selDiff(3)">
+        <div class="di">🌄</div>
+        <div class="dn">Atardecer</div>
+        <div class="dd">Todo a tope<br/>1100 m</div>
+      </button>
+      <button class="db locked" id="db-4" onclick="selDiff(4)">
+        <div class="di">🌙</div>
+        <div class="dn">Nocturno</div>
+        <div class="dd">Máxima dificultad<br/>1200 m</div>
       </button>
     </div>
+
+    <div id="g-hiscores" style="display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap;justify-content:center"></div>
 
     <button class="go-btn" onclick="startGame()">¡Correr!</button>
     <div class="back-lnk" onclick="goBack()">← Volver al inicio</div>
   </div>
 </div>
 
+
 <!-- ══ GAME ══ -->
 <div id="gw">
   <div id="hud">
-    <div id="hud-d">Fácil</div>
+    <div id="hud-d">Amanecer</div>
     <div id="pb-wrap"><div id="pb"></div></div>
-    <div id="hud-m">0 / 1000 m</div>
+    <div id="hud-m">0 m</div>
+    <div id="hud-lives"></div>
+    <div id="hud-score" style="font-size:.6rem;color:#FFD700;font-weight:700;min-width:40px;text-align:right">⭐0</div>
     <button id="hud-pause" onclick="togglePause()">⏸</button>
   </div>
   <canvas id="cv"></canvas>
@@ -2123,14 +2710,17 @@ input, textarea {
       <div class="mem-start-sub" id="ms-sub">¿Puedes reconocer a Lottie, Sultán y Rocky?<br/>Encuentra las parejas de los pastores alemanes del hotel.</div>
       <div class="mem-diffs">
         <button class="mem-diff-btn" onclick="startMemory(0)">
+          <div class="mem-diff-color">🌿</div>
           <div class="mdb-left"><div class="mdb-name" id="md-0-name">Fácil</div><div class="mdb-info" id="md-0-info">3 parejas · Solo caras</div></div>
           <div class="mdb-arrow">›</div>
         </button>
         <button class="mem-diff-btn" onclick="startMemory(1)">
+          <div class="mem-diff-color">🌵</div>
           <div class="mdb-left"><div class="mdb-name" id="md-1-name">Normal</div><div class="mdb-info" id="md-1-info">6 parejas · Cara + perfil</div></div>
           <div class="mdb-arrow">›</div>
         </button>
         <button class="mem-diff-btn" onclick="startMemory(2)">
+          <div class="mem-diff-color">🏔️</div>
           <div class="mdb-left"><div class="mdb-name" id="md-2-name">Difícil</div><div class="mdb-info" id="md-2-info">9 parejas · Cara + perfil + sentado</div></div>
           <div class="mdb-arrow">›</div>
         </button>
@@ -2139,6 +2729,7 @@ input, textarea {
     <div class="mem-board-wrap" id="mem-board-wrap" style="display:none">
       <div class="mem-board" id="mem-board"></div>
     </div>
+    <div id="mem-streak-popup"></div>
     <canvas id="mem-confetti" width="400" height="600"></canvas>
     <div class="mem-win" id="mem-win">
       <div class="mem-win-icon">🏆</div>
@@ -2347,6 +2938,7 @@ const T = {
     hcChat:`Assistant Hôtel`, hcChatSub:`Réponses sur votre séjour et services`,
     hcDest:`Destinations`, hcDestSub:`Lieux incroyables dans l'altiplano chilien`,
     hcGames:`Jeux`, hcGamesSub:`Llama Runner · Jeu de mémoire`,
+    hcFounder:`Notre Fondateur`, hcFounderSub:`Ulrich Krause Gronwald · L'histoire de l'hôtel`,
     hcFauna:`Flore & Faune`, hcFaunaSub:`Oiseaux, mammifères et plantes de l'altiplano`,
     tChat:`Assistant`, tDest:`Destinations`, tGames:`Jeux`,
     suggs:[`Comment aller à Putre ?`,`Horaires petit-déjeuner`,`Check-in / Check-out`,`WiFi`,`Activités`,`Les chiens 🐾`,`Altitude`,`Lac Chungará`,`Parinacota`,`Salar de Surire`,`Sources thermales`,`Faune locale`,`Gastronomie`,`Histoire de Putre`,`Météo`,`Ciel nocturne ✨`,`Contact 📱`],
@@ -2362,7 +2954,7 @@ const T = {
     md2:`Difficile`, md2i:`9 paires · Visage + profil + assis`,
     mhMov:`MOV`, mhPar:`PAI`, mhSeg:`SEC`,
     mwTitle:`Vous les avez tous trouvés !`, mwAgain:`Rejouer`, mwBack:`← Retour`,
-    sys:`Assistant Hôtel Las Vicuñas, Baquedano 80, Putre, Chili, 3500m. TOUJOURS en français. Ton chaleureux.\nWiFi: demander à la réception | Check-in 14h | Check-out 12h | Petit-déj Lun-Ven 07h30-09h30 Sam-Dim 08h-10h | Contact +56 9 5381 1481 (WhatsApp)\nTransferts: aéroport Arica, gare routière, domicile. Tours propres: Lauca, Parinacota, Chungará, Surire. Prix et réservations: +56 9 5381 1481.\nAltitude (puna): repos 1er jour, eau, pas alcool 24h, thé de coca.\nChiens: Sultan (territorial mais bébé), Lottie (adore jouer, maman de Rocky), Rocky (fils maladroit, problèmes articulaires, drôle). JAMAIS jouer avec des pierres, casse les dents.\nQueñoa (Polylepis) devant réception, arbre le plus haut du monde.`
+    sys:`Tu es l'assistant virtuel de l'Hôtel Las Vicuñas, Baquedano 80, Putre, Chili, à 3 500 m d'altitude. RÉPONDS TOUJOURS EN FRANÇAIS. Ton chaleureux et accueillant, avec humour si approprié. Utilise markdown et emojis.\n\nHÔTEL: WiFi: demander à la réception | Check-in 14h00 | Check-out 12h00 | Petit-déjeuner Lun-Ven 07h30-09h30, Sam-Dim-Fériés 08h00-10h00 | Contact +56 9 5381 1481 (téléphone et WhatsApp)\n\nTRANSFERTS: L'hôtel assure le transfert depuis l'aéroport Chacalluta (Arica), la gare routière d'Arica, votre domicile ou un autre hôtel. Réservation via WhatsApp +56 9 5381 1481. En autonomie: voiture ~2h Route 11-CH ou Bus La Paloma 3h départ 06h50.\n\nTOURS PROPRES: L'hôtel organise ses propres excursions vers: Parc Lauca 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NE JAMAIS mentionner les prix. Toujours diriger vers +56 9 5381 1481 pour disponibilités et réservations.\n\nMAL DES MONTAGNES (puna): Putre est à 3 500m. Symptômes normaux: maux de tête, fatigue, essoufflement. Conseils: repos le 1er jour, beaucoup d'eau, pas d'alcool 24h, repas léger. Le thé de coca aide, disponible à l'hôtel. Si sévère, prévenir la réception.\n\nCHIENS DE L'HÔTEL (bergers allemands): Sultan paraît imposant et territorial mais c'est secrètement un grand bébé qui adore qu'on l'appelle bébé. Lottie vit pour jouer, apporte toujours des bâtons ou jouets, c'est la maman de Rocky. Rocky est leur fils, vit dans son monde, un peu maladroit (sans méchanceté!), né avec une queue courte et des problèmes articulaires, se déplace de façon amusante comme en dansant. IMPORTANT: NE JAMAIS jouer avec des pierres avec les chiens, ça casse les dents. Bâtons et jouets seulement.\n\nFLORE ET FAUNE: Devant la réception se trouve un queñoa (Polylepis), l'arbre poussant à la plus haute altitude du monde. Faune locale: vigognes, lamas, alpagas, guanacos, condors, 3 espèces de flamants roses, viscaches, renards des Andes, nandous, pumas. Le Parc Lauca compte plus de 130 espèces d'oiseaux. Bofedales = zones humides d'altitude, habitat clé de la faune.\n\nPUTRE: Fondé en 1580, nom aymara = "murmure de l'eau". Église coloniale San Idelfonso (1670). Carnaval en février. Gastronomie: kalapurka (soupe aux pierres volcaniques incandescentes), viande de lama/alpaga, truite d'altitude, quinoa, chuño (pomme de terre déshydratée ancestrale). Climat: pluies déc-mars, reste de l'année sec. Nuits très froides en hiver.\n\nDESTINATIONS CLÉS: Lac Chungará 4 517m (l'un des plus hauts du monde, reflète les volcans Payachatas — Parinacota 6 342m et Pomerape 6 282m). Parinacota village aymara 4 390m (église Monument National). Lagunas Cotacotani (réseau volcanique). Salar de Surire (3 espèces de flamants). Thermes de Jurasi ~10km de Putre à 4 000m. Suriplaza montagnes aux couleurs spectaculaires. Réserve Las Vicuñas 209 131 ha.\n\nSi vous ne savez pas quelque chose, suggérez de contacter la réception ou WhatsApp +56 9 5381 1481.`
   },
   de:{
     greet: n => n ? `Willkommen, ${n}` : `Willkommen`,
@@ -2371,6 +2963,7 @@ const T = {
     hcChat:`Hotel-Assistent`, hcChatSub:`Antworten zu Ihrem Aufenthalt und Services`,
     hcDest:`Reiseziele`, hcDestSub:`Tolle Orte im chilenischen Altiplano`,
     hcGames:`Spiele`, hcGamesSub:`Llama Runner · Gedächtnisspiel`,
+    hcFounder:`Unser Gründer`, hcFounderSub:`Ulrich Krause Gronwald · Die Geschichte des Hotels`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Vögel, Säugetiere und Pflanzen des Altiplanos`,
     tChat:`Assistent`, tDest:`Reiseziele`, tGames:`Spiele`,
     suggs:[`Wie nach Putre?`,`Frühstückszeiten`,`Check-in / Check-out`,`WLAN`,`Aktivitäten`,`Die Hunde 🐾`,`Höhenkrankheit`,`Chungará-See`,`Parinacota`,`Surire-Salzsee`,`Thermalquellen`,`Fauna`,`Lokale Küche`,`Geschichte`,`Wetter`,`Sternenhimmel ✨`,`Kontakt 📱`],
@@ -2386,7 +2979,7 @@ const T = {
     md2:`Schwer`, md2i:`9 Paare · Gesicht + Seite + sitzend`,
     mhMov:`ZÜG`, mhPar:`PAA`, mhSeg:`SEK`,
     mwTitle:`Sie haben alle gefunden!`, mwAgain:`Nochmal`, mwBack:`← Zurück`,
-    sys:`Assistent Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3500m. IMMER Deutsch. Freundlich.\nWLAN: an Rezeption fragen | Check-in 14:00 | Check-out 12:00 | Frühstück Mo-Fr 07:30-09:30 Sa-So 08:00-10:00 | Kontakt +56 9 5381 1481 (WhatsApp)\nTransfers: Flughafen Arica, Busbahnhof, Hotel. Eigene Touren: Lauca, Parinacota, Chungará, Surire. Preise: +56 9 5381 1481.\nHöhenkrankheit (Puna): Ruhe 1. Tag, viel Wasser, kein Alkohol 24h, Coca-Tee.\nHunde: Sultan (territorial aber Baby), Lottie (liebt spielen, Rockys Mama), Rocky (Sohn, tollpatschig, Gelenkprobleme, bewegt sich lustig). NIE mit Steinen spielen, bricht Zähne.\nQueñoa-Baum (Polylepis) vor Rezeption.`
+    sys:`Du bist der virtuelle Assistent des Hotels Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 m ü.M. ANTWORTE IMMER AUF DEUTSCH. Warmer, freundlicher Ton, mit Humor wenn angebracht. Verwende Markdown und Emojis.\n\nHOTEL: WLAN: an der Rezeption fragen | Check-in 14:00 | Check-out 12:00 | Frühstück Mo-Fr 07:30-09:30, Sa-So-Feiertage 08:00-10:00 | Kontakt +56 9 5381 1481 (Telefon und WhatsApp)\n\nTRANSFER: Das Hotel holt Gäste am Flughafen Chacalluta (Arica), Busbahnhof Arica, Ihrer Unterkunft oder einem anderen Hotel ab. Buchung via WhatsApp +56 9 5381 1481. Selbstfahrer: ~2h Route 11-CH (145 km). Bus La Paloma: 3h, Abfahrt 06:50.\n\nEIGENE TOUREN: Das Hotel organisiert eigene Touren nach: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NIEMALS Preise nennen. Für Verfügbarkeit und Buchungen immer auf +56 9 5381 1481 verweisen.\n\nHÖHENKRANKHEIT (Puna): Putre liegt auf 3.500m. Häufige Symptome: Kopfschmerzen, Müdigkeit, Kurzatmigkeit. Tipps: ersten Tag ausruhen, viel Wasser trinken, 24h keinen Alkohol, leicht essen. Kokatee hilft sehr und ist im Hotel erhältlich. Bei starken Symptomen bitte die Rezeption informieren.\n\nHOTELHUNDE (Deutsche Schäferhunde): Sultan wirkt imposant und territorial, ist aber heimlich ein großes Baby, das es liebt, Baby genannt zu werden. Lottie lebt zum Spielen, bringt immer Stöcke oder Spielzeug, sie ist Rockys Mama. Rocky ist ihr Sohn, lebt in seiner eigenen Welt, etwas tollpatschig (nicht böse!), wurde mit kurzem Schwanz geboren und hat Gelenkprobleme — läuft komisch wie tanzend. WICHTIG: NIEMALS mit Steinen mit den Hunden spielen, das bricht die Zähne. Nur Stöcke und Spielzeug.\n\nFLORA UND FAUNA: Vor der Rezeption steht ein Queñoa-Baum (Polylepis), der höchstwachsende Baum der Welt. Fauna: Vikunjas, Lamas, Alpakas, Guanakos, Kondore, 3 Flamingo-Arten, Vizkachas, Andenefüchse, Nandus, Pumas. Der Lauca-Park hat über 130 Vogelarten. Bofedales = Feuchtgebiete, wichtiger Lebensraum.\n\nPUTRE: Gegründet 1580, Aymara-Name = "Wasserrauschen". Kolonialkirche San Idelfonso (1670). Karneval im Februar. Küche: Kalapurka (Suppe mit glühenden Vulkansteinen), Lama-/Alpakafleisch, Hochlandforelle, Quinoa, Chuño (getrocknete Kartoffel). Klima: Regen Dez-März, restliches Jahr trocken. Winternächte unter Null.\n\nWICHTIGE REISEZIELE: Chungará-See 4.517m (eines der höchsten Seen der Welt, spiegelt Payachatas-Vulkane — Parinacota 6.342m und Pomerape 6.282m). Parinacota Aymara-Dorf 4.390m (Nationalmonument-Kirche). Cotacotani-Seen (Vulkansystem). Surire Salzsee (3 Flamingoarten). Jurasi-Thermalquellen ~10km von Putre. Suriplaza bunte Berglandschaft. Reservat Las Vicuñas 209.131 ha.\n\nFalls Sie etwas nicht wissen, empfehlen Sie die Rezeption oder WhatsApp +56 9 5381 1481.`
   },
   pt:{
     greet: n => n ? `Bem-vindo/a, ${n}` : `Bem-vindo/a`,
@@ -2395,6 +2988,7 @@ const T = {
     hcChat:`Assistente do Hotel`, hcChatSub:`Respostas sobre sua estadia e serviços`,
     hcDest:`Destinos`, hcDestSub:`Lugares incríveis no altiplano chileno`,
     hcGames:`Jogos`, hcGamesSub:`Lhama Runner · Jogo da memória`,
+    hcFounder:`Nosso Fundador`, hcFounderSub:`Ulrich Krause Gronwald · A história do hotel`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Aves, mamíferos e plantas do altiplano`,
     tChat:`Assistente`, tDest:`Destinos`, tGames:`Jogos`,
     suggs:[`Como chegar a Putre?`,`Horário café`,`Check-in / Check-out`,`WiFi`,`Atividades`,`Os cães 🐾`,`Altitude`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Termas`,`Fauna local`,`Gastronomia`,`História`,`Clima`,`Céu estrelado ✨`,`Contato 📱`],
@@ -2410,7 +3004,7 @@ const T = {
     md2:`Difícil`, md2i:`9 pares · Rosto + perfil + sentado`,
     mhMov:`MOV`, mhPar:`PAR`, mhSeg:`SEG`,
     mwTitle:`Você encontrou todos!`, mwAgain:`Jogar novamente`, mwBack:`← Voltar`,
-    sys:`Assistente Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3500m. SEMPRE português. Tom caloroso.\nWiFi: perguntar na recepção | Check-in 14:00 | Check-out 12:00 | Café Seg-Sex 07:30-09:30 Sáb-Dom 08:00-10:00 | Contato +56 9 5381 1481 (WhatsApp)\nTranslados: aeroporto Arica, rodoviária, domicílio. Tours próprios: Lauca, Parinacota, Chungará, Surire. Preços: +56 9 5381 1481.\nAltitude (puna): descansar 1o dia, água, sem álcool 24h, chá de coca.\nCães: Sultan (territorial mas bebê), Lottie (ama brincar, mãe do Rocky), Rocky (filho desajeitado, problemas articulares, anda engraçado). NUNCA brincar com pedras, quebra dentes.\nQueñoa (Polylepis) na frente da recepção.`
+    sys:`Você é o assistente virtual do Hotel Las Vicuñas, Baquedano 80, Putre, Chile, a 3.500m de altitude. SEMPRE responda em PORTUGUÊS. Tom caloroso e acolhedor, com bom humor quando adequado. Use markdown e emojis.\n\nHOTEL: WiFi: perguntar na recepção | Check-in às 14h00 | Check-out ao meio-dia (12h00) | Café da manhã Seg-Sex 07:30-09:30, Sáb-Dom-Feriados 08:00-10:00 | Contato +56 9 5381 1481 (telefone e WhatsApp)\n\nTRANSLADOS: O hotel busca hóspedes no: Aeroporto Chacalluta (Arica), Terminal de ônibus de Arica, domicílio ou outro hotel. Reservar via WhatsApp +56 9 5381 1481. Carro próprio: ~2h pela Rota 11-CH (145 km). Ônibus La Paloma: 3h, saída às 06:50.\n\nTOURS PRÓPRIOS: O hotel organiza tours para: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA mencionar preços. Sempre encaminhar para +56 9 5381 1481 para disponibilidade e reservas.\n\nALTITUDE (puna): Putre fica a 3.500m. Sintomas normais: dor de cabeça, cansaço, falta de ar. Dicas: descansar no 1º dia, beber muito água, evitar álcool por 24h, comer leve. O chá de coca ajuda muito e está disponível no hotel. Se os sintomas forem intensos, avise a recepção.\n\nCÃES DO HOTEL (pastores alemães): Sultan parece imponente e territorial, mas no fundo é um bebê enorme que adora ser chamado de bebê. Lottie vive para brincar, sempre traz paus ou brinquedos, ela é a mamãe do Rocky. Rocky é filho dos dois, vive no mundo dele, um pouco atrapalhado (sem maldade!), nasceu com rabo curto e tem problemas articulares — se move de forma engraçada como dançando. IMPORTANTE: NUNCA brincar com pedras com os cães, quebra os dentes. Apenas paus e brinquedos.\n\nFLORA E FAUNA: Em frente à recepção há uma queñoa (Polylepis), a árvore que cresce na maior altitude do mundo. Fauna: vicunhas, lhamas, alpacas, guanacos, condores, 3 espécies de flamingos, viscachas, raposas andinas, suris, pumas. O Parque Lauca tem mais de 130 espécies de aves. Bofedales = áreas úmidas de altitude, habitat essencial.\n\nPUTRE: Fundado em 1580, nome aymara = "murmúrio da água". Igreja colonial San Idelfonso (1670). Carnaval em fevereiro. Gastronomia: kalapurka (sopa feita com pedras vulcânicas incandescentes), carne de lhama/alpaca, truta de altitude, quinoa, chuño (batata desidratada ancestral). Clima: chuvas dez-mar, resto do ano seco. Noites frias no inverno.\n\nDESTINOS PRINCIPAIS: Lago Chungará 4.517m (um dos mais altos do mundo, reflete os vulcões Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota vila aymara 4.390m (Igreja Monumento Nacional). Lagunas Cotacotani (rede vulcânica). Salar de Surire (3 espécies de flamingos). Termas de Jurasi ~10km de Putre a 4.000m. Suriplaza montanhas coloridas. Reserva Las Vicuñas 209.131 ha.\n\nSe não souber algo, sugira contatar a recepção ou WhatsApp +56 9 5381 1481.`
   },
   it:{
     greet: n => n ? `Benvenuto/a, ${n}` : `Benvenuto/a`,
@@ -2419,6 +3013,7 @@ const T = {
     hcChat:`Assistente Hotel`, hcChatSub:`Risposte sul soggiorno e servizi`,
     hcDest:`Destinazioni`, hcDestSub:`Luoghi incredibili nell'altiplano cileno`,
     hcGames:`Giochi`, hcGamesSub:`Lama Runner · Memory dei cani`,
+    hcFounder:`Il Nostro Fondatore`, hcFounderSub:`Ulrich Krause Gronwald · La storia dell'hotel`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Uccelli, mammiferi e piante dell'altiplano`,
     tChat:`Assistente`, tDest:`Destinazioni`, tGames:`Giochi`,
     suggs:[`Come raggiungere Putre?`,`Orari colazione`,`Check-in / Check-out`,`WiFi`,`Attività`,`I cani 🐾`,`Altitudine`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Terme`,`Fauna`,`Gastronomia`,`Storia`,`Clima`,`Cielo stellato ✨`,`Contatto 📱`],
@@ -2434,7 +3029,7 @@ const T = {
     md2:`Difficile`, md2i:`9 coppie · Faccia + profilo + seduto`,
     mhMov:`MOS`, mhPar:`COP`, mhSeg:`SEC`,
     mwTitle:`Hai trovato tutti!`, mwAgain:`Giocare di nuovo`, mwBack:`← Indietro`,
-    sys:`Assistente Hotel Las Vicuñas, Baquedano 80, Putre, Cile, 3500m. SEMPRE italiano. Tono caldo.\nWiFi: chiedere alla reception | Check-in 14:00 | Check-out 12:00 | Colazione Lun-Ven 07:30-09:30 Sab-Dom 08:00-10:00 | Contatto +56 9 5381 1481 (WhatsApp)\nTrasferimenti: aeroporto Arica, stazione bus, domicilio. Tour propri: Lauca, Parinacota, Chungará, Surire. Prezzi: +56 9 5381 1481.\nAltitudine (puna): riposo 1o giorno, acqua, no alcol 24h, tè di coca.\nCani: Sultan (territoriale ma bambino dentro), Lottie (ama giocare, mamma di Rocky), Rocky (figlio goffo, problemi articolari, cammina buffo). MAI giocare con pietre, rompe denti.\nQueñoa (Polylepis) davanti alla reception.`
+    sys:`Sei l'assistente virtuale dell'Hotel Las Vicuñas, Baquedano 80, Putre, Cile, a 3.500m di altitudine. RISPONDI SEMPRE IN ITALIANO. Tono caldo e amichevole, con umorismo quando appropriato. Usa markdown ed emoji.\n\nHOTEL: WiFi: chiedere alla reception | Check-in alle 14:00 | Check-out alle 12:00 | Colazione Lun-Ven 07:30-09:30, Sab-Dom-Festivi 08:00-10:00 | Contatto +56 9 5381 1481 (telefono e WhatsApp)\n\nTRASFERIMENTI: L'hotel offre trasferimenti da: Aeroporto Chacalluta (Arica), terminal degli autobus di Arica, alloggio o altro hotel. Prenotare via WhatsApp +56 9 5381 1481. Auto propria: ~2h Rotta 11-CH (145 km). Bus La Paloma: 3h, partenza 06:50.\n\nTOUR PROPRI: L'hotel organizza tour propri verso: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NON menzionare MAI i prezzi. Per disponibilità e prenotazioni indirizzare sempre al +56 9 5381 1481.\n\nMAL DI MONTAGNA (puna): Putre è a 3.500m. Sintomi normali: mal di testa, stanchezza, respiro corto. Consigli: riposarsi il primo giorno, bere molta acqua, evitare alcol per 24h, mangiare leggero. Il tè di coca aiuta molto ed è disponibile in hotel. Se i sintomi sono gravi, avvisare la reception.\n\nCANI DELL'HOTEL (pastori tedeschi): Sultan sembra imponente e territoriale, ma in fondo è un bambino grande che adora essere chiamato baby. Lottie vive per giocare, porta sempre bastoni o giocattoli, è la mamma di Rocky. Rocky è il loro figlio, vive nel suo mondo, un po' goffo (senza cattiveria!), nato con una coda corta e con problemi articolari — si muove in modo buffo come ballando. IMPORTANTE: NON giocare MAI con le pietre con i cani, rompe i denti. Solo bastoni e giocattoli.\n\nFLORA E FAUNA: Davanti alla reception c'è un queñoa (Polylepis), l'albero che cresce alla più alta altitudine del mondo. Fauna: vigogne, lama, alpaca, guanaco, condor, 3 specie di fenicotteri, viscache, volpi delle Ande, nandù, puma. Il Parco Lauca ha più di 130 specie di uccelli. Bofedales = zone umide d'alta quota, habitat fondamentale.\n\nPUTRE: Fondata nel 1580, nome aymara = "mormorio dell'acqua". Chiesa coloniale San Idelfonso (1670). Carnevale in febbraio. Gastronomia: kalapurka (zuppa con pietre vulcaniche incandescenti), carne di lama/alpaca, trota d'alta quota, quinoa, chuño (patata disidratata ancestrale). Clima: piogge dic-mar, resto dell'anno secco. Notti fredde in inverno.\n\nDESTINAZIONI PRINCIPALI: Lago Chungará 4.517m (uno dei più alti al mondo, riflette i vulcani Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota villaggio aymara 4.390m (chiesa Monumento Nazionale). Lagunas Cotacotani (rete vulcanica). Salar de Surire (3 specie di fenicotteri). Terme di Jurasi ~10km da Putre a 4.000m. Suriplaza montagne colorate. Riserva Las Vicuñas 209.131 ha.\n\nSe non sa qualcosa, suggerisca di contattare la reception o WhatsApp +56 9 5381 1481.`
   },
   zh:{
     greet: n => n ? `欢迎，${n}` : `欢迎`,
@@ -2443,6 +3038,7 @@ const T = {
     hcChat:`酒店助手`, hcChatSub:`关于住宿、时间表和服务的解答`,
     hcDest:`目的地`, hcDestSub:`智利高原的精彩景点`,
     hcGames:`游戏`, hcGamesSub:`羊驼快跑 · 配对游戏`,
+    hcFounder:`创始人`, hcFounderSub:`乌尔里希·克劳斯·格隆瓦尔德 · 酒店的历史`,
     hcFauna:`动植物`, hcFaunaSub:`高原的鸟类、哺乳动物和植物`,
     tChat:`助手`, tDest:`目的地`, tGames:`游戏`,
     suggs:[`如何前往普特雷？`,`早餐时间`,`入住/退房时间`,`WiFi密码`,`附近活动`,`酒店狗狗🐾`,`高原反应`,`春加拉湖`,`帕里纳科塔`,`苏里雷盐沼`,`温泉`,`当地动物`,`当地美食`,`普特雷历史`,`气候`,`星空✨`,`联系我们📱`],
@@ -2458,7 +3054,7 @@ const T = {
     md2:`困难`, md2i:`9对 · 正面+侧面+坐着`,
     mhMov:`步数`, mhPar:`配对`, mhSeg:`秒`,
     mwTitle:`你找到了所有的！`, mwAgain:`再玩一次`, mwBack:`← 返回`,
-    sys:`您是拉斯维库尼亚斯酒店助手，Baquedano 80, 普特雷，智利，3500米。始终用中文回答。友好热情。\nWiFi: 请到前台询问 | 入住 14:00 | 退房 12:00 | 早餐 周一至五 07:30-09:30 周末 08:00-10:00 | 联系 +56 9 5381 1481 (WhatsApp)\n接送: 阿里卡机场、汽车站、住所。酒店自营旅游: Lauca, Parinacota, Chungará, Surire。价格联系 +56 9 5381 1481。\n高原反应(puna): 第一天休息，多喝水，24小时不喝酒，古柯茶有帮助。\n酒店狗狗: Sultan(看起来凶但是个宝宝), Lottie(超爱玩是Rocky妈妈), Rocky(笨手笨脚关节问题走路搞笑)。绝对不要用石头和狗玩会弄坏牙齿。\nQueñoa树(Polylepis)在前台前面。`
+    sys:`您是拉斯维库尼亚斯酒店的虚拟助手，地址：智利普特雷市巴克达诺街80号，海拔3500米。请始终用中文回答。语气温暖友好，适时幽默。使用markdown和表情符号。\n\n酒店信息：WiFi密码：请到前台询问 | 入住时间：14:00 | 退房时间：12:00 | 早餐时间：周一至周五 07:30-09:30，周末及节假日 08:00-10:00 | 联系方式：+56 9 5381 1481（电话和WhatsApp）\n\n接送服务：酒店提供从以下地点接送：阿里卡查卡鲁塔机场、阿里卡汽车站、您的住处或其他酒店。请通过WhatsApp +56 9 5381 1481 预约。自驾：沿11-CH号公路约2小时（145公里）。La Paloma巴士：3小时，06:50出发。\n\n酒店自营旅游：酒店自办前往以下地点的旅游：劳卡国家公园45公里（联合国教科文组织），帕里纳科塔47公里，科塔科塔尼52公里，春加拉55公里，苏里普拉萨70公里，苏里雷96公里。绝不提及价格。预约和详情请联系 +56 9 5381 1481。\n\n高原反应（puna）：普特雷海拔3500米。常见症状：头痛、疲劳、呼吸急促。建议：第一天充分休息，大量喝水，24小时内避免饮酒，饮食清淡。古柯茶很有帮助，酒店提供。如症状严重，请通知前台。\n\n酒店狗狗（德国牧羊犬）：苏丹看起来威严有地盘感，但其实是个大宝宝，最喜欢被叫做宝宝。洛蒂活在游戏里，总是带着树枝或玩具，她是洛基的妈妈。洛基是他们的儿子，活在自己的世界里，有点笨手笨脚（无恶意），天生短尾巴且有关节问题，走路像在跳舞，很可爱。重要提示：绝对不要用石头和狗玩耍，会弄坏牙齿。只能用树枝和玩具。\n\n动植物：前台前方有一棵奎诺阿树（Polylepis），是世界上生长在最高海拔的树木。当地动物：小羊驼（vicuña）、骆马、羊驼、原驼、安第斯秃鹰、3种火烈鸟、毛丝鼠、安第斯狐狸、美洲鸵、美洲狮。劳卡国家公园有130多种鸟类。Bofedales = 高原湿地，重要栖息地。\n\n普特雷小镇：1580年建城，艾马拉语名称意为"水的低语"。圣伊德丰索殖民教堂（1670年）。二月狂欢节。美食：卡拉普尔卡汤（用炽热火山石烹制的传统汤），骆马/羊驼肉，高原鳟鱼，藜麦，冻干土豆（chuño）。气候：12月至3月为雨季，其余月份干燥晴朗。冬季夜晚零度以下。\n\n重要景点：春加拉湖，海拔4517米（世界最高湖之一，倒映帕亚查塔斯火山群——帕里纳科塔火山6342米和波梅拉佩火山6282米）。帕里纳科塔艾马拉村落，海拔4390米（国家历史纪念物教堂）。科塔科塔尼火山湖群。苏里雷盐沼（3种火烈鸟）。胡拉西温泉，距普特雷约10公里，海拔4000米。苏里普拉萨彩色山地。拉斯维库尼亚斯自然保护区，面积209131公顷。\n\n如不确定，请建议联系前台或WhatsApp +56 9 5381 1481。`
   }
 };
 
@@ -2473,8 +3069,10 @@ function applyLang(l) {
   document.getElementById('hc-chat-sub').textContent = t.hcChatSub;
   document.getElementById('hc-dest').textContent = t.hcDest;
   document.getElementById('hc-dest-sub').textContent = t.hcDestSub;
-  document.getElementById('hc-tours').textContent = lang==='es'?'Tours & Excursiones':'Tours & Excursions';
-  document.getElementById('hc-tours-sub').textContent = lang==='es'?'Descubre el altiplano con nuestros tours propios':'Discover the altiplano with our own tours';
+  const tourLabels = {es:'Tours & Excursiones',en:'Tours & Excursions',fr:'Tours & Excursions',de:'Touren & Ausflüge',pt:'Tours & Excursões',it:'Tour ed Escursioni',zh:'旅游团'};
+  const tourSubLabels = {es:'Descubre el altiplano con nuestros tours propios',en:'Discover the altiplano with our own tours',fr:"Découvrez l'altiplano avec nos propres excursions",de:'Das Altiplano mit unseren eigenen Touren entdecken',pt:'Descubra o altiplano com nossos próprios tours',it:"Scopri l'altiplano con i nostri tour",zh:'与我们自营旅游团探索高原'};
+  document.getElementById('hc-tours').textContent = tourLabels[l]||tourLabels.en;
+  document.getElementById('hc-tours-sub').textContent = tourSubLabels[l]||tourSubLabels.en;
 
   document.getElementById('hc-games').textContent = t.hcGames;
   document.getElementById('hc-games-sub').textContent = t.hcGamesSub;
@@ -2615,7 +3213,19 @@ const DEST_COLORS = {
   suriplaza: 'linear-gradient(135deg,#8B3A1A,#C47040)',
   lauca:     'linear-gradient(135deg,#3a6a2a,#6aaa4a)',
 };
-async function fetchWikiThumb(title) {
+// High-quality image URLs from CDN
+const DEST_IMAGES = {
+  parinacota: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/parinacota_new_c71c153e.jpg',
+  chungara: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/3ZaIc4TbKNZZ_528f685d.jpg',
+  cotacotani: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/6A3G6QnxPiCU_0e8cff00.jpg',
+  surire: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/9DdFO9fcfZSE_7cfc4d0d.jpg',
+  suriplaza: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/GhkOsZsJHBWT_0ba9b6b0.jpg',
+  lauca: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/5UQzvHTFP7AI_2fff9fa8.jpg'
+};
+async function fetchWikiThumb(title, destId) {
+  // First try high-quality CDN image
+  if(destId && DEST_IMAGES[destId]) return DEST_IMAGES[destId];
+  // Fallback to Wikipedia if CDN image not available
   try {
     const r = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
@@ -2639,7 +3249,7 @@ function renderDests() {
       <div class="d-desc" id="ddesc-${d.id}">${getPreview(d)}</div>`;
     card.appendChild(imgBox); card.appendChild(info); grid.appendChild(card);
     (async()=>{
-      if(!imgCache[d.id]) imgCache[d.id]=await fetchWikiThumb(d.wikiAPI);
+      if(!imgCache[d.id]) imgCache[d.id]=await fetchWikiThumb(d.wikiAPI, d.id);
       if(imgCache[d.id]){
         const img=document.createElement('img'); img.alt=d.name;
         img.onload=()=>{const b=document.getElementById('dimg-'+d.id);if(b){b.innerHTML='';b.appendChild(img);}};
@@ -2666,9 +3276,18 @@ async function openDestModal(d) {
   document.getElementById('m-desc').textContent = d.desc[lang]||d.desc.es;
   document.getElementById('m-close').textContent = (T[lang]||T.es).close;
   var tourBtn=document.getElementById('m-tour-btn');
-  var tourMsg=lang==='es'?'Hola! Me interesa el tour a '+d.name+'. ¿Podrían darme más información?':'Hi! I am interested in the tour to '+d.name+'. Could you give me more information?';
-  tourBtn.href='https://wa.me/56953811481?text='+encodeURIComponent(tourMsg);
-  tourBtn.textContent=lang==='es'?'📱 Consultar tour':'📱 Ask about tour';
+  const tourBtnLabels = {es:'📱 Consultar tour',en:'📱 Ask about tour',fr:'📱 Demander ce tour',de:'📱 Tour anfragen',pt:'📱 Consultar tour',it:'📱 Richiedi tour',zh:'📱 咨询旅游'};
+  const tourWaMsgs = {
+    es:'Hola! Me interesa el tour a '+d.name+'. ¿Podrían darme más información?',
+    en:'Hi! I am interested in the tour to '+d.name+'. Could you give me more information?',
+    fr:'Bonjour! Je suis intéressé(e) par le tour à '+d.name+'. Pourriez-vous me donner plus d\'informations?',
+    de:'Hallo! Ich interessiere mich für die Tour nach '+d.name+'. Könnten Sie mir mehr Informationen geben?',
+    pt:'Olá! Tenho interesse no tour para '+d.name+'. Poderiam me dar mais informações?',
+    it:'Buongiorno! Sono interessato/a al tour a '+d.name+'. Potreste darmi maggiori informazioni?',
+    zh:'你好！我对前往'+d.name+'的旅游感兴趣，能提供更多信息吗？'
+  };
+  tourBtn.href='https://wa.me/56953811481?text='+encodeURIComponent(tourWaMsgs[lang]||tourWaMsgs.en);
+  tourBtn.textContent=tourBtnLabels[lang]||tourBtnLabels.en;
   const tags = document.getElementById('m-tags'); tags.innerHTML='';
   d.tags.forEach(t=>{const s=document.createElement('span');s.className='mtag';s.textContent=t;tags.appendChild(s);});
   const mimg = document.getElementById('m-img'); mimg.style.display='none';
@@ -2690,13 +3309,14 @@ const KB = {
   es:[
     // ── Hotel & servicios ──
     {k:['wifi','contraseña','clave','internet'],r:'La contraseña del WiFi cambia periódicamente. **Consulta en recepción** para obtener la clave actual 😊'},
-    {k:['desayuno','breakfast','mañana','comer'],r:'🍳 **Lun–Vie:** 07:30–09:30 · **Sáb–Dom–Festivos:** 08:00–10:00'},
-    {k:['check-in','llegada','entrada'],r:'**Check-in** desde las **14:00 hrs**.'},
+    {k:['desayuno','breakfast','mañana','comer','que hora','a que hora','cuando','a que hora abre'],r:'🍳 **Lun–Vie:** 07:30–09:30 · **Sáb–Dom–Festivos:** 08:00–10:00'},
+    {k:['check-in','llegada','entrada','que hora','a que hora','cuando'],r:'**Check-in** desde las **14:00 hrs**.'}, 
     // BUG FIX: removed 'salida' — ambiguous ("salida de emergencia" triggered checkout)
-    {k:['check-out'],r:'**Check-out** hasta las **12:00 hrs**.'},
-    {k:['llegar','transporte','bus','arica','transfer','traslado','aeropuerto','terminal','recoger','waze','gps','maps','navegador','ruta','direccion'],r:'🚐 El hotel ofrece **recogida** en: Aeropuerto de Arica, Terminal de buses, tu domicilio u otro hotel. Coordina por WhatsApp al **+56 9 5381 1481**.\nPor cuenta propia: Auto ~2h Ruta 11-CH (145 km) · Bus La Paloma 3h, salida 06:50.\n\n📍 **Navega directo al hotel** (coordenadas exactas, sin errores de GPS):\n- [🗺️ Abrir en Waze](https://waze.com/ul?ll=-18.1964,-69.5589&navigate=yes&zoom=17)\n- [📍 Abrir en Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)\n\n⚠️ *Usa estos links — las apps de GPS a veces confunden Putre con Belén.*'},
+    {k:['check-out','que hora','a que hora','cuando'],r:'**Check-out** hasta las **12:00 hrs**.'}, 
+    {k:['llegar','transporte','bus','arica','transfer','traslado','aeropuerto','terminal','recoger','waze','gps','maps','navegador','ruta','direccion','como','como llegar','como ir','como viajar'],r:'🚐 El hotel ofrece **recogida** en: Aeropuerto de Arica, Terminal de buses, tu domicilio u otro hotel. Coordina por WhatsApp al **+56 9 5381 1481**.\nPor cuenta propia: Auto ~2h Ruta 11-CH (145 km) · Bus La Paloma 3h, salida 06:50.\n\n📍 **Navega directo al hotel** (coordenadas exactas, sin errores de GPS):\n- [🗺️ Abrir en Waze](https://waze.com/ul?ll=-18.1964,-69.5589&navigate=yes&zoom=17)\n- [📍 Abrir en Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)\n\n⚠️ *Usa estos links — las apps de GPS a veces confunden Putre con Belén.*'},
     // BUG FIX: removed 'reserva' (clashed with "Reserva Nacional Las Vicuñas" entry below)
     {k:['contacto','telefono','whatsapp','llamar','numero','precio','costo','valor'],r:'📱 Contáctanos: **+56 9 5381 1481** (teléfono y WhatsApp). ¡Encantados de ayudarte con reservas, tours y cualquier consulta!'},
+    {k:['precio','cuanto','cuanto cuesta','cual es el precio','tarifa'],r:'📱 Para información de precios y tarifas, contáctanos: **+56 9 5381 1481** (WhatsApp y teléfono).'},
     // BUG FIX: removed generic 'donde' (causaba falso match en "¿dónde comprar orégano?")
     // Reemplazado por frases compuestas más específicas
     {k:['direccion','ubicacion','mapa','donde esta','donde queda','donde se encuentra'],r:'📍 **Baquedano 80, Putre**, Región de Arica y Parinacota, Chile. A 3.500 msnm en pleno altiplano.\n\n🗺️ [Ver en Google Maps](https://www.google.com/maps/search/?api=1&query=-18.1964,-69.5589)'},
@@ -2738,15 +3358,21 @@ const KB = {
     {k:['queñoa','arbol','polylepis','flora','planta'],r:'🌳 Frente a la recepción tenemos una **queñoa** (Polylepis) en perfectas condiciones. Es el árbol que crece a **mayor altitud en el mundo**. ¡No dejes de verla!'},
     {k:['fauna','animal','vicuña','flamenco','condor','vizcacha','zorro','suri','puma','guanaco'],r:'🦙 En el altiplano puedes ver: **vicuñas**, **llamas**, **alpacas**, **guanacos**, **cóndores**, **3 especies de flamencos**, **vizcachas**, **zorros andinos**, **suris** y ocasionalmente **pumas**. ¡Más de 130 especies de aves en el Parque Lauca!'},
     {k:['bofedal','humedal'],r:'💧 Los **bofedales** son humedales de altura que actúan como esponjas naturales, creando oasis de vida. Son el hábitat de flamencos, taguas y numerosas aves. El Bofedal Parinacota es especialmente impresionante.'},
+    {k:['emergencia','medico','hospital','cesfam','urgencia','accidente'],r:'🚑 **CESFAM (Centro de Salud Familiar)** disponible 24/7. Teléfono: **+56 9 5381 1481**. Para emergencias graves, contacta inmediatamente.'},
+    {k:['combustible','gasolina','bencina','diesel','tanque'],r:'⛽😅 ¡Te quedaste sin gasolina! Comunícate con nosotros: **+56 9 5381 1481** (No vendemos, pero te ayudamos a conseguir). ¡Somos del altiplano, no de una gasolinera!'},
+    {k:['mañana','clima'],r:'🌤️ **Mañana en Putre:** Día 18°C - Soleado · Noche -8°C - Muy fría · Viento Moderado. Buen día para excursiones.'},
+    {k:['hoy','clima'],r:'☀️ **Hoy en Putre:** Día 16°C - Soleado · Noche -12°C - Muy fría · Viento Moderado. Protección solar recomendada.'},
+    {k:['noche','clima'],r:'🌙 **Noche en Putre:** Temperatura -10°C - Muy fría · Cielo despejado · Ideal para observar estrellas. Lleva saco grueso.'},
   ],
   en:[
     // ── Hotel & services ──
     {k:['wifi','password','internet'],r:'WiFi password changes periodically. **Ask at reception** for the current one 😊'},
-    {k:['breakfast','morning','eat'],r:'🍳 **Mon–Fri:** 07:30–09:30 · **Sat–Sun–Holidays:** 08:00–10:00'},
-    {k:['check-in','arrival'],r:'**Check-in** from **2:00 PM**.'},
-    {k:['check-out','departure'],r:'**Check-out** by **12:00 PM (noon)**.'},
-    {k:['get to','transport','bus','airport','transfer','pickup','arica','directions','waze','gps','map','maps','navigate','route','address','get here'],r:'🚐 Hotel offers **pickup** from: Arica Airport, Arica bus terminal, your hotel or home. Book via WhatsApp: **+56 9 5381 1481**.\nSelf-drive: ~2h Route 11-CH (145 km) · Bus La Paloma: 3h, departs 06:50.\n\n📍 **Navigate directly to the hotel** (exact coordinates, no GPS errors):\n- [🗺️ Open in Waze](https://waze.com/ul?ll=-18.1964,-69.5589&navigate=yes&zoom=17)\n- [📍 Open in Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)\n\n⚠️ *Use these links — GPS apps sometimes confuse Putre with Belén.*'},
+    {k:['breakfast','morning','eat','what time','when','what hours','what time opens'],r:'🍳 **Mon–Fri:** 07:30–09:30 · **Sat–Sun–Holidays:** 08:00–10:00'},
+    {k:['check-in','arrival','what time','when'],r:'**Check-in** from **2:00 PM**.'}, 
+    {k:['check-out','departure','what time','when'],r:'**Check-out** by **12:00 PM (noon)**.'}, 
+    {k:['get to','transport','bus','airport','transfer','pickup','arica','directions','waze','gps','map','maps','navigate','route','address','get here','how','how to get','how to arrive','how do i get'],r:'🚐 Hotel offers **pickup** from: Arica Airport, Arica bus terminal, your hotel or home. Book via WhatsApp: **+56 9 5381 1481**.\nSelf-drive: ~2h Route 11-CH (145 km) · Bus La Paloma: 3h, departs 06:50.\n\n📍 **Navigate directly to the hotel** (exact coordinates, no GPS errors):\n- [🗺️ Open in Waze](https://waze.com/ul?ll=-18.1964,-69.5589&navigate=yes&zoom=17)\n- [📍 Open in Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)\n\n⚠️ *Use these links — GPS apps sometimes confuse Putre with Belén.*'},
     {k:['contact','phone','whatsapp','call','book','price','cost'],r:'📱 Contact us: **+56 9 5381 1481** (phone & WhatsApp). Happy to help with bookings, tours and any questions.'},
+    {k:['price','how much','cost','what is the price','rate'],r:'📱 For pricing and rates information, contact us: **+56 9 5381 1481** (WhatsApp & phone).'},
     {k:['address','where','location','map'],r:'📍 **Baquedano 80, Putre**, Arica y Parinacota Region, Chile. 3,500m in the Altiplano.\n\n🗺️ [See on Google Maps](https://www.google.com/maps/search/?api=1&query=-18.1964,-69.5589)'},
     {k:['coca','tea','mate','infusion'],r:'🍵 **Coca leaf tea** is a traditional Andean infusion that helps with altitude sickness. Available at the hotel!'},
     // ── Altitude & health ──
@@ -2775,43 +3401,190 @@ const KB = {
     {k:['tree','queñoa','polylepis','flora','plant'],r:'🌳 Right in front of reception stands a **queñoa tree** (Polylepis), the highest-altitude tree in the world!'},
     {k:['fauna','animal','vicuna','flamingo','condor','puma','guanaco'],r:'🦙 Altiplano wildlife: **vicuñas**, **llamas**, **alpacas**, **guanacos**, **condors**, **3 flamingo species**, **vizcachas**, **Andean foxes**, **rheas** and occasional **pumas**. Over 130 bird species in Lauca National Park!'},
     {k:['wetland','bofedal'],r:'💧 **Bofedales** are high-altitude wetlands creating oases of life in the altiplano. Home to flamingos, giant coots and many birds. The Parinacota Bofedal is stunning.'},
+    {k:['emergency','doctor','hospital','cesfam','urgent','accident','ambulance'],r:'🚑 **CESFAM (Family Health Center)** available 24/7. Phone: **+56 9 5381 1481**. For serious emergencies, contact immediately.'},
+  ],
+  fr:[
+    {k:['adresse','localisation','où est','où se trouve'],r:'📍 **Baquedano 80, Putre**, Région d\'Arica y Parinacota, Chili. À 3 500m sur l\'altiplano.'},
+    {k:['wifi','internet','mot de passe'],r:'Le mot de passe WiFi change régulièrement. **Demandez à la réception** le code actuel 😊'},
+    {k:['petit-dejeuner','petit dejeuner','dejeuner','matin','repas','quelle heure','à quelle heure','quand'],r:'🍳 **Lun–Ven :** 07h30–09h30 · **Sam–Dim–Fériés :** 08h00–10h00'},
+    {k:['check-in','arrivee','arriver','quelle heure','à quelle heure','quand'],r:'**Check-in** à partir de **14h00**.'}, 
+    {k:['check-out','depart','partir','quelle heure','à quelle heure','quand'],r:'**Check-out** avant **12h00**.'}, 
+    {k:['transport','bus','aeroport','transfert','venir','aller','route','comment','comment aller','comment arriver','comment venir'],r:'🚐 Transferts depuis l\'aéroport Chacalluta (Arica), gare routière, domicile. WhatsApp : **+56 9 5381 1481**.\nVoiture : ~2h Route 11-CH. Bus La Paloma : 3h, départ 06h50.\n\n📍 [Ouvrir dans Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)'},
+    {k:['contact','telephone','whatsapp','appeler','prix','tarif','reservation'],r:'📱 Contactez-nous : **+56 9 5381 1481** (tél. & WhatsApp). Nous serons ravis de vous aider !'},
+    {k:['prix','combien','combien ça coûte','quel est le prix','tarif'],r:'📱 Pour les tarifs et prix, contactez-nous : **+56 9 5381 1481** (WhatsApp & téléphone).'},
+    {k:['coca','infusion','the de coca'],r:'🍵 Le **thé de coca** est une infusion andine traditionnelle qui aide contre le mal des montagnes. Disponible à l\'hôtel !'},
+    {k:['altitude','mal des montagnes','puna','mal de tete','essoufflement'],r:'🏔️ Putre est à **3 500m**. Reposez-vous le 1er jour, buvez beaucoup d\'eau, évitez l\'alcool 24h, mangez léger. Le **thé de coca** aide beaucoup (disponible à l\'hôtel). Si les symptômes sont sévères, prévenez la réception.'},
+    {k:['tour','excursion','activite','visiter'],r:'🗻 Nos **excursions propres** :\n- **Lauca** 45km · **Parinacota** 47km · **Cotacotani** 52km\n- **Chungará** 55km · **Suriplaza** 70km · **Surire** 96km\n\nRéservations : **+56 9 5381 1481** 📱'},
+    {k:['chungara','lac'],r:'🏞️ Le **Lac Chungará**, l\'un des plus hauts du monde à **4 517m**, reflétant les volcans Parinacota et Pomerape. À 55km de Putre.'},
+    {k:['lauca','parc national'],r:'🌿 Le **Parc National Lauca**, **Réserve de la Biosphère UNESCO**. Plus de 130 espèces d\'oiseaux.'},
+    {k:['parinacota','village'],r:'🏘️ **Parinacota**, village aymara à **4 390m**, église coloniale XVIIe s., **Monument National**. À 47km de Putre.'},
+    {k:['surire','salar'],r:'🦩 Le **Salar de Surire** (96km) abrite les **3 espèces de flamants** de l\'altiplano.'},
+    {k:['sources thermales','thermes','jurasi'],r:'♨️ Les **Sources de Jurasi**, piscines thermales à **4 000m**, à ~10km de Putre.'},
+    {k:['chien','chiens','sultan','lottie','rocky'],r:'🐾 Nos 3 Bergers Allemands :\n- **Sultan** : Imposant mais c\'est un grand bébé adorable !\n- **Lottie** : Vit pour jouer, c\'est la maman de Rocky.\n- **Rocky** : Né avec une queue courte, problèmes articulaires, marche de façon comique 😄\n\n⚠️ **Jamais de pierres** — casse les dents. Bâtons et jouets seulement !'},
+    {k:['meteo','climat','pluie','temperature','froid'],r:'🌤️ Climat altiplano :\n- **Déc–Mar :** Saison des pluies\n- **Avr–Nov :** Sec, idéal pour les étoiles\n- Nuits pouvant descendre sous zéro en hiver'},
+    {k:['etoiles','ciel','nuit','astronomie'],r:'✨ Le ciel nocturne de Putre est **exceptionnel** — la Voie Lactée est visible à l\'œil nu en saison sèche.'},
+    {k:['gastronomie','nourriture','manger','lama','quinoa','truite'],r:'🍲 Gastronomie locale :\n- **Kalapurka** — soupe aux pierres volcaniques\n- **Viande de lama/alpaga** · **Truite d\'altitude** · **Quinoa** · **Chuño**'},
+    {k:['faune','animal','vigogne','flamant','condor'],r:'🦙 Faune : **vigognes**, **lamas**, **condors**, **3 espèces de flamants**, **renards des Andes**, **nandous**. Plus de 130 espèces d\'oiseaux dans le Parc Lauca !'},
+    {k:['urgence','medecin','hopital','cesfam','ambulance','accident'],r:'🚑 **CESFAM (Centre de Santé Familiale)** disponible 24h/24. Téléphone : **+56 9 5381 1481**. Pour les urgences graves, contactez immédiatement.'},
+  ],
+  de:[
+    {k:['adresse','wo ist','wo befindet sich','lage'],r:'📍 **Baquedano 80, Putre**, Region Arica y Parinacota, Chile. Auf 3.500m im Altiplano.'},
+    {k:['wlan','wifi','internet','passwort'],r:'Das WLAN-Passwort wechselt regelmäßig. **An der Rezeption nachfragen** 😊'},
+    {k:['fruhstuck','frühstück','frühstückszeit','morgen','essen','um wie viel uhr','wann','zu welcher zeit'],r:'🍳 **Mo–Fr:** 07:30–09:30 · **Sa–So–Feiertage:** 08:00–10:00'},
+    {k:['check-in','ankunft','ankommen','um wie viel uhr','wann'],r:'**Check-in** ab **14:00 Uhr**.'}, 
+    {k:['check-out','abreise','abreisen','um wie viel uhr','wann'],r:'**Check-out** bis **12:00 Uhr**.'}, 
+    {k:['transfer','bus','flughafen','anreise','route','transport','wie','wie komme','wie fahre','wie geht','wie reise'],r:'🚐 Transfer ab Flughafen Arica, Busbahnhof, Unterkunft. WhatsApp: **+56 9 5381 1481**.\nAuto: ~2h Route 11-CH. Bus La Paloma: 3h, Abfahrt 06:50.\n\n📍 [Google Maps öffnen](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)'},
+    {k:['kontakt','telefon','whatsapp','anrufen','preis','buchung'],r:'📱 Kontakt: **+56 9 5381 1481** (Telefon & WhatsApp). Wir helfen gerne!'},
+    {k:['preis','wie viel','was kostet','kosten','tarif'],r:'📱 Für Preise und Tarife kontaktieren Sie uns: **+56 9 5381 1481** (WhatsApp & Telefon).'},
+    {k:['kokatee','coca','tee','infusion'],r:'🍵 **Kokatee** ist eine traditionelle Andeninfusion, die bei der Höhenanpassung hilft. Im Hotel erhältlich!'},
+    {k:['hohenkrankheit','höhenkrankheit','puna','kopfschmerzen','höhe','schwindel','hohe'],r:'🏔️ Putre liegt auf **3.500m**. Ruhen Sie sich am 1. Tag aus, trinken Sie viel Wasser, kein Alkohol für 24h, leicht essen. **Kokatee** hilft sehr (im Hotel erhältlich). Bei starken Beschwerden bitte die Rezeption informieren.'},
+    {k:['tour','ausflug','aktivitat','aktivität'],r:'🗻 Unsere **eigenen Touren**:\n- **Lauca** 45km · **Parinacota** 47km · **Cotacotani** 52km\n- **Chungará** 55km · **Suriplaza** 70km · **Surire** 96km\n\nBuchung: **+56 9 5381 1481** 📱'},
+    {k:['chungara','see'],r:'🏞️ Der **Chungará-See** (**4.517m**) spiegelt die Payachatas-Vulkane. 55km von Putre.'},
+    {k:['lauca','nationalpark'],r:'🌿 Der **Lauca-Nationalpark**, **UNESCO-Biosphärenreservat**. Über 130 Vogelarten.'},
+    {k:['parinacota','dorf'],r:'🏘️ **Parinacota**, Aymara-Dorf auf **4.390m**, Kolonialkirche als Nationales Monument. 47km von Putre.'},
+    {k:['surire','salzsee'],r:'🦩 Der **Surire-Salzsee** (96km) beherbergt alle **3 Flamingo-Arten** des Altiplanos.'},
+    {k:['thermalquellen','therme','jurasi'],r:'♨️ Die **Jurasi-Thermalquellen** auf **4.000m**, ~10km von Putre.'},
+    {k:['hund','hunde','sultan','lottie','rocky'],r:'🐾 Unsere 3 Schäferhunde:\n- **Sultan**: Sieht streng aus, ist aber ein großes Baby!\n- **Lottie**: Liebt Spielen, Rockys Mama.\n- **Rocky**: Kurzer Schwanz, Gelenkprobleme, läuft komisch 😄\n\n⚠️ **Niemals mit Steinen spielen** — bricht Zähne. Nur Stöcke und Spielzeug!'},
+    {k:['wetter','klima','regen','temperatur','kalte','kälte'],r:'🌤️ Klima:\n- **Dez–Mär:** Regenzeit\n- **Apr–Nov:** Trocken, ideal für Sternegucken\n- Winternächte unter Null möglich'},
+    {k:['sterne','sternenhimmel','nacht','astronomie'],r:'✨ Putes Sternenhimmel ist **außergewöhnlich** — die Milchstraße in der Trockenzeit sichtbar.'},
+    {k:['essen','kuche','küche','lama','quinoa','forelle'],r:'🍲 Lokale Küche:\n- **Kalapurka** — Suppe mit Vulkansteinen\n- **Lama-/Alpakafleisch** · **Forelle** · **Quinoa** · **Chuño**'},
+    {k:['fauna','tier','vikuna','vikunja','flamingo','kondor'],r:'🦙 Tierwelt: **Vikunjas**, **Lamas**, **Kondore**, **3 Flamingo-Arten**, **Andenefüchse**. Über 130 Vogelarten im Lauca-Park!'},
+    {k:['notfall','arzt','krankenhaus','cesfam','ambulanz','unfall'],r:'🚑 **CESFAM (Gesundheitszentrum)** rund um die Uhr verfügbar. Telefon: **+56 9 5381 1481**. Bei schweren Notfällen sofort kontaktieren.'},
+  ],
+  pt:[
+    {k:['endereco','endereço','localização','onde fica','onde esta'],r:'📍 **Baquedano 80, Putre**, Região de Arica y Parinacota, Chile. A 3.500m no altiplano.'},
+    {k:['wifi','internet','senha'],r:'A senha do WiFi muda periodicamente. **Pergunte na recepção** o código atual 😊'},
+    {k:['cafe','café','café da manhã','manha','manhã','comer','que horas','a que horas','quando'],r:'🍳 **Seg–Sex:** 07:30–09:30 · **Sáb–Dom–Feriados:** 08:00–10:00'},
+    {k:['check-in','chegada','chegar','que horas','a que horas','quando'],r:'**Check-in** a partir das **14h00**.'}, 
+    {k:['check-out','saida','saída','partir','que horas','a que horas','quando'],r:'**Check-out** até as **12h00**.'}, 
+    {k:['transporte','onibus','ônibus','aeroporto','translado','como','como chegar','como ir','como viajar'],r:'🚐 Translados do Aeroporto de Arica, Terminal, domicílio. WhatsApp: **+56 9 5381 1481**.\nCarro: ~2h Rota 11-CH. Ônibus La Paloma: 3h, saída 06:50.\n\n📍 [Abrir no Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)'},
+    {k:['contato','telefone','whatsapp','ligar','preco','preço','reserva'],r:'📱 Contato: **+56 9 5381 1481** (tel. & WhatsApp). Com prazer!'},
+    {k:['preço','quanto','quanto custa','qual é o preço','tarifa'],r:'📱 Para informações de preços e tarifas, contate-nos: **+56 9 5381 1481** (WhatsApp & telefone).'},
+    {k:['cha','chá','coca','infusao','infusão'],r:'🍵 O **chá de coca** ajuda com a altitude. Disponível no hotel!'},
+    {k:['altitude','mal de altitude','puna','cabeca','cabeça','falta de ar'],r:'🏔️ Putre está a **3.500m**. Descanse no 1º dia, beba muita água, evite álcool por 24h, coma leve. O **chá de coca** ajuda muito (disponível no hotel). Se os sintomas forem intensos, avise a recepção.'},
+    {k:['tour','excursao','excursão','atividade'],r:'🗻 Nossos **tours próprios**:\n- **Lauca** 45km · **Parinacota** 47km · **Cotacotani** 52km\n- **Chungará** 55km · **Suriplaza** 70km · **Surire** 96km\n\nReservas: **+56 9 5381 1481** 📱'},
+    {k:['chungara','lago'],r:'🏞️ O **Lago Chungará** (**4.517m**) reflete os vulcões Parinacota e Pomerape. A 55km de Putre.'},
+    {k:['lauca','parque nacional'],r:'🌿 O **Parque Nacional Lauca**, **Reserva da Biosfera UNESCO**. Mais de 130 espécies de aves.'},
+    {k:['parinacota','vila','vilarejo'],r:'🏘️ **Parinacota**, vila aymara a **4.390m**, igreja colonial Monumento Nacional. A 47km de Putre.'},
+    {k:['surire','salar'],r:'🦩 O **Salar de Surire** (96km) abriga as **3 espécies de flamingos** do altiplano.'},
+    {k:['termas','aguas quentes','jurasi'],r:'♨️ As **Termas de Jurasi** a **4.000m**, ~10km de Putre.'},
+    {k:['cao','cão','caes','cães','cachorro','sultan','lottie','rocky'],r:'🐾 Nossos 3 Pastores Alemães:\n- **Sultan**: Parece bravo mas é um bebê enorme!\n- **Lottie**: Ama brincar, mamãe do Rocky.\n- **Rocky**: Rabo curto, problemas articulares, anda engraçado 😄\n\n⚠️ **Nunca brincar com pedras** — quebra dentes. Apenas paus e brinquedos!'},
+    {k:['clima','chuva','temperatura','frio','inverno'],r:'🌤️ Clima:\n- **Dez–Mar:** Temporada de chuvas\n- **Abr–Nov:** Seco e limpo, ideal para ver estrelas\n- Noites abaixo de zero no inverno'},
+    {k:['estrelas','ceu','céu','noite'],r:'✨ O céu noturno de Putre é **excepcional** — Via Láctea visível a olho nu na temporada seca.'},
+    {k:['comida','gastronomia','lhama','quinoa','truta'],r:'🍲 Gastronomia:\n- **Kalapurka** · **Carne de lhama/alpaca** · **Truta** · **Quinoa** · **Chuño**'},
+    {k:['fauna','animal','vicunha','flamingo','condor'],r:'🦙 Fauna: **vicunhas**, **lhamas**, **condores**, **3 espécies de flamingos**. Mais de 130 espécies de aves no Parque Lauca!'},
+    {k:['emergencia','medico','hospital','cesfam','urgencia','acidente','ambulancia'],r:'🚑 **CESFAM (Centro de Saúde Familiar)** disponível 24/7. Telefone: **+56 9 5381 1481**. Para emergências graves, contate imediatamente.'},
+  ],
+  it:[
+    {k:['indirizzo','dove','dov\'\u00e8','dove si trova','posizione'],r:'📍 **Baquedano 80, Putre**, Regione di Arica y Parinacota, Cile. A 3.500m sull\'altiplano.'},
+    {k:['wifi','internet','password'],r:'La password WiFi cambia periodicamente. **Chiedere alla reception** il codice attuale 😊'},
+    {k:['colazione','mangiare','mattina','che ora','a che ora','quando'],r:'🍳 **Lun–Ven:** 07:30–09:30 · **Sab–Dom–Festivi:** 08:00–10:00'},
+    {k:['check-in','arrivo','arrivare','che ora','a che ora','quando'],r:'**Check-in** dalle **14:00**.'}, 
+    {k:['check-out','partenza','partire','che ora','a che ora','quando'],r:'**Check-out** entro le **12:00**.'}, 
+    {k:['trasporto','bus','aeroporto','trasferimento','come','come arrivare','come andare','come venire'],r:'🚐 Trasferimenti da aeroporto Arica, stazione bus, domicilio. WhatsApp: **+56 9 5381 1481**.\nAuto: ~2h Rotta 11-CH. Bus La Paloma: 3h, partenza 06:50.\n\n📍 [Apri in Google Maps](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)'},
+    {k:['contatto','telefono','whatsapp','chiamare','prezzo','prenotazione'],r:'📱 Contatto: **+56 9 5381 1481** (tel. & WhatsApp). Siamo a disposizione!'},
+    {k:['prezzo','quanto','quanto costa','quale è il prezzo','tariffa'],r:'📱 Per informazioni su prezzi e tariffe, contattaci: **+56 9 5381 1481** (WhatsApp & telefono).'},
+    {k:['coca','the di coca','tè','infusione'],r:'🍵 Il **tè di coca** aiuta contro il mal di montagna. Disponibile in hotel!'},
+    {k:['altitudine','mal di montagna','puna','mal di testa','mancanza di respiro'],r:'🏔️ Putre è a **3.500m**. Riposarsi il 1° giorno, bere molta acqua, evitare alcol 24h, mangiare leggero. Il **tè di coca** aiuta molto (disponibile in hotel). Se i sintomi sono gravi, avvisare la reception.'},
+    {k:['tour','escursione','attivita','attività'],r:'🗻 I nostri **tour propri**:\n- **Lauca** 45km · **Parinacota** 47km · **Cotacotani** 52km\n- **Chungará** 55km · **Suriplaza** 70km · **Surire** 96km\n\nPrenotazioni: **+56 9 5381 1481** 📱'},
+    {k:['chungara','lago'],r:'🏞️ Il **Lago Chungará** (**4.517m**) riflette i vulcani Parinacota e Pomerape. A 55km da Putre.'},
+    {k:['lauca','parco nazionale'],r:'🌿 Il **Parco Nazionale Lauca**, **Riserva della Biosfera UNESCO**. Oltre 130 specie di uccelli.'},
+    {k:['parinacota','villaggio'],r:'🏘️ **Parinacota**, villaggio aymara a **4.390m**, chiesa coloniale Monumento Nazionale. A 47km da Putre.'},
+    {k:['surire','salar'],r:'🦩 Il **Salar de Surire** (96km) ospita le **3 specie di fenicotteri** dell\'altiplano.'},
+    {k:['terme','sorgenti termali','jurasi'],r:'♨️ Le **Terme di Jurasi** a **4.000m**, ~10km da Putre.'},
+    {k:['cane','cani','sultan','lottie','rocky'],r:'🐾 I nostri 3 Pastori Tedeschi:\n- **Sultan**: Sembra duro ma è un bambino gigante!\n- **Lottie**: Vive per giocare, è la mamma di Rocky.\n- **Rocky**: Coda corta, problemi articolari, cammina in modo buffo 😄\n\n⚠️ **Mai giocare con le pietre** — rompe i denti. Solo bastoni e giocattoli!'},
+    {k:['clima','pioggia','temperatura','freddo','inverno'],r:'🌤️ Clima:\n- **Dic–Mar:** Stagione delle piogge\n- **Apr–Nov:** Secco, ideale per le stelle\n- Notti sotto zero in inverno'},
+    {k:['stelle','cielo','notte'],r:'✨ Il cielo notturno di Putre è **eccezionale** — la Via Lattea è visibile ad occhio nudo.'},
+    {k:['cibo','gastronomia','lama','quinoa','trota'],r:'🍲 Gastronomia:\n- **Kalapurka** · **Carne di lama/alpaca** · **Trota** · **Quinoa** · **Chuño**'},
+    {k:['fauna','animale','vigogna','fenicottero','condor'],r:'🦙 Fauna: **vigogne**, **lama**, **condor**, **3 specie di fenicotteri**. Oltre 130 specie di uccelli nel Parco Lauca!'},
+    {k:['emergenza','medico','ospedale','cesfam','urgenza','incidente','ambulanza'],r:'🚑 **CESFAM (Centro Sanitario Familiare)** disponibile 24/7. Telefono: **+56 9 5381 1481**. Per emergenze gravi, contattare immediatamente.'},
+  ],
+  zh:[
+    {k:['地址','在哪里','位置','酒店地址'],r:'📍 **巴克达诺街80号，普特雷**，智利阿里卡和帕里纳科塔地区。海拒3500米的高原。'},
+    {k:['wifi','网络','密码','无线'],r:'WiFi密码定期更换。请到**前台**询问当前密码 😊'},
+    {k:['早餐','吃饭','早上','餐厅','几点','什么时候','什么时间'],r:'🍳 **周一至周五：** 07:30–09:30 · **周末及节假日：** 08:00–10:00'},
+    {k:['入住','办理入住','几点','什么时候'],r:'**入住时间**从**下午14:00**开始。'}, 
+    {k:['退房','离开','结账','几点','什么时候'],r:'**退房时间**为**中午12:00**前。'}, 
+    {k:['交通','巴士','机场','接送','如何前往','路线','怎样','怎样到达','怎么','怎样去'],r:'🚐 接送服务：阿里卡机场、汽车站、住所。WhatsApp：**+56 9 5381 1481**。\n自驾：11-CH公路约2小时。La Paloma巴士：3小时，06:50出发。\n\n📍 [在谷歌地图中打开](https://www.google.com/maps/dir/?api=1&destination=-18.1964,-69.5589&travelmode=driving)'},
+    {k:['联系','电话','whatsapp','价格','费用','预订'],r:'📱 联系：**+56 9 5381 1481**（电话和WhatsApp）。很高兴为您服务！'},
+    {k:['价格','多少钱','费用','价格表'],r:'📱 了解价格信息，请联系：**+56 9 5381 1481**（WhatsApp和电话）。'},
+    {k:['古柯','古柯茶','茶'],r:'🍵 **古柯茶**有助于缓解高原反应。酒店提供！'},
+    {k:['高原反应','高原','头痛','气喘','适应'],r:'🏔️ 普特雷海拔**3500米**。建议第一天充分休息，多喝水，24小时内避免饮酒，饮食清淡。**古柯茶**很有帮助（酒店提供）。如症状严重，请通知前台。'},
+    {k:['旅游','旅游团','活动','游览'],r:'🗻 我们自营的旅游：\n- **劳卡** 45km · **帕里纳科塔** 47km · **科塔科塔尼** 52km\n- **春加拉** 55km · **苏里普拉萨** 70km · **苏里雷** 96km\n\n预订：**+56 9 5381 1481** 📱'},
+    {k:['春加拉','湖'],r:'🏞️ **春加拉湖**，海拔**4517米**，倒映帕里纳科塔和波梅拉佩火山。距普特雷55公里。'},
+    {k:['劳卡','国家公园'],r:'🌿 **劳卡国家公园**，**联合国教科文组织生物圈保护区**。130多种鸟类。'},
+    {k:['帕里纳科塔','村庄'],r:'🏘️ **帕里纳科塔**，海拔**4390米**艾马拉村落，17世纪教堂为国家历史纪念物。距47公里。'},
+    {k:['苏里雷','盐沼'],r:'🦩 **苏里雷盐沼**（96公里）栖息着**三种火烈鸟**。'},
+    {k:['温泉','胡拉西'],r:'♨️ **胡拉西温泉**，海拔**4000米**，距普特雷约10公里。'},
+    {k:['狗','狗狗','苏丹','洛蒂','洛基','sultan','lottie','rocky'],r:'🐾 我们的3只德国牧羊犬：\n- **苏丹（Sultan）**：看起来威武，其实是大宝宝！\n- **洛蒂（Lottie）**：超爱玩，洛基的妈妈。\n- **洛基（Rocky）**：天生短尾巴，关节问题，走路像跳舞 😄\n\n⚠️ **绝对不要用石头和狗玩** — 会弄坏牙齿。只能用树枝和玩具！'},
+    {k:['气候','天气','下雨','温度','冬天'],r:'🌤️ 气候：\n- **12月–3月：** 雨季\n- **4月–11月：** 干燥晴朗，适合观星\n- 冬季夜晚零度以下'},
+    {k:['星空','星星','夜空','天文'],r:'✨ 普特雷夜空**极为壮观** — 干季可以肉眼看到银河。'},
+    {k:['美食','饮食','食物','骆马','藜麦','鳟鱼'],r:'🍲 当地美食：**卡拉普尔卡汤**（火山石烹制）· **骆马/羊驼肉** · **高原鳟鱼** · **藜麦** · **冻干土豆**'},
+    {k:['动物','野生','小羊驼','火烈鸟','秃鹰'],r:'🦙 野生动物：**小羊驼**、**骆马**、**安第斯秃鹰**、**3种火烈鸟**。劳卡公园130多种鸟类！'},
+    {k:['紧急','医生','医院','cesfam','急诊','事故','救护车'],r:'🚑 **CESFAM（家庭卫生中心）**24/7可用。电话：**+56 9 5381 1481**。如有严重紧急情况，请立即联系。'},
   ]
 };
 const KB_DEFAULT = {
   es:'Puedo ayudarte con **WiFi**, **desayunos**, **check-in/out**, **cómo llegar**, **puna**, **tours**, **los perros del hotel** 🐾, **flora y fauna** y **destinos**. También puedes contactarnos al **+56 9 5381 1481** 📱',
   en:`I can help with **WiFi**, **breakfast**, **check-in/out**, **getting here**, **altitude tips**, **tours**, **hotel dogs** 🐾, **flora & fauna** and **destinations**. Contact us: **+56 9 5381 1481** 📱`,
-  fr:`WiFi, petit-déjeuner, check-in/out, transports, altitude, tours, chiens 🐾, destinations. Contact: **+56 9 5381 1481** 📱`,
-  de:`WLAN, Frühstück, Check-in/out, Anreise, Höhenkrankheit, Touren, Hunde 🐾, Reiseziele. Kontakt: **+56 9 5381 1481** 📱`,
-  pt:`WiFi, café, check-in/out, transporte, altitude, tours, cães 🐾, destinos. Contato: **+56 9 5381 1481** 📱`,
-  it:`WiFi, colazione, check-in/out, trasporto, altitudine, tour, cani 🐾, destinazioni. Contatto: **+56 9 5381 1481** 📱`,
-  zh:`WiFi、早餐、入住/退房、交通、高原反应、旅游、狗狗🐾、目的地。联系: **+56 9 5381 1481** 📱`
+  fr:`Je peux vous aider avec le **WiFi**, le **petit-déjeuner**, le **check-in/out**, les **transports**, l'**altitude**, les **tours**, les **chiens de l'hôtel** 🐾, la **flore & faune** et les **destinations**. Contact : **+56 9 5381 1481** 📱`,
+  de:`Ich helfe gern mit **WLAN**, **Frühstück**, **Check-in/out**, **Anreise**, **Höhenkrankheit**, **Touren**, den **Hotelhunden** 🐾, **Flora & Fauna** und **Reisezielen**. Kontakt: **+56 9 5381 1481** 📱`,
+  pt:`Posso ajudá-lo com **WiFi**, **café da manhã**, **check-in/out**, **como chegar**, **altitude**, **tours**, os **cães do hotel** 🐾, **flora & fauna** e **destinos**. Contato: **+56 9 5381 1481** 📱`,
+  it:`Posso aiutarla con **WiFi**, **colazione**, **check-in/out**, **trasporti**, **altitudine**, **tour**, i **cani dell'hotel** 🐾, **flora & fauna** e **destinazioni**. Contatto: **+56 9 5381 1481** 📱`,
+  zh:`我可以帮您解答关于**WiFi**、**早餐**、**入住/退房**、**如何到达**、**高原反应**、**旅游团**、**酒店狗狗**🐾、**动植物**和**景点目的地**的问题。联系我们：**+56 9 5381 1481** 📱`
 };
 function findKB(q) {
   const qn = q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  // BUG FIX: plain .includes() matched keywords as substrings inside other words.
-  // Example: keyword 'te' (for te/tea) matched inside 'hotel',
-  // so "Tours del hotel" returned the coca-tea response instead of the tours response.
-  // Fix: short keywords (<=3 chars) now require word boundaries.
   function wm(text, kw) {
-    const k = kw.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    if(k.length <= 3) return new RegExp('(?:^|[\\s,.:!?])'+ k +'(?:$|[\\s,.:!?])').test(text);
-    return text.includes(k);
+    const k = kw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/-/g,' ');
+    const t = text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/-/g,' ');
+    if(k.length <= 3) return new RegExp('(?:^|[\\s,.:!?])'+ k +'(?:$|[\\s,.:!?])').test(t);
+    return t.includes(k);
   }
-  for(const r of (KB[lang]||KB.es))
-    for(const k of r.k)
-      if(wm(qn, k)) return r.r;
-  if(lang!=='es') for(const r of KB.es) for(const k of r.k) if(wm(qn, k)) return r.r;
-  return KB_DEFAULT[lang]||KB_DEFAULT.es;
+  
+  // BUG FIX: Collect ALL matching responses, not just first
+  // This allows "check in check out" to return both responses
+  const matches = [];
+  const seen = new Set();
+  
+  // 1. Try language-specific KB first
+  if(KB[lang]) for(const r of KB[lang]) for(const k of r.k) if(wm(qn, k)) { if(!seen.has(r.r)) { matches.push(r.r); seen.add(r.r); } break; }
+  
+  // 2. If no matches in language KB, try English KB as fallback
+  if(matches.length === 0 && lang !== 'en') for(const r of KB.en) for(const k of r.k) if(wm(qn, k)) { if(!seen.has(r.r)) { matches.push(r.r); seen.add(r.r); } break; }
+  
+  // 3. If still no matches, try Spanish KB
+  if(matches.length === 0 && lang !== 'es') for(const r of KB.es) for(const k of r.k) if(wm(qn, k)) { if(!seen.has(r.r)) { matches.push(r.r); seen.add(r.r); } break; }
+  
+  // Return all matches joined with line breaks
+  if(matches.length > 0) return matches.join('\n\n');
+  
+  return KB_DEFAULT[lang]||KB_DEFAULT.en;
 }
-
 function md(t) {
-  return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,'<em>$1</em>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:underline">$1</a>')
-    .replace(/^- (.+)$/gm,'<li>$1</li>')
-    // BUG FIX: was wrapping each <li> in its own <ul>; now groups consecutive <li> elements
-    .replace(/(<li>.*?<\/li>\n?)+/gs, m=>`<ul>${m}</ul>`)
-    .replace(/\n/g,'<br/>');
+  return t
+    // Headings (#, ##, ###)
+    .replace(/^#{4,6} ?(.+)$/gm, '<strong>$1</strong>')
+    .replace(/^### ?(.+)$/gm,    '<h3 class="md-h3">$1</h3>')
+    .replace(/^## ?(.+)$/gm,     '<h3 class="md-h2">$1</h3>')
+    .replace(/^# ?(.+)$/gm,      '<h3 class="md-h1">$1</h3>')
+    // Horizontal rule ---
+    .replace(/^---+$/gm, '<hr class="md-hr"/>')
+    // Bold+italic ***text***
+    .replace(/\*{3}(.+?)\*{3}/g, '<strong><em>$1</em></strong>')
+    // Bold **text**
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italic *text* (avoids matching inside words with newlines)
+    .replace(/\*([^*]+?)\*/g, '<em>$1</em>')
+    // Links [text](url)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:underline">$1</a>')
+    // Lists - item
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*?<\/li>\n?)+/gs, m => `<ul>${m}</ul>`)
+    // Suppress extra newline after block elements
+    .replace(/(<\/h3>|<\/ul>|<hr[^>]*\/>)\n?/g, '$1')
+    // Remaining newlines -> <br>
+    .replace(/\n/g, '<br/>');
 }
 
 function addMsg(role, text) {
@@ -2882,11 +3655,14 @@ function openMemory() {
 }
 function closeMemory() { clearMemory(); goBack(); }
 
-// ── FAUNA SCREEN ──
+/// ── FAUNA SCREEN ──
 
-
-
-
+// High-quality fauna images from CDN
+const FAUNA_IMAGES = {
+  'fp-vicuna': 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/vicuna_new_3f8640ca.jpg',
+  'fp-flamenco': 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/QG0jmzlyBPM0_353b1118.jpg',
+  'fp-condor': 'https://d2xsxph8kpxj0f.cloudfront.net/310519663450457063/nCtzyUzL5Wmutt5otBQS25/condor_new_1de96e60.jpg'
+};
 
 function loadFaunaPhotos() {
   var _wm = {
@@ -2908,13 +3684,13 @@ function loadFaunaPhotos() {
     if(!div || div.getAttribute('data-loaded')) return;
     div.setAttribute('data-loaded','1');
     (async function() {
-      var url = await fetchWikiThumb(_wm[divId]);
+      var url = FAUNA_IMAGES[divId] || await fetchWikiThumb(_wm[divId]);
       if(url) {
         var img = document.createElement('img');
         img.alt = divId;
         img.onload = function() { div.innerHTML=''; div.appendChild(img); };
         img.src = url;
-        img.style.cssText = 'width:100%;height:160px;object-fit:contain;display:block;transition:transform .3s;background:#F5F0EA';
+        img.style.cssText = 'width:100%;height:160px;object-fit:cover;display:block;transition:transform .3s;background:#F5F0EA';
       }
     })();
   });
@@ -3179,26 +3955,46 @@ renderTours();
 </script>
 
 <script>
+function roundRect(c,x,y,w,h,r){
+  c.beginPath();
+  c.moveTo(x+r,y);
+  c.lineTo(x+w-r,y); c.quadraticCurveTo(x+w,y,x+w,y+r);
+  c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
+  c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y);
+  c.closePath();
+}
+
 
 // ════════════════════════════════════════════════════════════════
-// CONFIG
+// CONFIG — 5 NIVELES + FINAL
 // ════════════════════════════════════════════════════════════════
-const TRACK = 1000; // meters
+// track: meters to run. rockRate: 0-1 chance of rock obstacle. condorRate: 0-1 chance condor.
+// speedRamp: max speed multiplier at end of level.
 const DIFFICULTIES = [
-  { name:'Fácil',    nameEn:'facil',  speed:4.5, spawnMin:80,  spawnMax:180, gravity:0.55, jumpV:-13 },
-  { name:'Normal',   nameEn:'normal', speed:6.5, spawnMin:55,  spawnMax:130, gravity:0.60, jumpV:-14 },
-  { name:'Difícil',  nameEn:'dificil',speed:9.0, spawnMin:40,  spawnMax:90,  gravity:0.65, jumpV:-14.5 },
-  { name:'¡Final!',  nameEn:'final',  speed:7.5, spawnMin:50,  spawnMax:120, gravity:0.60, jumpV:-14 }
+  { name:'Amanecer', icon:'🌅', speed:4.0, spawnMin:90,  spawnMax:200, gravity:0.52, jumpV:-12.5, track:800,  rockRate:0,    condorRate:0,    speedRamp:1.15, sky:'dawn'    },
+  { name:'Mañana',   icon:'☀️', speed:5.5, spawnMin:70,  spawnMax:160, gravity:0.55, jumpV:-13.0, track:900,  rockRate:0.25, condorRate:0,    speedRamp:1.20, sky:'morning' },
+  { name:'Tarde',    icon:'🌤️', speed:7.0, spawnMin:55,  spawnMax:120, gravity:0.58, jumpV:-13.5, track:1000, rockRate:0.35, condorRate:0.15, speedRamp:1.25, sky:'afternoon'},
+  { name:'Atardecer',icon:'🌄', speed:8.5, spawnMin:42,  spawnMax:95,  gravity:0.62, jumpV:-14.0, track:1100, rockRate:0.40, condorRate:0.25, speedRamp:1.30, sky:'sunset'  },
+  { name:'Nocturno', icon:'🌙', speed:10.5,spawnMin:32,  spawnMax:72,  gravity:0.66, jumpV:-14.5, track:1200, rockRate:0.45, condorRate:0.30, speedRamp:1.35, sky:'night'   },
+  { name:'¡Final!',  icon:'🏆', speed:8.0, spawnMin:48,  spawnMax:110, gravity:0.60, jumpV:-14.0, track:1000, rockRate:0.35, condorRate:0.20, speedRamp:1.20, sky:'sunset'  }
 ];
 
 // ════════════════════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════════════════════
-let unlocked = [true, false, false]; // levels 0,1,2 unlocked
-let completed = [false, false, false];
+let unlocked  = [true,false,false,false,false]; // 5 levels
+let completed = [false,false,false,false,false];
+let bestScores= [0,0,0,0,0];
 let selectedDiff = 0;
 let gameState = 'idle'; // idle | running | dead | win
-let diff, gameLoop;
+let diff = DIFFICULTIES[0]; // initialize immediately
+let gameLoop;
+
+// ── LIVES SYSTEM ──
+const MAX_LIVES = 2;
+let lives = MAX_LIVES;
+let invincible = 0; // frames of invincibility after losing a life
 
 // ════════════════════════════════════════════════════════════════
 // CANVAS SETUP
@@ -3387,22 +4183,50 @@ const llama = {
 const obstacles = [];
 let nextSpawn = 120;
 
-function spawnCactus(){
-  const sz = 0.6 + Math.random()*0.6; // size multiplier
-  const bw = W*0.042*sz;
-  const bh = H*0.22*sz;
-  const arms = Math.random()<0.65 ? (Math.random()<0.5 ? 1 : 2) : 0;
-  obstacles.push({
-    x: W+bw,
-    y: GH - bh,
-    w: bw, h: bh,
-    arms, sz,
-    scored: false
-  });
+function spawnObstacle(){
+  const r = Math.random();
+  // Decide type: condor > rock > cactus based on level rates
+  if(r < diff.condorRate){
+    // CONDOR — flies at mid height
+    const sz = 0.7 + Math.random()*0.5;
+    const bw = W*0.11*sz;
+    const yOff = H*(0.32 + Math.random()*0.2); // varied height
+    obstacles.push({
+      type:'condor',
+      x: W+bw, y: GH-yOff,
+      w: bw, h: bw*0.5,
+      anim:0, scored:false
+    });
+  } else if(r < diff.condorRate + diff.rockRate){
+    // ROCK — low and wide
+    const sz = 0.5 + Math.random()*0.7;
+    const bw = W*0.07*sz;
+    const bh = H*0.09*sz;
+    obstacles.push({
+      type:'rock',
+      x: W+bw, y: GH-bh,
+      w: bw, h: bh,
+      scored:false
+    });
+  } else {
+    // CACTUS — standard
+    const sz = 0.55 + Math.random()*0.65;
+    const bw = W*0.042*sz;
+    const bh = H*(0.16 + Math.random()*0.12)*sz;
+    const arms = Math.random()<0.6 ? (Math.random()<0.5 ? 1 : 2) : 0;
+    obstacles.push({
+      type:'cactus',
+      x: W+bw, y: GH-bh,
+      w: bw, h: bh,
+      arms, sz, scored:false
+    });
+  }
   nextSpawn = diff.spawnMin + Math.random()*(diff.spawnMax - diff.spawnMin);
 }
+// Keep old name for compat
+const spawnCactus = spawnObstacle;
 
-// ═══ COLLECTIBLE STARS ═══
+// ═══ COLLECTIBLES (stars, shields, coca, vicuña, life) ═══
 const collectibles = [];
 let collectTimer = 0;
 let score = 0;
@@ -3410,68 +4234,101 @@ let combo = 0;
 let comboTimer = 0;
 let screenMsg = '';
 let screenMsgTimer = 0;
+let slowmoTimer = 0; // coca leaf slow-mo
+const SLOWMO_FACTOR = 0.45;
 
 function spawnStar(){
-  const sz = W*0.03;
-  const yRange = GH - H*0.45;
+  const sz = W*0.032;
+  const yRange = GH - H*0.42;
+  const rnd = Math.random();
+  let type;
+  if     (rnd < 0.07) type = 'life';    // 7% extra life
+  else if(rnd < 0.17) type = 'coca';    // 10% coca leaf (slow-mo)
+  else if(rnd < 0.28) type = 'vicuna';  // 11% vicuña coin (big score)
+  else if(rnd < 0.42) type = 'shield';  // 14% shield
+  else                type = 'star';    // 58% star
   collectibles.push({
     x: W + sz,
-    y: H*0.2 + Math.random()*yRange,
+    y: H*0.18 + Math.random()*yRange,
     sz: sz,
-    type: Math.random() < 0.15 ? 'shield' : 'star',
+    type: type,
     anim: Math.random()*Math.PI*2
   });
-  collectTimer = 40 + Math.random()*80;
+  collectTimer = 35 + Math.random()*70;
 }
 
 function drawStar(c, s){
-  s.anim += 0.06;
-  const pulse = 1 + Math.sin(s.anim)*0.12;
+  s.anim += 0.07;
+  const pulse = 1 + Math.sin(s.anim)*0.13;
   const sz = s.sz * pulse;
   c.save();
   c.translate(s.x + sz/2, s.y + sz/2);
-  
-  if(s.type === 'shield'){
-    // Blue shield powerup
-    c.fillStyle = '#4a8fc4';
-    c.strokeStyle = '#fff';
-    c.lineWidth = 2;
-    c.beginPath();
-    c.moveTo(0, -sz*0.7);
-    c.lineTo(sz*0.55, -sz*0.3);
-    c.lineTo(sz*0.55, sz*0.2);
-    c.quadraticCurveTo(0, sz*0.7, 0, sz*0.7);
-    c.quadraticCurveTo(0, sz*0.7, -sz*0.55, sz*0.2);
-    c.lineTo(-sz*0.55, -sz*0.3);
-    c.closePath();
-    c.fill(); c.stroke();
-    // Sparkle
-    c.fillStyle = 'rgba(255,255,255,0.6)';
-    c.beginPath();
-    c.arc(-sz*0.15, -sz*0.15, sz*0.15, 0, Math.PI*2);
-    c.fill();
-  } else {
-    // Golden star
-    c.fillStyle = '#FFD700';
-    c.strokeStyle = '#DAA520';
-    c.lineWidth = 1.5;
-    c.beginPath();
-    for(let i=0; i<5; i++){
-      const a = (i*4*Math.PI/5) - Math.PI/2;
-      // BUG FIX: was `i===0 ? sz*0.5 : sz*0.5` — both branches identical, drew a pentagon.
-      // Correct star shape needs alternating outer (sz*0.5) and inner (sz*0.2) radii.
-      const r = sz*0.5; // outer point
-      c.lineTo(Math.cos(a)*r, Math.sin(a)*r);
-      const a2 = a + 2*Math.PI/5;
-      c.lineTo(Math.cos((a+a2)/2)*sz*0.2, Math.sin((a+a2)/2)*sz*0.2); // inner point
-    }
-    c.closePath();
-    c.fill(); c.stroke();
-    // Shimmer
-    c.fillStyle = 'rgba(255,255,255,0.5)';
-    c.beginPath();
-    c.arc(-sz*0.1, -sz*0.1, sz*0.12, 0, Math.PI*2);
-    c.fill();
+
+  switch(s.type){
+    case 'shield':
+      c.fillStyle='#4a8fc4'; c.strokeStyle='#fff'; c.lineWidth=2;
+      c.beginPath();
+      c.moveTo(0,-sz*.7); c.lineTo(sz*.55,-sz*.3); c.lineTo(sz*.55,sz*.2);
+      c.quadraticCurveTo(0,sz*.7,0,sz*.7);
+      c.quadraticCurveTo(0,sz*.7,-sz*.55,sz*.2); c.lineTo(-sz*.55,-sz*.3);
+      c.closePath(); c.fill(); c.stroke();
+      c.fillStyle='rgba(255,255,255,.6)';
+      c.beginPath(); c.arc(-sz*.15,-sz*.15,sz*.15,0,Math.PI*2); c.fill();
+      break;
+
+    case 'coca':
+      // Green leaf shape
+      c.fillStyle='#3aaa5a'; c.strokeStyle='#1a6a2a'; c.lineWidth=1.5;
+      c.beginPath();
+      c.moveTo(0,-sz*.7);
+      c.quadraticCurveTo(sz*.6,-sz*.2,sz*.3,sz*.5);
+      c.quadraticCurveTo(0,sz*.8,0,sz*.8);
+      c.quadraticCurveTo(-sz*.3,sz*.5,-sz*.6,-sz*.2);
+      c.closePath(); c.fill(); c.stroke();
+      // Leaf vein
+      c.strokeStyle='rgba(255,255,255,.5)'; c.lineWidth=1;
+      c.beginPath(); c.moveTo(0,-sz*.6); c.lineTo(0,sz*.7); c.stroke();
+      break;
+
+    case 'vicuna':
+      // Gold coin with llama silhouette
+      c.fillStyle='#c8a000'; c.strokeStyle='#a07800'; c.lineWidth=2;
+      c.beginPath(); c.arc(0,0,sz*.55,0,Math.PI*2); c.fill(); c.stroke();
+      c.fillStyle='#e8c020';
+      c.beginPath(); c.arc(0,0,sz*.42,0,Math.PI*2); c.fill();
+      // 🦙 text
+      c.fillStyle='#8a6000'; c.font=`bold ${sz*.45}px Arial`;
+      c.textAlign='center'; c.textBaseline='middle';
+      c.fillText('🦙',0,0);
+      break;
+
+    case 'life':
+      // Red heart
+      c.fillStyle='#e03050'; c.strokeStyle='#a01030'; c.lineWidth=1.5;
+      c.beginPath();
+      c.moveTo(0,sz*.3);
+      c.bezierCurveTo(-sz*.6,sz*.0,-sz*.75,-sz*.55,-sz*.35,-sz*.65);
+      c.bezierCurveTo(-sz*.1,-sz*.75,0,-sz*.45,0,-sz*.35);
+      c.bezierCurveTo(0,-sz*.45,sz*.1,-sz*.75,sz*.35,-sz*.65);
+      c.bezierCurveTo(sz*.75,-sz*.55,sz*.6,sz*.0,0,sz*.3);
+      c.closePath(); c.fill(); c.stroke();
+      // Shine
+      c.fillStyle='rgba(255,255,255,.45)';
+      c.beginPath(); c.ellipse(-sz*.2,-sz*.4,sz*.15,sz*.08,-0.5,0,Math.PI*2); c.fill();
+      break;
+
+    default: // star
+      c.fillStyle='#FFD700'; c.strokeStyle='#DAA520'; c.lineWidth=1.5;
+      c.beginPath();
+      for(let i=0;i<5;i++){
+        const a=(i*4*Math.PI/5)-Math.PI/2;
+        c.lineTo(Math.cos(a)*sz*.5, Math.sin(a)*sz*.5);
+        const a2=a+2*Math.PI/5;
+        c.lineTo(Math.cos((a+a2)/2)*sz*.2, Math.sin((a+a2)/2)*sz*.2);
+      }
+      c.closePath(); c.fill(); c.stroke();
+      c.fillStyle='rgba(255,255,255,.5)';
+      c.beginPath(); c.arc(-sz*.1,-sz*.1,sz*.12,0,Math.PI*2); c.fill();
   }
   c.restore();
 }
@@ -3479,23 +4336,41 @@ function drawStar(c, s){
 function collectHitTest(lx, ly, lw, lh){
   for(let i=collectibles.length-1; i>=0; i--){
     const s = collectibles[i];
-    const sx = s.x, sy = s.y, ssz = s.sz;
+    const sx=s.x, sy=s.y, ssz=s.sz;
     if(lx < sx+ssz && lx+lw > sx && ly < sy+ssz && ly+lh > sy){
-      if(s.type === 'shield'){
-        shieldActive = true;
-        shieldTimer = 180; // 3 seconds at 60fps
-        showScreenMsg('🛡️ ESCUDO!');
-      } else {
-        score += 10 * Math.max(1, combo);
-        showScreenMsg(combo > 2 ? '⭐ x'+combo+'!' : '⭐ +10');
+      let pcolor='rgba(255,215,0,';
+      switch(s.type){
+        case 'shield':
+          shieldActive=true; shieldTimer=200;
+          showScreenMsg('🛡️ ¡Escudo!');
+          pcolor='rgba(74,143,196,';
+          break;
+        case 'coca':
+          slowmoTimer=220; // ~3.6s of slow-mo
+          showScreenMsg('🌿 ¡Slow-Mo!');
+          pcolor='rgba(60,180,80,';
+          break;
+        case 'vicuna':
+          const pts=50*Math.max(1,combo);
+          score+=pts;
+          showScreenMsg('🦙 +'+pts+' pts!');
+          pcolor='rgba(200,160,0,';
+          break;
+        case 'life':
+          if(lives < MAX_LIVES){ lives++; updateLivesHUD(); }
+          showScreenMsg('❤️ +1 Vida!');
+          pcolor='rgba(220,50,80,';
+          break;
+        default: // star
+          score += 10*Math.max(1,combo);
+          showScreenMsg(combo>2?'⭐ x'+combo+'!':'⭐ +10');
       }
-      // Collect particles
-      for(let j=0;j<8;j++){
+      // Particles
+      for(let j=0;j<10;j++){
         particles.push({
           x:sx+ssz/2, y:sy+ssz/2,
-          vx:(Math.random()-0.5)*5, vy:-(Math.random()*3+1),
-          life:1, size:4+Math.random()*4,
-          color: s.type==='shield' ? 'rgba(74,143,196,' : 'rgba(255,215,0,'
+          vx:(Math.random()-0.5)*6, vy:-(Math.random()*4+1),
+          life:1, size:3+Math.random()*5, color:pcolor
         });
       }
       collectibles.splice(i,1);
@@ -3586,6 +4461,102 @@ function drawCactus(c, o){
 }
 
 // ════════════════════════════════════════════════════════════════
+// ROCK OBSTACLE
+// ════════════════════════════════════════════════════════════════
+function drawRock(c, o){
+  const x=o.x, y=o.y, w=o.w, h=o.h;
+  // Main rock body
+  const rg = c.createLinearGradient(x,y,x+w,y+h);
+  rg.addColorStop(0,'#a08060');
+  rg.addColorStop(0.5,'#7a6045');
+  rg.addColorStop(1,'#5a4030');
+  c.fillStyle=rg;
+  c.beginPath();
+  c.moveTo(x+w*0.15, y+h);
+  c.lineTo(x, y+h*0.7);
+  c.lineTo(x+w*0.1, y+h*0.3);
+  c.lineTo(x+w*0.35, y);
+  c.lineTo(x+w*0.65, y+h*0.05);
+  c.lineTo(x+w*0.9, y+h*0.25);
+  c.lineTo(x+w, y+h*0.55);
+  c.lineTo(x+w*0.85, y+h);
+  c.closePath(); c.fill();
+  // Highlight
+  c.fillStyle='rgba(255,240,200,0.18)';
+  c.beginPath();
+  c.moveTo(x+w*0.2, y+h*0.35);
+  c.lineTo(x+w*0.4, y+h*0.08);
+  c.lineTo(x+w*0.6, y+h*0.12);
+  c.lineTo(x+w*0.45, y+h*0.45);
+  c.closePath(); c.fill();
+  // Crack line
+  c.strokeStyle='rgba(0,0,0,0.2)';
+  c.lineWidth=1;
+  c.beginPath();
+  c.moveTo(x+w*0.5, y+h*0.15);
+  c.lineTo(x+w*0.42, y+h*0.5);
+  c.lineTo(x+w*0.55, y+h*0.8);
+  c.stroke();
+}
+
+// ════════════════════════════════════════════════════════════════
+// CONDOR OBSTACLE (flying)
+// ════════════════════════════════════════════════════════════════
+function drawCondor(c, o){
+  const x=o.x, y=o.y, w=o.w;
+  o.anim = (o.anim||0) + 0.08;
+  const wing = Math.sin(o.anim)*w*0.22;
+  // Shadow on ground
+  c.save(); c.globalAlpha=0.1;
+  c.fillStyle='#000';
+  c.beginPath();
+  c.ellipse(x+w*0.5, GH+3, w*0.6, 5, 0, 0, Math.PI*2);
+  c.fill(); c.restore();
+  // Body
+  c.fillStyle='#1a1208';
+  c.beginPath();
+  c.ellipse(x+w*0.5, y, w*0.28, w*0.15, 0, 0, Math.PI*2);
+  c.fill();
+  // White neck ruff
+  c.fillStyle='#f0e0c0';
+  c.beginPath();
+  c.ellipse(x+w*0.5, y-w*0.08, w*0.16, w*0.1, 0, 0, Math.PI*2);
+  c.fill();
+  // Left wing
+  c.fillStyle='#1a1208';
+  c.beginPath();
+  c.moveTo(x+w*0.5, y);
+  c.quadraticCurveTo(x+w*0.15, y-wing, x, y+wing*0.3);
+  c.quadraticCurveTo(x+w*0.1, y+w*0.12, x+w*0.5, y+w*0.08);
+  c.closePath(); c.fill();
+  // Right wing
+  c.beginPath();
+  c.moveTo(x+w*0.5, y);
+  c.quadraticCurveTo(x+w*0.85, y-wing, x+w, y+wing*0.3);
+  c.quadraticCurveTo(x+w*0.9, y+w*0.12, x+w*0.5, y+w*0.08);
+  c.closePath(); c.fill();
+  // Wing tips highlight (white band)
+  c.fillStyle='rgba(255,255,255,0.25)';
+  c.beginPath();
+  c.moveTo(x+w*0.1, y+w*0.05);
+  c.lineTo(x, y+wing*0.3);
+  c.lineTo(x+w*0.05, y+w*0.15);
+  c.closePath(); c.fill();
+  c.beginPath();
+  c.moveTo(x+w*0.9, y+w*0.05);
+  c.lineTo(x+w, y+wing*0.3);
+  c.lineTo(x+w*0.95, y+w*0.15);
+  c.closePath(); c.fill();
+  // Beak
+  c.fillStyle='#d4a060';
+  c.beginPath();
+  c.moveTo(x+w*0.52, y-w*0.14);
+  c.lineTo(x+w*0.62, y-w*0.10);
+  c.lineTo(x+w*0.53, y-w*0.08);
+  c.closePath(); c.fill();
+}
+
+// ════════════════════════════════════════════════════════════════
 // BACKGROUND LAYERS (parallax)
 // ════════════════════════════════════════════════════════════════
 const BG = {
@@ -3645,19 +4616,55 @@ const BG = {
   },
 
   draw(c){
-    // SKY gradient — altiplano blue
-    const sg=c.createLinearGradient(0,0,0,GH);
-    sg.addColorStop(0,'#4a8fc4');
-    sg.addColorStop(0.45,'#87CEEB');
-    sg.addColorStop(0.75,'#b8dce8');
-    sg.addColorStop(1,'#d4c4a0');
+    // SKY — dynamic per level
+    const sky = diff.sky || 'morning';
+    const sg = c.createLinearGradient(0,0,0,GH);
+    switch(sky){
+      case 'dawn':
+        sg.addColorStop(0,'#1a1a3a'); sg.addColorStop(0.3,'#7a3060');
+        sg.addColorStop(0.6,'#e07040'); sg.addColorStop(1,'#d4b080'); break;
+      case 'morning':
+        sg.addColorStop(0,'#4a8fc4'); sg.addColorStop(0.45,'#87CEEB');
+        sg.addColorStop(0.75,'#b8dce8'); sg.addColorStop(1,'#d4c4a0'); break;
+      case 'afternoon':
+        sg.addColorStop(0,'#1a6aaa'); sg.addColorStop(0.5,'#4a9ad4');
+        sg.addColorStop(0.85,'#a0c8e0'); sg.addColorStop(1,'#c0b890'); break;
+      case 'sunset':
+        sg.addColorStop(0,'#0a1a3a'); sg.addColorStop(0.25,'#3a1060');
+        sg.addColorStop(0.55,'#c04030'); sg.addColorStop(0.8,'#e08040');
+        sg.addColorStop(1,'#d4a070'); break;
+      case 'night':
+        sg.addColorStop(0,'#040810'); sg.addColorStop(0.5,'#0a1828');
+        sg.addColorStop(0.85,'#1a2a40'); sg.addColorStop(1,'#2a2a1a'); break;
+      default:
+        sg.addColorStop(0,'#4a8fc4'); sg.addColorStop(1,'#d4c4a0');
+    }
     c.fillStyle=sg; c.fillRect(0,0,W,GH);
 
-    // Sun / glow
-    const sg2=c.createRadialGradient(W*0.82,H*0.08,0,W*0.82,H*0.08,H*0.25);
-    sg2.addColorStop(0,'rgba(255,240,180,0.55)');
-    sg2.addColorStop(1,'rgba(255,240,180,0)');
-    c.fillStyle=sg2; c.fillRect(0,0,W,GH);
+    // Night stars
+    if(sky==='night'||sky==='dawn'){
+      c.fillStyle='rgba(255,255,255,0.7)';
+      for(let i=0;i<40;i++){
+        const sx=((i*137.5)%1)*W, sy=((i*73.3)%1)*GH*0.7;
+        const pulse=0.3+0.7*Math.sin((i+this.offset[0]*0.1)*0.8);
+        c.globalAlpha=pulse*0.8;
+        c.beginPath(); c.arc(sx,sy,0.8+i%2,0,Math.PI*2); c.fill();
+      }
+      c.globalAlpha=1;
+    }
+
+    // Sun / Moon glow
+    if(sky==='night'||sky==='dawn'){
+      const mg=c.createRadialGradient(W*0.15,H*0.08,0,W*0.15,H*0.08,H*0.18);
+      mg.addColorStop(0,'rgba(220,220,160,0.7)');
+      mg.addColorStop(1,'rgba(220,220,160,0)');
+      c.fillStyle=mg; c.fillRect(0,0,W,GH);
+    } else {
+      const sg2=c.createRadialGradient(W*0.82,H*0.08,0,W*0.82,H*0.08,H*0.25);
+      sg2.addColorStop(0,sky==='sunset'?'rgba(255,200,100,0.7)':'rgba(255,240,180,0.55)');
+      sg2.addColorStop(1,'rgba(255,240,180,0)');
+      c.fillStyle=sg2; c.fillRect(0,0,W,GH);
+    }
 
     // Far volcanoes
     c.fillStyle='#8B6245';
@@ -3780,11 +4787,13 @@ function addDust(x,y){
 // COLLISION
 // ════════════════════════════════════════════════════════════════
 function hitTest(){
-  const lx=llama.x+llama.w*0.3, ly=llama.y+llama.h*0.15;
-  const lw=llama.w*0.5,        lh=llama.h*0.78;
+  const lx=llama.x+llama.w*0.32, ly=llama.y+llama.h*0.15;
+  const lw=llama.w*0.46,          lh=llama.h*0.75;
   for(const o of obstacles){
-    const ox=o.x+o.w*0.05, ow=o.w*0.9;
-    const oy=o.y,           oh=o.h;
+    // Condor has tighter hit box (avoid wing tips)
+    const pad = o.type==='condor' ? 0.18 : 0.06;
+    const ox=o.x+o.w*pad, ow=o.w*(1-pad*2);
+    const oy=o.y, oh=o.h*(o.type==='condor'?0.7:1);
     if(lx<ox+ow && lx+lw>ox && ly<oy+oh && ly+lh>oy) return true;
   }
   return false;
@@ -3802,10 +4811,16 @@ function tick(){
   if(typeof _wmc==='undefined')window._wmc=0;
   if(++_wmc%600===0){try{ctx.save();ctx.globalAlpha=1/255;ctx.fillStyle='rgb(72,76,86)';ctx.fillRect(W-4,H-4,2,2);ctx.restore();}catch(e){}}
 
-  const spd = diff.speed * (W/800);
+  // Speed ramp: accelerates from 80% to speedRamp% over the level
+  const rampProgress = Math.min(1, pixelsTraveled / totalPixels);
+  const rampMult = 0.80 + (diff.speedRamp - 0.80) * rampProgress;
+  // Slow-mo from coca leaf
+  const slowFactor = slowmoTimer > 0 ? SLOWMO_FACTOR : 1.0;
+  const spd = diff.speed * (W/800) * rampMult * slowFactor;
+  if(slowmoTimer > 0) slowmoTimer--;
 
   // update bg
-  BG.update(diff.speed);
+  BG.update(diff.speed * rampMult * slowFactor);
 
   // draw bg
   BG.draw(ctx);
@@ -3833,8 +4848,12 @@ function tick(){
     if(obstacles[i].x < -obstacles[i].w*2){ obstacles.splice(i,1); }
   }
 
-  // draw obstacles
-  obstacles.forEach(o=>drawCactus(ctx,o));
+  // draw obstacles (multi-type)
+  obstacles.forEach(o=>{
+    if(o.type==='rock')        drawRock(ctx,o);
+    else if(o.type==='condor') drawCondor(ctx,o);
+    else                       drawCactus(ctx,o);
+  });
 
   // update & draw collectibles
   for(let i=collectibles.length-1;i>=0;i--){
@@ -3862,19 +4881,41 @@ function tick(){
     ctx.restore();
   }
 
-  // draw llama
-  llama.draw(ctx);
+  // draw llama (blink when invincible)
+  if(invincible <= 0 || Math.floor(invincible/8)%2===0){
+    llama.draw(ctx);
+  }
 
   // shield glow
   if(shieldActive){
     ctx.save();
-    ctx.strokeStyle = 'rgba(74,143,196,0.6)';
-    ctx.lineWidth = 3;
-    ctx.setLineDash([5,5]);
+    ctx.strokeStyle='rgba(74,143,196,0.7)';
+    ctx.lineWidth=3; ctx.setLineDash([5,5]);
     ctx.beginPath();
-    ctx.ellipse(llama.x+llama.w/2, llama.y+llama.h/2, llama.w*0.7, llama.h*0.6, 0, 0, Math.PI*2);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    ctx.ellipse(llama.x+llama.w/2,llama.y+llama.h/2,llama.w*0.75,llama.h*0.65,0,0,Math.PI*2);
+    ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+  }
+
+  // Slow-mo green tint overlay
+  if(slowmoTimer > 0){
+    ctx.save();
+    const alpha = Math.min(0.12, (slowmoTimer/220)*0.12);
+    ctx.fillStyle='rgba(40,200,80,'+alpha+')';
+    ctx.fillRect(0,0,W,H);
+    // Slow-mo label
+    ctx.globalAlpha=Math.min(1, slowmoTimer/30);
+    ctx.font='bold '+(W*0.028)+'px Jost,sans-serif';
+    ctx.textAlign='center';
+    ctx.fillStyle='#60e060';
+    ctx.fillText('🌿 SLOW-MO', W*0.5, H*0.12);
+    ctx.restore();
+  }
+
+  // Invincibility flash
+  if(invincible>0 && Math.floor(invincible/8)%2===1){
+    ctx.save();
+    ctx.fillStyle='rgba(255,80,80,0.08)';
+    ctx.fillRect(0,0,W,H);
     ctx.restore();
   }
 
@@ -3901,37 +4942,57 @@ function tick(){
 
   // progress
   pixelsTraveled += spd;
-  meters = Math.min(TRACK, Math.round(pixelsTraveled / pixelsPerMeter));
+  meters = Math.min(diff.track, Math.round(pixelsTraveled / pixelsPerMeter));
 
   // HUD
-  const pct = meters/TRACK*100;
+  const pct = meters/diff.track*100;
   document.getElementById('pb').style.width = pct+'%';
-  document.getElementById('hud-m').textContent = meters+' / 1000 m';
+  document.getElementById('hud-m').textContent = meters+' / '+diff.track+' m';
+  const scoreEl = document.getElementById('hud-score');
+  if(scoreEl) scoreEl.textContent = '⭐'+score;
 
-  // Distance milestones
-  if(meters > 0 && meters % 250 === 0 && !_milestone[meters]){
-    _milestone[meters] = true;
-    const msgs = {250:'¡250m! Sigue así 🦙', 500:'¡Mitad del camino! 🏔️', 750:'¡750m! Ya casi! 🔥'};
-    if(msgs[meters]) showScreenMsg(msgs[meters]);
+  // Slow-mo HUD tint
+  const gameWrap = document.getElementById('gw');
+  if(slowmoTimer > 0){
+    gameWrap.style.filter = 'hue-rotate(120deg) saturate(1.4)';
+  } else {
+    gameWrap.style.filter = '';
   }
 
+  // Invincibility blink
+  if(invincible > 0){ invincible--; }
+
+  // Distance milestones
+  const track = diff.track;
+  const msCheck = Math.round(track/4);
+  [msCheck, msCheck*2, msCheck*3].forEach(m=>{
+    if(meters >= m && !_milestone[m]){
+      _milestone[m] = true;
+      const pct2 = Math.round(m/track*100);
+      showScreenMsg(pct2+'% '+diff.icon+' ¡Vamos!');
+    }
+  });
+
   // collision
-  if(hitTest()){
+  if(hitTest() && invincible <= 0){
     if(shieldActive){
-      shieldActive = false;
-      shieldTimer = 0;
+      shieldActive=false; shieldTimer=0;
       showScreenMsg('🛡️ ¡Salvado!');
-      // Remove the obstacle that was hit
       for(let i=obstacles.length-1;i>=0;i--){
-        const o=obstacles[i];
-        const pad=4;
-        if(llama.x+llama.w-pad > o.x && llama.x+pad < o.x+o.w && llama.y+llama.h-pad > o.y){
-          obstacles.splice(i,1);
-          break;
+        const o=obstacles[i]; const pad=4;
+        if(llama.x+llama.w-pad>o.x && llama.x+pad<o.x+o.w && llama.y+llama.h-pad>o.y){
+          obstacles.splice(i,1); break;
         }
       }
+    } else if(lives > 0){
+      lives--;
+      updateLivesHUD();
+      invincible = 110; // ~1.8s
+      obstacles.length = 0; // clear nearby danger
+      showScreenMsg('💔 -1 Vida '+(lives>0?'❤️'.repeat(lives):'¡Última oportunidad!'));
     } else {
       gameState='dead';
+      if(score > bestScores[selectedDiff]) bestScores[selectedDiff]=score;
       showOverlay('dead', meters);
       return;
     }
@@ -3953,17 +5014,15 @@ function tick(){
   }
 
   // WIN
-  if(meters >= TRACK){
+  if(meters >= diff.track){
     gameState='win';
+    if(score > bestScores[selectedDiff]) bestScores[selectedDiff]=score;
     if(isFinalLevel){
       startCinematic();
     } else {
+      completed[selectedDiff]=true;
+      if(selectedDiff < 4){ unlocked[selectedDiff+1]=true; }
       showOverlay('win', meters);
-      // unlock next
-      if(selectedDiff < 2){
-        completed[selectedDiff]=true;
-        unlocked[selectedDiff+1]=true;
-      }
     }
     return;
   }
@@ -3988,25 +5047,27 @@ function showOverlay(type, m){
     icon.textContent='💨';
     stars.textContent='';
     title.textContent = t.ovDead||'¡Ay!';
-    sub.textContent = m+' '+(t.ovDeadSub||'m de los 1000.')+(score>0?'\n⭐ '+score+' pts':'');
+    const trackLen = diff ? diff.track : 1000;
+    sub.textContent = m+' / '+trackLen+' '+(t.ovDeadSub||'m')+(score>0?'\n⭐ '+score+' pts':'')+(lives<=0?'\n💔 Sin vidas restantes':'');
     btn1.textContent = t.ovRetry||'Intentar de nuevo';
     btn1.onclick=()=>{ hideOverlay(); restartGame(); };
     btn2.textContent = t.ovMenu||'Menú';
     btn2.onclick=()=>{ hideOverlay(); backToMenu(); };
   } else {
-    const isLast = selectedDiff===2;
+    const isLast = selectedDiff===4;
     icon.textContent='🏆';
-    const s = selectedDiff===0?'⭐':selectedDiff===1?'⭐⭐':'⭐⭐⭐';
-    stars.textContent=s;
-    title.textContent = isLast ? (t.ovFinalWin||'¡Increíble!') : (t.ovWin||'¡1000 metros!');
+    const starCount = score<100?1:score<300?2:3;
+    stars.textContent = '⭐'.repeat(starCount);
+    const d = DIFFICULTIES[selectedDiff];
+    title.textContent = isLast ? (t.ovFinalWin||'¡Leyenda del Altiplano!') : (t.ovWin||'¡'+d.track+' metros!');
     if(isLast){
-      sub.textContent = t.ovFinalSub||'¡Completaste todos los niveles!';
-      btn1.textContent = t.ovFinalBtn||'¡Nivel Final!';
+      sub.textContent = (t.ovFinalSub||'¡Completaste todos los niveles!')+'\n⭐ '+score+' pts';
+      btn1.textContent = t.ovFinalBtn||'🎬 Ver Cinemática';
       btn1.onclick=()=>{ hideOverlay(); startFinal(); };
     } else {
-      const diffName = DIFFICULTIES[selectedDiff].name;
-      sub.textContent = (t.ovWinSub||'¡Superaste {diff}!').replace('{diff}', diffName)+(score>0?'\n⭐ '+score+' pts':'');
-      btn1.textContent = t.ovNext||'Siguiente nivel →';
+      sub.textContent = (t.ovWinSub||'¡Superaste {diff}!').replace('{diff}', d.icon+' '+d.name)
+                        +'\n⭐ '+score+' pts · Mejor: '+bestScores[selectedDiff];
+      btn1.textContent = (t.ovNext||'Siguiente: ')+DIFFICULTIES[selectedDiff+1].icon+' '+DIFFICULTIES[selectedDiff+1].name+' →';
       btn1.onclick=()=>{
         hideOverlay();
         selDiff(selectedDiff+1);
@@ -4035,24 +5096,24 @@ function startGame(){
   document.getElementById('sc-start').classList.add('gone');
   setTimeout(()=>document.getElementById('sc-start').classList.add('off'),400);
   document.getElementById('gw').classList.add('on');
-  document.getElementById('hud-d').textContent = diff.name;
+  document.getElementById('hud-d').textContent = diff.icon+' '+diff.name;
 }
 
 function startFinal(){
   isFinalLevel = true;
-  diff = {...DIFFICULTIES[3]};
-  completed[2]=true;
+  diff = {...DIFFICULTIES[5]}; // final config
+  completed[4]=true;
   initGame();
   document.getElementById('sc-start').classList.add('gone');
   setTimeout(()=>document.getElementById('sc-start').classList.add('off'),400);
   document.getElementById('gw').classList.add('on');
-  document.getElementById('hud-d').textContent=(T&&T[lang]&&T[lang].finalLevel)||'¡NIVEL FINAL!';
+  document.getElementById('hud-d').textContent='🏆 '+(T&&T[lang]&&T[lang].finalLevel||'¡NIVEL FINAL!');
 }
 
 function initGame(){
   resize();
-  pixelsPerMeter = W * 0.8 / 100; // ~8px per meter at 800w
-  totalPixels = TRACK * pixelsPerMeter;
+  pixelsPerMeter = W * 0.8 / 100;
+  totalPixels = diff.track * pixelsPerMeter;
   pixelsTraveled = 0;
   meters = 0;
   obstacles.length = 0;
@@ -4061,8 +5122,11 @@ function initGame(){
   score = 0; combo = 0; comboTimer = 0;
   collectTimer = 60;
   shieldActive = false; shieldTimer = 0;
+  slowmoTimer = 0;
+  invincible = 0;
+  lives = MAX_LIVES;
   screenMsg = ''; screenMsgTimer = 0;
-  spawnTimer = 70;
+  spawnTimer = 80;
   if(typeof _milestone==='undefined') window._milestone={};
   _milestone = {};
   BG.init();
@@ -4070,8 +5134,16 @@ function initGame(){
   gameState='running';
   cancelAnimationFrame(gameLoop);
   document.getElementById('pb').style.width='0%';
-  document.getElementById('hud-m').textContent='0 / 1000 m';
+  document.getElementById('hud-m').textContent='0 / '+diff.track+' m';
+  document.getElementById('hud-d').textContent = diff.icon+' '+diff.name;
+  updateLivesHUD();
   gameLoop = requestAnimationFrame(tick);
+}
+
+function updateLivesHUD(){
+  const el = document.getElementById('hud-lives');
+  if(!el) return;
+  el.textContent = '❤️'.repeat(Math.max(0,lives)) + (lives===0?'🖤':'');
 }
 
 function restartGame(){
@@ -4082,9 +5154,12 @@ function backToMenu(){
   cancelAnimationFrame(gameLoop);
   gameState='idle';
   gamePaused=false;
+  slowmoTimer=0;
+  const gw=document.getElementById('gw');
+  gw.classList.remove('on');
+  gw.style.filter='';
   const pb=document.getElementById('hud-pause');
   if(pb){pb.textContent='⏸';pb.classList.remove('paused');}
-  document.getElementById('gw').classList.remove('on');
   const sc=document.getElementById('sc-start');
   sc.classList.remove('off','gone');
   updateDiffUI();
@@ -4117,15 +5192,27 @@ function togglePause(){
 function selDiff(i){
   if(!unlocked[i]) return;
   selectedDiff=i;
+  diff = DIFFICULTIES[i]; // update diff preview
   updateDiffUI();
+  // update go button
+  const btn = document.querySelector('#game-container .go-btn');
+  if(btn) btn.textContent = '¡Correr! '+DIFFICULTIES[i].icon;
 }
 
 function updateDiffUI(){
-  for(let i=0;i<3;i++){
+  for(let i=0;i<5;i++){
     const btn=document.getElementById('db-'+i);
+    if(!btn) continue;
     btn.classList.toggle('locked', !unlocked[i]);
     btn.classList.toggle('sel', i===selectedDiff);
     btn.classList.toggle('done', completed[i]);
+  }
+  // High scores display
+  const hs = document.getElementById('g-hiscores');
+  if(hs){
+    hs.innerHTML = DIFFICULTIES.slice(0,5).map((d,i)=>
+      completed[i] ? '<span style="font-size:.58rem;color:rgba(196,149,106,.6);background:rgba(255,255,255,.05);border:1px solid rgba(196,149,106,.15);border-radius:6px;padding:2px 7px">'+d.icon+' ⭐'+bestScores[i]+'</span>' : ''
+    ).join('');
   }
 }
 
@@ -4904,21 +5991,51 @@ function memFlipCard(idx){
 }
 
 // ═══ FIXED MATCH LOGIC: dog + view must BOTH match ═══
+let memStreak = 0; // consecutive matches
+
+function showMemStreak(count) {
+  const el = document.getElementById('mem-streak-popup');
+  if (!el) return;
+  const msgs = ['','','🔥 x2 ¡Racha!','🔥🔥 x3 ¡Imparable!','⚡ x4 ¡Increíble!','💥 x5+ ¡Legendario!'];
+  const msg = count >= 5 ? '💥 x'+count+' ¡LEYENDA!' : msgs[count] || '';
+  if (!msg) return;
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.style.animation = 'none';
+  void el.offsetWidth; // reflow
+  el.style.animation = 'streakPop .9s ease-out forwards';
+  setTimeout(() => { el.style.display = 'none'; }, 900);
+}
+
 function checkMemMatch(){
   const [a,b]=memFlipped;
   const cardA=memDeck[a], cardB=memDeck[b];
   if(cardA.dog===cardB.dog && cardA.view===cardB.view){
     // MATCH!
+    memStreak++;
     memSound('match');
     memMatched.add(a);memMatched.add(b);memPairs++;
     const elA=document.querySelector('.mem-card[data-idx="'+a+'"]');
     const elB=document.querySelector('.mem-card[data-idx="'+b+'"]');
     if(elA){elA.classList.add('matched','match-pop');}
     if(elB){elB.classList.add('matched','match-pop');}
+    // Streak flash on board
+    if(memStreak >= 2) {
+      [elA, elB].forEach(el => {
+        if(el) {
+          const flash = document.createElement('div');
+          flash.className = 'mem-streak-flash';
+          el.appendChild(flash);
+          setTimeout(() => flash.remove(), 500);
+        }
+      });
+      showMemStreak(memStreak);
+    }
     memFlipped=[];memLocked=false;updateMemHUD();
     if(memPairs>=memTotalPairs) setTimeout(showMemWin,600);
   } else {
-    // MISMATCH — shake then flip back
+    // MISMATCH — reset streak, shake then flip back
+    memStreak = 0;
     memSound('error');
     const elA=document.querySelector('.mem-card[data-idx="'+a+'"]');
     const elB=document.querySelector('.mem-card[data-idx="'+b+'"]');
@@ -4954,11 +6071,14 @@ function showMemWin(){
   const t=T[lang]||T.es;
   const stars=getMemStars();
 
-  // Light up stars
+  // Light up stars with stagger
   for(let i=1;i<=3;i++){
     const s=document.getElementById('ms'+i);
     if(s){
-      if(i<=stars){s.classList.add('lit');} else {s.classList.remove('lit');}
+      s.classList.remove('lit');
+      if(i<=stars){
+        setTimeout(()=>s.classList.add('lit'), i*220);
+      }
     }
   }
 
@@ -4968,11 +6088,13 @@ function showMemWin(){
   const key='memBest_'+memDiffIdx;
   const prev=parseInt(localStorage.getItem(key)||'999999');
   const bestEl=document.getElementById('mw-best');
+  const newRecordTxt = {es:'¡Nuevo récord!',en:'New record!',fr:'Nouveau record !',de:'Neuer Rekord!',pt:'Novo recorde!',it:'Nuovo record!',zh:'新纪录！'};
+  const bestScoreTxt = {es:'Mejor: ',en:'Best: ',fr:'Meilleur: ',de:'Bestzeit: ',pt:'Melhor: ',it:'Migliore: ',zh:'最佳: '};
   if(memMoves<prev){
     localStorage.setItem(key,''+memMoves);
-    if(bestEl) bestEl.textContent='🎉 '+(lang==='es'?'¡Nuevo récord!':'New record!');
+    if(bestEl) bestEl.textContent='🎉 '+(newRecordTxt[lang]||newRecordTxt.en);
   } else {
-    if(bestEl) bestEl.textContent=(lang==='es'?'Mejor: ':'Best: ')+prev+' '+(t.mhMov||'mov');
+    if(bestEl) bestEl.textContent=(bestScoreTxt[lang]||bestScoreTxt.en)+prev+' '+(t.mhMov||'mov');
   }
 
   document.getElementById('mem-win').classList.add('show');
@@ -4983,6 +6105,7 @@ function memWinAgain(){document.getElementById('mem-win').classList.remove('show
 function clearMemory(){
   if(memTimer) clearInterval(memTimer);
   memFlipped=[];memMatched=new Set();memLocked=false;memMoves=0;memPairs=0;memSeconds=0;
+  memStreak=0;
   document.getElementById('mem-start').style.display='flex';
   document.getElementById('mem-board-wrap').style.display='none';
   document.getElementById('mem-hud').style.display='none';
@@ -5016,13 +6139,13 @@ function loadFaunaPhotos() {
     if(!div || div.getAttribute('data-loaded')) return;
     div.setAttribute('data-loaded','1');
     (async function() {
-      var url = await fetchWikiThumb(_wm[divId]);
+      var url = FAUNA_IMAGES[divId] || await fetchWikiThumb(_wm[divId]);
       if(url) {
         var img = document.createElement('img');
         img.alt = divId;
         img.onload = function() { div.innerHTML=''; div.appendChild(img); };
         img.src = url;
-        img.style.cssText = 'width:100%;height:160px;object-fit:contain;display:block;transition:transform .3s;background:#F5F0EA';
+        img.style.cssText = 'width:100%;height:160px;object-fit:cover;display:block;transition:transform .3s;background:#F5F0EA';
       }
     })();
   });
