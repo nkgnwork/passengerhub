@@ -47,8 +47,8 @@
   <!-- Theme color (browser bar color on mobile) -->
   <meta name="theme-color" content="#3B1A08">
   <meta name="author" content="Hotel Las Vicuñas, Putre, Chile">
+  <!-- ═══ STYLES ═══ -->
   <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -84,7 +84,9 @@ body { height: 100%; overflow: hidden; -webkit-overflow-scrolling: touch; }
 body { font-family: var(--ff-body); background: var(--cream); color: var(--text); }
 
 /* ══════════════════════════════════════════════════
-   SCREEN SYSTEM
+
+
+SCREEN SYSTEM
 ══════════════════════════════════════════════════ */
 .app-screen {
   position: fixed; inset: 0; display: flex; flex-direction: column;
@@ -360,316 +362,9 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 
 
 /* ══════════════════════════════════════════════════
-   TOURS SCREEN
-══════════════════════════════════════════════════ */
-#s-tours { background: var(--cream); }
-.tours-header {
-  padding: 18px 16px 14px;
-  background: linear-gradient(135deg, var(--earth) 0%, #5A2E10 60%, var(--wood) 100%);
-  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
-}
-.tours-header .back-btn { color: var(--sand); }
-.tours-title {
-  font-family: var(--ff-display); font-size: 1.25rem; font-weight: 500;
-  color: var(--sand); font-style: italic;
-}
-.tours-subtitle {
-  font-size: .65rem; color: rgba(255,253,249,.6); margin-top: 2px;
-}
 
-.tours-tabs {
-  display: flex; background: var(--parchment); flex-shrink: 0;
-  border-bottom: 1px solid var(--stone);
-}
-.tours-tab {
-  flex: 1; padding: 12px 8px; text-align: center;
-  font-size: .72rem; font-weight: 600; letter-spacing: .03em;
-  color: var(--text-mid); background: none; border: none;
-  border-bottom: 3px solid transparent; cursor: pointer;
-  transition: all .2s;
-}
-.tours-tab.active {
-  color: var(--earth); border-bottom-color: var(--gold);
-  background: var(--cream);
-}
 
-.tours-panel { display: none; flex: 1; overflow-y: auto; padding: 14px 16px 80px; -webkit-overflow-scrolling: touch; }
-.tours-panel.active { display: block; }
-
-.tour-card {
-  background: var(--white); border-radius: var(--r-lg);
-  margin-bottom: 14px; overflow: hidden;
-  box-shadow: 0 2px 10px rgba(28,8,0,.06);
-  border-left: 4px solid var(--gold);
-}
-.tour-card-header {
-  padding: 16px 16px 12px; cursor: pointer;
-  display: flex; align-items: flex-start; gap: 12px;
-}
-.tour-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; flex-shrink: 0;
-  background: linear-gradient(135deg, #E8DDD0, #D4C4B0);
-}
-.tour-info { flex: 1; }
-.tour-name {
-  font-family: var(--ff-display); font-size: .95rem; font-weight: 600;
-  color: var(--earth); line-height: 1.3;
-}
-.tour-meta {
-  display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;
-}
-.tour-badge {
-  font-size: .62rem; font-weight: 500; padding: 3px 8px;
-  border-radius: 10px; letter-spacing: .02em;
-}
-.tour-badge.duration { background: #E8F4E8; color: #2D6A2E; }
-.tour-badge.includes { background: #FFF3E0; color: #A0522D; }
-.tour-badge.type { background: #E8EAF6; color: #3949AB; }
-.tour-toggle {
-  font-size: 1.2rem; color: var(--gold); transition: transform .3s;
-  flex-shrink: 0; margin-top: 4px;
-}
-.tour-card.open .tour-toggle { transform: rotate(180deg); }
-
-.tour-details {
-  display: none; padding: 0 16px 16px;
-  border-top: 1px solid var(--stone);
-}
-.tour-card.open .tour-details { display: block; }
-
-.tour-section-label {
-  font-size: .65rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--caramel); margin: 14px 0 8px;
-}
-.tour-route {
-  font-size: .78rem; color: var(--text); line-height: 1.6;
-  padding-left: 4px;
-}
-.tour-route-step {
-  display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;
-}
-.tour-route-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--gold); flex-shrink: 0; margin-top: 5px;
-}
-.tour-flora-fauna {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-}
-.tour-ff-box {
-  background: var(--parchment); border-radius: var(--r-sm);
-  padding: 10px;
-}
-.tour-ff-title {
-  font-size: .65rem; font-weight: 700; margin-bottom: 6px;
-}
-.tour-ff-title.flora { color: #2E7D32; }
-.tour-ff-title.fauna { color: #5D4037; }
-.tour-ff-list {
-  font-size: .72rem; color: var(--text-mid); line-height: 1.5;
-}
-
-.tour-cta {
-  display: flex; justify-content: center; margin-top: 14px;
-}
-.tour-whatsapp-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 10px 20px; background: #25D366; color: #fff;
-  border-radius: 22px; font-family: var(--ff-body);
-  font-size: .78rem; font-weight: 600;
-  text-decoration: none; letter-spacing: .3px;
-  transition: transform .2s, box-shadow .2s;
-  box-shadow: 0 3px 10px rgba(37,211,102,.3);
-}
-.tour-whatsapp-btn:active {
-  transform: scale(.96);
-}
-
-/* Transfers section */
-.transfers-info {
-  background: var(--white); border-radius: var(--r-lg);
-  padding: 18px; margin-bottom: 14px;
-  box-shadow: 0 2px 10px rgba(28,8,0,.06);
-  border-left: 4px solid var(--caramel);
-}
-.transfers-title {
-  font-family: var(--ff-display); font-size: 1rem; font-weight: 600;
-  color: var(--earth); margin-bottom: 10px;
-}
-.transfer-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 0; border-bottom: 1px solid var(--parchment);
-}
-.transfer-item:last-child { border-bottom: none; }
-.transfer-icon { font-size: 1.2rem; }
-.transfer-text { font-size: .78rem; color: var(--text); flex: 1; line-height: 1.4; }
-.transfer-time { font-size: .68rem; color: var(--caramel); font-weight: 600; }
-
-/* ══════════════════════════════════════════════════
-   FLORA Y FAUNA PANEL
-══════════════════════════════════════════════════ */
-.ff-scroll {
-  flex: 1; overflow-y: auto;
-  padding: 14px 14px 80px;
-  -webkit-overflow-scrolling: touch;
-}
-.ff-scroll::-webkit-scrollbar { display: none; }
-.ff-section-hdr {
-  display: flex; align-items: center; gap: 8px;
-  padding: 14px 2px 8px;
-  border-bottom: 2px solid var(--stone);
-  margin-bottom: 12px;
-}
-.ff-section-hdr:first-child { padding-top: 2px; }
-.ff-section-icon { font-size: 1.4rem; }
-.ff-section-title {
-  font-family: var(--ff-display); font-size: 1.05rem;
-  font-weight: 600; color: var(--earth); font-style: italic;
-}
-.ff-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 11px; margin-bottom: 8px;
-}
-.ff-card {
-  background: var(--white); border-radius: var(--r-md);
-  overflow: hidden; cursor: pointer;
-  box-shadow: 0 2px 10px rgba(28,8,0,.08);
-  transition: transform .22s ease, box-shadow .22s ease;
-  border-bottom: 3px solid var(--gold);
-}
-.ff-card:active { transform: scale(.96); box-shadow: 0 1px 4px rgba(28,8,0,.1); }
-.ff-img {
-  height: 100px; position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #E8DDD0, #C4B090);
-}
-.ff-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ff-placeholder { font-size: 2.4rem; opacity: .45; }
-.ff-badge {
-  position: absolute; top: 5px; left: 5px;
-  background: rgba(28,8,0,.62); color: #fff;
-  border-radius: 20px; padding: 2px 7px;
-  font-size: .52rem; font-weight: 700;
-  letter-spacing: .05em; text-transform: uppercase;
-  backdrop-filter: blur(4px);
-}
-.ff-body { padding: 8px 9px 10px; }
-.ff-name {
-  font-family: var(--ff-display); font-size: .82rem;
-  font-weight: 600; color: var(--earth); line-height: 1.25;
-  margin-bottom: 2px;
-}
-.ff-sci {
-  font-size: .6rem; font-style: italic;
-  color: var(--caramel); margin-bottom: 4px;
-}
-.ff-desc { font-size: .66rem; color: var(--text-mid); line-height: 1.45; }
-
-/* Flora y Fauna Modal */
-.ff-modal-bg {
-  display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(28,8,0,.72); align-items: flex-end;
-  justify-content: center;
-}
-.ff-modal-bg.open { display: flex; }
-.ff-modal {
-  background: var(--white); border-radius: 20px 20px 0 0;
-  width: 100%; max-width: 480px; max-height: 82vh;
-  overflow-y: auto; padding-bottom: 32px;
-}
-.ff-modal-img {
-  width: 100%; height: 220px; object-fit: cover;
-  background: linear-gradient(135deg, #D4C4B0, #B8A080);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 4rem; border-radius: 20px 20px 0 0;
-  overflow: hidden;
-}
-.ff-modal-img img { width: 100%; height: 100%; object-fit: cover; }
-.ff-modal-body { padding: 20px 20px 0; }
-.ff-modal-cat {
-  font-size: .6rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--caramel); margin-bottom: 4px;
-}
-.ff-modal-name {
-  font-family: var(--ff-display); font-size: 1.3rem;
-  font-weight: 600; color: var(--earth); margin-bottom: 2px;
-}
-.ff-modal-sci {
-  font-size: .72rem; font-style: italic; color: var(--caramel);
-  margin-bottom: 14px;
-}
-.ff-modal-desc {
-  font-size: .84rem; color: var(--text); line-height: 1.7;
-  margin-bottom: 16px;
-}
-.ff-modal-close {
-  width: 100%; padding: 13px; margin-top: 8px;
-  background: var(--earth); color: var(--white);
-  border: none; border-radius: var(--r-md);
-  font-family: var(--ff-body); font-size: .82rem;
-  font-weight: 600; cursor: pointer; letter-spacing: .06em;
-}
-
-/* ══════════════════════════════════════════════════
-   PAUSE BUTTON & OVERLAY
-══════════════════════════════════════════════════ */
-#pause-btn {
-  position: absolute; top: 7px; right: 10px; z-index: 25;
-  width: 34px; height: 34px;
-  background: rgba(0,0,0,.45); border: none; border-radius: 8px;
-  color: #fff; font-size: 1rem; display: flex;
-  align-items: center; justify-content: center;
-  cursor: pointer; transition: background .18s;
-}
-#pause-btn:hover { background: rgba(0,0,0,.65); }
-#pause-overlay {
-  display: none; position: absolute; inset: 0; z-index: 30;
-  background: rgba(10,3,0,.78); flex-direction: column;
-  align-items: center; justify-content: center; gap: 18px;
-  border-radius: 0;
-}
-#pause-overlay.on { display: flex; }
-#pause-overlay h2 {
-  font-family: var(--ff-display); font-size: 1.8rem;
-  color: var(--sand); font-style: italic; letter-spacing: .04em;
-}
-.pause-btn-row { display: flex; flex-direction: column; gap: 11px; width: 220px; }
-.pause-btn-item {
-  padding: 13px; border: none; border-radius: var(--r-md);
-  font-family: var(--ff-body); font-size: .82rem; font-weight: 600;
-  cursor: pointer; letter-spacing: .05em;
-}
-.pause-btn-primary { background: var(--gold); color: var(--earth); }
-.pause-btn-secondary { background: rgba(255,255,255,.12); color: var(--white); }
-.pause-btn-exit { background: transparent; color: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.2); }
-
-/* Memory pause */
-#mem-pause-btn {
-  background: transparent; border: 1px solid rgba(196,149,106,.3);
-  border-radius: 7px; color: var(--sand); font-size: .9rem;
-  padding: 4px 10px; cursor: pointer; margin-left: auto;
-}
-#mem-pause-overlay {
-  display: none; position: fixed; inset: 0; z-index: 150;
-  background: rgba(10,3,0,.82); flex-direction: column;
-  align-items: center; justify-content: center; gap: 16px;
-}
-#mem-pause-overlay.on { display: flex; }
-#mem-pause-overlay h2 {
-  font-family: var(--ff-display); font-size: 1.6rem;
-  color: var(--sand); font-style: italic;
-}
-.mem-pause-btn {
-  width: 200px; padding: 13px; border: none; border-radius: var(--r-md);
-  font-family: var(--ff-body); font-size: .82rem; font-weight: 600;
-  cursor: pointer;
-}
-.mem-pause-primary { background: var(--gold); color: var(--earth); }
-.mem-pause-exit { background: rgba(255,255,255,.12); color: var(--white); margin-top: 4px; }
-
-/* ══════════════════════════════════════════════════
-   CHAT SCREEN
+CHAT SCREEN
 ══════════════════════════════════════════════════ */
 #s-chat { background: var(--cream); }
 
@@ -949,6 +644,319 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
   transition: background .2s;
 }
 .m-close:hover { background: var(--wood); }
+
+/* ══════════════════════════════════════════════════
+
+
+TOURS SCREEN
+══════════════════════════════════════════════════ */
+#s-tours { background: var(--cream); }
+.tours-header {
+  padding: 18px 16px 14px;
+  background: linear-gradient(135deg, var(--earth) 0%, #5A2E10 60%, var(--wood) 100%);
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+}
+.tours-header .back-btn { color: var(--sand); }
+.tours-title {
+  font-family: var(--ff-display); font-size: 1.25rem; font-weight: 500;
+  color: var(--sand); font-style: italic;
+}
+.tours-subtitle {
+  font-size: .65rem; color: rgba(255,253,249,.6); margin-top: 2px;
+}
+
+.tours-tabs {
+  display: flex; background: var(--parchment); flex-shrink: 0;
+  border-bottom: 1px solid var(--stone);
+}
+.tours-tab {
+  flex: 1; padding: 12px 8px; text-align: center;
+  font-size: .72rem; font-weight: 600; letter-spacing: .03em;
+  color: var(--text-mid); background: none; border: none;
+  border-bottom: 3px solid transparent; cursor: pointer;
+  transition: all .2s;
+}
+.tours-tab.active {
+  color: var(--earth); border-bottom-color: var(--gold);
+  background: var(--cream);
+}
+
+.tours-panel { display: none; flex: 1; overflow-y: auto; padding: 14px 16px 80px; -webkit-overflow-scrolling: touch; }
+.tours-panel.active { display: block; }
+
+.tour-card {
+  background: var(--white); border-radius: var(--r-lg);
+  margin-bottom: 14px; overflow: hidden;
+  box-shadow: 0 2px 10px rgba(28,8,0,.06);
+  border-left: 4px solid var(--gold);
+}
+.tour-card-header {
+  padding: 16px 16px 12px; cursor: pointer;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.tour-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+  background: linear-gradient(135deg, #E8DDD0, #D4C4B0);
+}
+.tour-info { flex: 1; }
+.tour-name {
+  font-family: var(--ff-display); font-size: .95rem; font-weight: 600;
+  color: var(--earth); line-height: 1.3;
+}
+.tour-meta {
+  display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;
+}
+.tour-badge {
+  font-size: .62rem; font-weight: 500; padding: 3px 8px;
+  border-radius: 10px; letter-spacing: .02em;
+}
+.tour-badge.duration { background: #E8F4E8; color: #2D6A2E; }
+.tour-badge.includes { background: #FFF3E0; color: #A0522D; }
+.tour-badge.type { background: #E8EAF6; color: #3949AB; }
+.tour-toggle {
+  font-size: 1.2rem; color: var(--gold); transition: transform .3s;
+  flex-shrink: 0; margin-top: 4px;
+}
+.tour-card.open .tour-toggle { transform: rotate(180deg); }
+
+.tour-details {
+  display: none; padding: 0 16px 16px;
+  border-top: 1px solid var(--stone);
+}
+.tour-card.open .tour-details { display: block; }
+
+.tour-section-label {
+  font-size: .65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--caramel); margin: 14px 0 8px;
+}
+.tour-route {
+  font-size: .78rem; color: var(--text); line-height: 1.6;
+  padding-left: 4px;
+}
+.tour-route-step {
+  display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;
+}
+.tour-route-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 5px;
+}
+.tour-flora-fauna {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.tour-ff-box {
+  background: var(--parchment); border-radius: var(--r-sm);
+  padding: 10px;
+}
+.tour-ff-title {
+  font-size: .65rem; font-weight: 700; margin-bottom: 6px;
+}
+.tour-ff-title.flora { color: #2E7D32; }
+.tour-ff-title.fauna { color: #5D4037; }
+.tour-ff-list {
+  font-size: .72rem; color: var(--text-mid); line-height: 1.5;
+}
+
+.tour-cta {
+  display: flex; justify-content: center; margin-top: 14px;
+}
+.tour-whatsapp-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; background: #25D366; color: #fff;
+  border-radius: 22px; font-family: var(--ff-body);
+  font-size: .78rem; font-weight: 600;
+  text-decoration: none; letter-spacing: .3px;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 3px 10px rgba(37,211,102,.3);
+}
+.tour-whatsapp-btn:active {
+  transform: scale(.96);
+}
+
+/* Transfers section */
+.transfers-info {
+  background: var(--white); border-radius: var(--r-lg);
+  padding: 18px; margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(28,8,0,.06);
+  border-left: 4px solid var(--caramel);
+}
+.transfers-title {
+  font-family: var(--ff-display); font-size: 1rem; font-weight: 600;
+  color: var(--earth); margin-bottom: 10px;
+}
+.transfer-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--parchment);
+}
+.transfer-item:last-child { border-bottom: none; }
+.transfer-icon { font-size: 1.2rem; }
+.transfer-text { font-size: .78rem; color: var(--text); flex: 1; line-height: 1.4; }
+.transfer-time { font-size: .68rem; color: var(--caramel); font-weight: 600; }
+
+/* ══════════════════════════════════════════════════
+   FLORA Y FAUNA PANEL
+══════════════════════════════════════════════════ */
+.ff-scroll {
+  flex: 1; overflow-y: auto;
+  padding: 14px 14px 80px;
+  -webkit-overflow-scrolling: touch;
+}
+.ff-scroll::-webkit-scrollbar { display: none; }
+.ff-section-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 2px 8px;
+  border-bottom: 2px solid var(--stone);
+  margin-bottom: 12px;
+}
+.ff-section-hdr:first-child { padding-top: 2px; }
+.ff-section-icon { font-size: 1.4rem; }
+.ff-section-title {
+  font-family: var(--ff-display); font-size: 1.05rem;
+  font-weight: 600; color: var(--earth); font-style: italic;
+}
+.ff-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 11px; margin-bottom: 8px;
+}
+.ff-card {
+  background: var(--white); border-radius: var(--r-md);
+  overflow: hidden; cursor: pointer;
+  box-shadow: 0 2px 10px rgba(28,8,0,.08);
+  transition: transform .22s ease, box-shadow .22s ease;
+  border-bottom: 3px solid var(--gold);
+}
+.ff-card:active { transform: scale(.96); box-shadow: 0 1px 4px rgba(28,8,0,.1); }
+.ff-img {
+  height: 100px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #E8DDD0, #C4B090);
+}
+.ff-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ff-placeholder { font-size: 2.4rem; opacity: .45; }
+.ff-badge {
+  position: absolute; top: 5px; left: 5px;
+  background: rgba(28,8,0,.62); color: #fff;
+  border-radius: 20px; padding: 2px 7px;
+  font-size: .52rem; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+.ff-body { padding: 8px 9px 10px; }
+.ff-name {
+  font-family: var(--ff-display); font-size: .82rem;
+  font-weight: 600; color: var(--earth); line-height: 1.25;
+  margin-bottom: 2px;
+}
+.ff-sci {
+  font-size: .6rem; font-style: italic;
+  color: var(--caramel); margin-bottom: 4px;
+}
+.ff-desc { font-size: .66rem; color: var(--text-mid); line-height: 1.45; }
+
+/* Flora y Fauna Modal */
+.ff-modal-bg {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(28,8,0,.72); align-items: flex-end;
+  justify-content: center;
+}
+.ff-modal-bg.open { display: flex; }
+.ff-modal {
+  background: var(--white); border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 480px; max-height: 82vh;
+  overflow-y: auto; padding-bottom: 32px;
+}
+.ff-modal-img {
+  width: 100%; height: 220px; object-fit: cover;
+  background: linear-gradient(135deg, #D4C4B0, #B8A080);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; border-radius: 20px 20px 0 0;
+  overflow: hidden;
+}
+.ff-modal-img img { width: 100%; height: 100%; object-fit: cover; }
+.ff-modal-body { padding: 20px 20px 0; }
+.ff-modal-cat {
+  font-size: .6rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--caramel); margin-bottom: 4px;
+}
+.ff-modal-name {
+  font-family: var(--ff-display); font-size: 1.3rem;
+  font-weight: 600; color: var(--earth); margin-bottom: 2px;
+}
+.ff-modal-sci {
+  font-size: .72rem; font-style: italic; color: var(--caramel);
+  margin-bottom: 14px;
+}
+.ff-modal-desc {
+  font-size: .84rem; color: var(--text); line-height: 1.7;
+  margin-bottom: 16px;
+}
+.ff-modal-close {
+  width: 100%; padding: 13px; margin-top: 8px;
+  background: var(--earth); color: var(--white);
+  border: none; border-radius: var(--r-md);
+  font-family: var(--ff-body); font-size: .82rem;
+  font-weight: 600; cursor: pointer; letter-spacing: .06em;
+}
+
+/* ══════════════════════════════════════════════════
+
+
+PAUSE BUTTON & OVERLAY
+══════════════════════════════════════════════════ */
+#pause-btn {
+  position: absolute; top: 7px; right: 10px; z-index: 25;
+  width: 34px; height: 34px;
+  background: rgba(0,0,0,.45); border: none; border-radius: 8px;
+  color: #fff; font-size: 1rem; display: flex;
+  align-items: center; justify-content: center;
+  cursor: pointer; transition: background .18s;
+}
+#pause-btn:hover { background: rgba(0,0,0,.65); }
+#pause-overlay {
+  display: none; position: absolute; inset: 0; z-index: 30;
+  background: rgba(10,3,0,.78); flex-direction: column;
+  align-items: center; justify-content: center; gap: 18px;
+  border-radius: 0;
+}
+#pause-overlay.on { display: flex; }
+#pause-overlay h2 {
+  font-family: var(--ff-display); font-size: 1.8rem;
+  color: var(--sand); font-style: italic; letter-spacing: .04em;
+}
+.pause-btn-row { display: flex; flex-direction: column; gap: 11px; width: 220px; }
+.pause-btn-item {
+  padding: 13px; border: none; border-radius: var(--r-md);
+  font-family: var(--ff-body); font-size: .82rem; font-weight: 600;
+  cursor: pointer; letter-spacing: .05em;
+}
+.pause-btn-primary { background: var(--gold); color: var(--earth); }
+.pause-btn-secondary { background: rgba(255,255,255,.12); color: var(--white); }
+.pause-btn-exit { background: transparent; color: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.2); }
+
+/* Memory pause */
+#mem-pause-btn {
+  background: transparent; border: 1px solid rgba(196,149,106,.3);
+  border-radius: 7px; color: var(--sand); font-size: .9rem;
+  padding: 4px 10px; cursor: pointer; margin-left: auto;
+}
+#mem-pause-overlay {
+  display: none; position: fixed; inset: 0; z-index: 150;
+  background: rgba(10,3,0,.82); flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+}
+#mem-pause-overlay.on { display: flex; }
+#mem-pause-overlay h2 {
+  font-family: var(--ff-display); font-size: 1.6rem;
+  color: var(--sand); font-style: italic;
+}
+.mem-pause-btn {
+  width: 200px; padding: 13px; border: none; border-radius: var(--r-md);
+  font-family: var(--ff-body); font-size: .82rem; font-weight: 600;
+  cursor: pointer;
+}
+.mem-pause-primary { background: var(--gold); color: var(--earth); }
+.mem-pause-exit { background: rgba(255,255,255,.12); color: var(--white); margin-top: 4px; }
 
 /* ══════════════════════════════════════════════════
    GAMES SCREEN
@@ -1513,8 +1521,6 @@ body { font-family: var(--ff-body); background: var(--cream); color: var(--text)
 }
 
 
-
-
 /* ── FOUNDER TRIBUTE ── */
 #s-founder {
   background: linear-gradient(180deg, #3B1A08 0%, #2a1205 100%);
@@ -1881,6 +1887,110 @@ input, textarea {
 #cin-skip:hover { color:#fff;border-color:rgba(255,255,255,.6); }
 
 
+/* ══ DOG FACT BUBBLE ══ */
+#mem-fact-bubble {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  z-index: 60; pointer-events: none;
+  max-width: 88%; text-align: center;
+  background: rgba(20,10,30,0.92);
+  border: 1px solid rgba(196,149,106,.35);
+  border-radius: 12px; padding: 9px 16px;
+  font-size: .72rem; font-weight: 400; color: #FFF8F0; line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0,0,0,.6);
+  display: none;
+  animation: factFadeIn .3s ease;
+}
+@keyframes factFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+#mem-fact-bubble .fact-dog { font-weight: 700; margin-right: 5px; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; }
+
+/* ══ CARD BACK SHIMMER — uses card background directly, no ::after conflict ══ */
+@keyframes cardShimmer {
+  0%   { background-position: -200% center, 0 0; }
+  100% { background-position: 200% center, 0 0; }
+}
+.card-back {
+  background:
+    linear-gradient(105deg, transparent 35%, rgba(255,220,150,.06) 50%, transparent 65%),
+    linear-gradient(145deg, #3B1A08, #1a0a03);
+  background-size: 200% 100%, 100% 100%;
+  animation: cardShimmer 3.5s ease-in-out infinite;
+}
+
+/* ══ MEM SCORE FLOAT ══ */
+.mem-score-float {
+  position: absolute; pointer-events: none; z-index: 65;
+  font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700;
+  color: #ffe066; text-shadow: 0 0 14px rgba(255,200,50,.7);
+  animation: memScoreRise .9s ease-out forwards;
+}
+@keyframes memScoreRise {
+  0%   { opacity: 1; transform: translateY(0) scale(1.1); }
+  80%  { opacity: 1; transform: translateY(-40px) scale(1); }
+  100% { opacity: 0; transform: translateY(-55px) scale(.9); }
+}
+
+/* ══ HINT BUTTON ══ */
+#mem-hint-btn {
+  position: absolute; bottom: 16px; right: 16px; z-index: 45;
+  background: rgba(196,149,106,.15); border: 1px solid rgba(196,149,106,.4);
+  border-radius: 20px; padding: 6px 14px;
+  font-family: var(--ff-body); font-size: .65rem; font-weight: 600;
+  color: var(--gold); cursor: pointer; letter-spacing: .06em; text-transform: uppercase;
+  transition: all .2s; display: none;
+}
+#mem-hint-btn:hover { background: rgba(196,149,106,.3); }
+
+/* ══ COUNTDOWN TIMER PULSE ══ */
+@keyframes timerPulse {
+  0%,100% { color: #ff4444; transform: scale(1); text-shadow: 0 0 12px rgba(255,60,60,.8); }
+  50%      { color: #ff8888; transform: scale(1.12); text-shadow: 0 0 24px rgba(255,60,60,1); }
+}
+.mem-hud-val.danger { animation: timerPulse .5s ease-in-out infinite; }
+
+/* ══ LEADERBOARD ══ */
+#mem-lb-inner {
+  width:100%;
+}
+.mem-lb-section {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(196,149,106,.15);
+  border-radius: 10px; padding: 8px 12px;
+  margin-bottom: 8px;
+}
+.mem-lb-title {
+  font-size:.55rem; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold); opacity:.7;
+  margin-bottom:5px;
+}
+.mem-lb-row {
+  display:flex; align-items:center; gap:8px;
+  font-size:.68rem; color:#FFF8F0; padding:3px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.mem-lb-row:last-child { border-bottom:none; }
+.mem-lb-rank { width:18px; font-weight:700; color:var(--gold); text-align:center; }
+.mem-lb-name { flex:1; font-weight:400; }
+.mem-lb-score { font-weight:700; color:var(--gold); }
+
+/* ══ TIMESUP ══ */
+#mem-timesup { display:none; }
+#mem-timesup.show { display:flex !important; }
+
+/* ══ COMBO WILDCARD ══ */
+.mem-wildcard-flash {
+  position:absolute; inset:0; z-index:55; pointer-events:none;
+  background: radial-gradient(circle, rgba(255,215,0,.35) 0%, transparent 70%);
+  animation: wildcardFlash .8s ease-out forwards;
+  border-radius:12px;
+}
+@keyframes wildcardFlash {
+  0%   { opacity:1; transform:scale(1.15); }
+  100% { opacity:0; transform:scale(1); }
+}
+
 /* ── MOBILE TOUCH FIXES ── */
 button, [onclick] {
   -webkit-tap-highlight-color: transparent;
@@ -1898,10 +2008,10 @@ input, textarea {
   -webkit-user-select: none;
   user-select: none;
 }
+
   </style>
 </head>
 <body>
-
 <noscript>
 <div style="position:fixed;inset:0;z-index:99999;background:#3B1A08;color:#DDB888;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;font-family:-apple-system,sans-serif;">
   <div style="font-size:48px;margin-bottom:20px;">🏨</div>
@@ -2014,7 +2124,7 @@ input, textarea {
       </div>
       <div class="hub-card-arrow">›</div>
     </div>
-    <div class="hub-card" onclick="goTo('s-games')">
+    <div class="hub-card" onclick="updateGameCardBadges();goTo('s-games')">
       <div class="hub-card-icon">🎮</div>
       <div class="hub-card-body">
         <div class="hub-card-name" id="hc-games">Juegos</div>
@@ -2234,7 +2344,7 @@ input, textarea {
         <div class="gc-body">
           <div class="gc-name" id="gn-runner">Llama Runner</div>
           <div class="gc-desc" id="gd-runner">Corre 1000 m esquivando cactus candelabro del altiplano</div>
-          <div class="gc-badge">3 niveles · ⭐ Stars · 🛡️ Shields · Cinemática final</div>
+          <div class="gc-badge" id="gc-badge-runner">3 niveles · ⭐ Stars · 🛡️ Shields · Cinemática final</div>
         </div>
         <div class="gc-arrow">›</div>
       </div>
@@ -2256,7 +2366,7 @@ input, textarea {
         <div class="gc-body">
           <div class="gc-name" id="gn-memory">Memorice Perros</div>
           <div class="gc-desc" id="gd-memory">¿Puedes reconocer a Lottie, Sultán y Rocky?</div>
-          <div class="gc-badge">3 dificultades · Los pastores del hotel</div>
+          <div class="gc-badge" id="gc-badge-memory">3 dificultades · Los pastores del hotel</div>
         </div>
         <div class="gc-arrow">›</div>
       </div>
@@ -2731,12 +2841,24 @@ input, textarea {
           <div class="mdb-left"><div class="mdb-name" id="md-2-name">Difícil</div><div class="mdb-info" id="md-2-info">9 parejas · Cara + perfil + sentado</div></div>
           <div class="mdb-arrow">›</div>
         </button>
+        <button class="mem-diff-btn" onclick="startMemory(3)" style="border-left-color:#ff4444;">
+          <div class="mem-diff-color" style="background:rgba(255,50,50,.12);">⏱️</div>
+          <div class="mdb-left"><div class="mdb-name" id="md-3-name" style="color:#ff6666;">Contrarreloj</div><div class="mdb-info" id="md-3-info">60s · -3s por error · 6 parejas</div></div>
+          <div class="mdb-arrow">›</div>
+        </button>
+      </div>
+
+      <!-- Leaderboard panel -->
+      <div id="mem-leaderboard" style="width:100%;max-width:320px;margin-top:8px;">
+        <div id="mem-lb-inner"></div>
       </div>
     </div>
     <div class="mem-board-wrap" id="mem-board-wrap" style="display:none">
       <div class="mem-board" id="mem-board"></div>
     </div>
     <div id="mem-streak-popup"></div>
+    <div id="mem-fact-bubble" style="display:none"></div>
+    <button id="mem-hint-btn" onclick="useMemHint()" style="display:none">💡 Pista</button>
     <canvas id="mem-confetti" width="400" height="600"></canvas>
     <div class="mem-win" id="mem-win">
       <div class="mem-win-icon">🏆</div>
@@ -2748,9 +2870,21 @@ input, textarea {
       </div>
       <div class="mem-win-sub" id="mw-sub"></div>
       <div class="mem-best" id="mw-best"></div>
+      <div id="mw-lb" style="font-size:.65rem;color:rgba(196,149,106,.7);margin-top:6px;text-align:center;line-height:1.8;"></div>
       <div class="mem-win-btns">
         <button class="mem-win-btn primary" id="mw-again" onclick="memWinAgain()">Jugar de nuevo</button>
         <button class="mem-win-btn secondary" id="mw-back" onclick="closeMemory()">← Volver</button>
+      </div>
+    </div>
+
+    <!-- Time's up overlay (countdown mode) -->
+    <div id="mem-timesup" style="display:none;position:absolute;inset:0;z-index:52;background:rgba(180,20,20,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:28px;">
+      <div style="font-size:3.5rem;">⏰</div>
+      <div data-ts-title style="font-family:var(--ff-display);font-size:2rem;font-weight:700;color:#fff;text-align:center;">¡Tiempo!</div>
+      <div id="mem-timesup-sub" style="font-size:.82rem;color:rgba(255,220,220,.85);text-align:center;"></div>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:240px;margin-top:8px;">
+        <button class="mem-win-btn primary" onclick="memWinAgain()">Intentar de nuevo</button>
+        <button class="mem-win-btn secondary" onclick="closeMemory()">← Volver</button>
       </div>
     </div>
   </div>
@@ -2777,6 +2911,44 @@ input, textarea {
 </div>
 
 <script>
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║          PASSENGER HUB — HOTEL LAS VICUÑAS                      ║
+// ║          ARCHITECTURE MAP (for AI/developer navigation)          ║
+// ╠══════════════════════════════════════════════════════════════════╣
+// ║  SCRIPT BLOCK 1 (this block): Core App Logic                    ║
+// ║    ├─ API KEY setup (obfuscated)         ~L2806                  ║
+// ║    ├─ GLOBALS: lang, guestName,          ~L2817                  ║
+// ║    │          screenHistory, chatHist                            ║
+// ║    ├─ NAV: goTo(id), goBack()            ~L2824                  ║
+// ║    ├─ WELCOME: pickLang, applyWelcomeLang, enterApp ~L2842       ║
+// ║    ├─ TRANSLATIONS: T{}  (7 languages)   ~L2889                  ║
+// ║    ├─ SUGGESTIONS: renderSuggs()         ~L3143                  ║
+// ║    ├─ DESTINATIONS: PLACES[], renderDests, openDestModal ~L3151  ║
+// ║    ├─ KB FALLBACK: KB{}, findKB()        ~L3314                  ║
+// ║    ├─ MARKDOWN: md()                     ~L3571                  ║
+// ║    ├─ CHAT: addMsg, send(), clearChat    ~L3597                  ║
+// ║    ├─ GAME LAUNCHERS: openRunner/Memory  ~L3652                  ║
+// ║    ├─ FAUNA: loadFaunaPhotos, sendFauna  ~L3665                  ║
+// ║    └─ TOURS: TOURS_DATA[], renderTours   ~L3897                  ║
+// ║                                                                  ║
+// ║  SCRIPT BLOCK 2: Llama Runner (Canvas Game)                     ║
+// ║    ├─ DIFFICULTIES[] config              ~L4038                  ║
+// ║    ├─ STATE: gameState, lives, etc.      ~L4054                  ║
+// ║    ├─ LLAMA entity: update, draw         ~L4095                  ║
+// ║    ├─ GAME LOOP: tick(), hitTest()       ~L4875                  ║
+// ║    ├─ CINEMATIC intro sequence           ~L5332                  ║
+// ║    └─ INTEGRATION: openLlamaRunner()     ~L5711                  ║
+// ║                                                                  ║
+// ║  SCRIPT BLOCK 3: Memory Card Game                               ║
+// ║    ├─ MEMORY CARDS data (dog SVGs)       ~L5756                  ║
+// ║    ├─ GAME LOGIC: startMemory, flip,     ~L6007                  ║
+// ║    │               match, win screen                             ║
+// ║    └─ FAUNA duplicate removed (cleaned)                          ║
+// ║                                                                  ║
+// ║  SCRIPT BLOCK 4: Code Protection (anti-devtools)  ~L6238         ║
+// ╚══════════════════════════════════════════════════════════════════╝
+
+
 // ═══════════════════════════════════════════════════════════
 // © Hotel Las Vicuñas, Putre, Chile — Passenger Hub HLV
 // This software is proprietary and confidential.
@@ -2823,7 +2995,7 @@ let chatHist = [];
 // ── SCREEN NAV ──
 function goTo(id) {
   if(window.__hlv_dead&&id!=='s-welcome'&&id!=='s-hub')return;
-  if(id==='s-fauna') setTimeout(loadFaunaPhotos, 300);
+  if(id==='s-fauna') setTimeout(function(){ loadFaunaPhotos(); initFaunaCardClicks(); }, 300);
   const cur = document.querySelector('.app-screen:not(.hidden):not(.slide-left)');
   if(cur) { screenHistory.push(cur.id); cur.classList.add('slide-left'); }
   const next = document.getElementById(id);
@@ -2898,7 +3070,7 @@ const T = {
     hcFounder:`Nuestro Fundador`, hcFounderSub:`Ulrich Krause Gronwald · La historia del hotel`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Aves, mamíferos y plantas del altiplano`,
     tChat:`Asistente`, tDest:`Destinos`, tGames:`Juegos`,
-    suggs:[`¿Cómo llegar?`,`Tours del hotel`,`Los perros 🐾`,`Puna y altura`,`WiFi`,`Contacto 📱`,`Horario desayuno`,`Check-in / Check-out`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Termas de Jurasi`,`Volcanes`,`Flora y fauna`,`Gastronomía local`,`Historia de Putre`,`Clima y temperatura`,`Cielo nocturno ✨`,`¿Qué ropa llevar?`,`Cultura aymara`,`Parque Lauca`,`¿Hay transporte?`],
+    suggs:[`¿Cómo llegar?`,`Tours del hotel`,`Los perros 🐾`,`Puna y altura`,`WiFi`,`Contacto 📱`,`Horario desayuno`,`Check-in / Check-out`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Termas de Jurasi`,`Volcanes`,`Flora y fauna`,`Gastronomía local`,`Historia de Putre`,`Clima y temperatura`,`Cielo nocturno ✨`,`¿Qué ropa llevar?`,`Cultura aymara`,`Parque Lauca`,`¿Hay transporte?`,`Fogata & estrellas 🔥`,`Lavandería`,`Estacionamiento 🚗`,`Emergencias 🚨`],
     km:`km desde el hotel`, close:`Cerrar`, ul:`TÚ`,
     wtxt:`Bienvenido al Hotel Las Vicuñas.<br/>Estoy aquí para ayudarte con tu estadía.`,
     gnRunner:`Llama Runner`, gdRunner:`Corre 1000 m esquivando cactus candelabro del altiplano`,
@@ -2911,7 +3083,9 @@ const T = {
     md2:`Difícil`, md2i:`9 parejas · Cara + perfil + sentado`,
     mhMov:`MOV`, mhPar:`PAR`, mhSeg:`SEG`,
     mwTitle:`¡Los encontraste todos!`, mwAgain:`Jugar de nuevo`, mwBack:`← Volver`,
-    sys:`Eres el asistente virtual del Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 msnm. Responde SIEMPRE en español. Tono cálido, cercano, con humor cuando sea apropiado. Usa markdown y emojis.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Desayunos Lun-Vie 07:30-09:30, Sáb-Dom-Festivos 08:00-10:00 | Contacto +56 9 5381 1481 (tel y WhatsApp)\n\nTRANSPORTE: El hotel recoge pasajeros en Aeropuerto Chacalluta (Arica), Terminal de buses Arica, domicilio u otro hotel. Coordinar por WhatsApp +56 9 5381 1481. Por cuenta propia: auto 2h Ruta 11-CH o Bus La Paloma 3h salida 06:50.\n\nTOURS PROPIOS: El hotel organiza tours a Parque Lauca 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA menciones precios. Siempre indica contactar +56 9 5381 1481 para disponibilidad y reservas.\n\nPUNA: Putre está a 3.500 msnm. Síntomas normales: dolor de cabeza, fatiga, falta de aire. Recomendaciones: descansar primer día, mucha agua, evitar alcohol 24h, comer liviano. El mate de coca ayuda, disponible en el hotel. Si es fuerte, avisar en recepción.\n\nPERROS DEL HOTEL (pastores alemanes): Sultán es territorial e imponente pero en el fondo es un bebé, le encanta que le digan bebé. Lottie vive para jugar, siempre trae palos o juguetes, es la mamá de Rocky. Rocky es hijo de ambos, vive en su mundo, algo bruto y despistado (no es de maldad), nació con la cola corta y tiene problemas articulares, se mueve chistoso como bailando. IMPORTANTE: NUNCA jugar con piedras con los perros, se rompen los dientes. Solo palos y juguetes.\n\nFLORA Y FAUNA: Frente a recepción hay una queñoa (Polylepis), el árbol de mayor altitud del mundo. Fauna local: vicuñas, llamas, alpacas, guanacos, cóndores, 3 especies de flamencos, vizcachas, zorros andinos, suris, pumas. El Parque Lauca tiene más de 130 especies de aves. Bofedales = humedales de altura, hábitat clave de la fauna.\n\nPUTRE: Fundado 1580, nombre aymara = "murmullo del agua". Iglesia colonial San Idelfonso (1670). Carnaval en febrero. Gastronomía: kalapurka, carne de llama, trucha altiplánica, quinoa, papa chuño. Clima: lluvias dic-mar, resto del año seco. Noches bajo cero en invierno.\n\nDESTINOS DESTACADOS: Lago Chungará 4.517 msnm (uno de los más altos del mundo, reflejan volcanes Payachatas). Parinacota pueblo aymara 4.390 msnm (iglesia Monumento Nacional). Lagunas Cotacotani (sistema volcánico). Salar de Surire (3 especies flamencos). Termas de Jurasi ~10km de Putre 4.000 msnm. Suriplaza montañas de colores. Reserva Las Vicuñas 209.131 ha.\n\nSi no sabes algo, sugiere contactar recepción o WhatsApp +56 9 5381 1481.`
+    md3:`⏱️ Contrarreloj`, md3i:`60s · -3s por error · 6 parejas`,
+    hintBtn:`💡 Pista`, timesUpTitle:`¡Tiempo!`,
+    sys:`Eres el asistente virtual del Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 msnm. Responde SIEMPRE en español. Tono cálido, cercano, con humor cuando sea apropiado. Usa markdown y emojis.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Desayunos Lun-Vie 07:30-09:30, Sáb-Dom-Festivos 08:00-10:00 | Contacto +56 9 5381 1481 (tel y WhatsApp)\n\nSERVICIOS DEL HOTEL: Fogata & Observación Estelar — consultar disponibilidad en recepción, ideal en noches despejadas (la mayoría del año). Lavandería — servicio disponible, consultar en recepción. Estacionamiento — gratuito dentro del hotel, parking disponible para vehículos de los huéspedes.\n\nEMERGENCIAS EN PUTRE: SAMU (ambulancia) 131 | Bomberos Putre 132 | Carabineros Putre 133. Para cualquier emergencia médica relacionada con el hotel avisar también a recepción: +56 9 5381 1481.\n\nTRANSPORTE: El hotel recoge pasajeros en Aeropuerto Chacalluta (Arica), Terminal de buses Arica, domicilio u otro hotel. Coordinar por WhatsApp +56 9 5381 1481. Por cuenta propia: auto 2h Ruta 11-CH o Bus La Paloma 3h salida 06:50.\n\nTOURS PROPIOS: El hotel organiza tours a Parque Lauca 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA menciones precios. Siempre indica contactar +56 9 5381 1481 para disponibilidad y reservas.\n\nPUNA: Putre está a 3.500 msnm. Síntomas normales: dolor de cabeza, fatiga, falta de aire. Recomendaciones: descansar primer día, mucha agua, evitar alcohol 24h, comer liviano. El mate de coca ayuda, disponible en el hotel. Si es fuerte, avisar en recepción.\n\nPERROS DEL HOTEL (pastores alemanes): Sultán es territorial e imponente pero en el fondo es un bebé, le encanta que le digan bebé. Lottie vive para jugar, siempre trae palos o juguetes, es la mamá de Rocky. Rocky es hijo de ambos, vive en su mundo, algo bruto y despistado (no es de maldad), nació con la cola corta y tiene problemas articulares, se mueve chistoso como bailando. IMPORTANTE: NUNCA jugar con piedras con los perros, se rompen los dientes. Solo palos y juguetes.\n\nFLORA Y FAUNA: Frente a recepción hay una queñoa (Polylepis), el árbol de mayor altitud del mundo. Fauna local: vicuñas, llamas, alpacas, guanacos, cóndores, 3 especies de flamencos, vizcachas, zorros andinos, suris, pumas. El Parque Lauca tiene más de 130 especies de aves. Bofedales = humedales de altura, hábitat clave de la fauna.\n\nPUTRE: Fundado 1580, nombre aymara = "murmullo del agua". Iglesia colonial San Idelfonso (1670). Carnaval en febrero. Gastronomía: kalapurka, carne de llama, trucha altiplánica, quinoa, papa chuño. Clima: lluvias dic-mar, resto del año seco. Noches bajo cero en invierno.\n\nDESTINOS DESTACADOS: Lago Chungará 4.517 msnm (uno de los más altos del mundo, reflejan volcanes Payachatas). Parinacota pueblo aymara 4.390 msnm (iglesia Monumento Nacional). Lagunas Cotacotani (sistema volcánico). Salar de Surire (3 especies flamencos). Termas de Jurasi ~10km de Putre 4.000 msnm. Suriplaza montañas de colores. Reserva Las Vicuñas 209.131 ha.\n\nSi no sabes algo, sugiere contactar recepción o WhatsApp +56 9 5381 1481.`
   },
   en:{
     greet: n => n ? `Welcome, ${n}` : `Welcome`,
@@ -2923,7 +3097,7 @@ const T = {
     hcFounder:`Our Founder`, hcFounderSub:`Ulrich Krause Gronwald · The hotel's story`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Birds, mammals and plants of the altiplano`,
     tChat:`Assistant`, tDest:`Destinations`, tGames:`Games`,
-    suggs:[`How to get here?`,`Hotel tours`,`The dogs 🐾`,`Altitude tips`,`WiFi`,`Contact 📱`,`Breakfast hours`,`Check-in / Check-out`,`Lake Chungará`,`Parinacota village`,`Surire salt flat`,`Hot springs`,`Volcanoes`,`Flora & fauna`,`Local food`,`Putre history`,`Weather & climate`,`Stargazing ✨`,`What to pack?`,`Aymara culture`,`Lauca Park`,`Transport options`],
+    suggs:[`How to get here?`,`Hotel tours`,`The dogs 🐾`,`Altitude tips`,`WiFi`,`Contact 📱`,`Breakfast hours`,`Check-in / Check-out`,`Lake Chungará`,`Parinacota village`,`Surire salt flat`,`Hot springs`,`Volcanoes`,`Flora & fauna`,`Local food`,`Putre history`,`Weather & climate`,`Stargazing ✨`,`What to pack?`,`Aymara culture`,`Lauca Park`,`Transport options`,`Campfire & stars 🔥`,`Laundry service`,`Parking 🚗`,`Emergencies 🚨`],
     km:`km from hotel`, close:`Close`, ul:`YOU`,
     wtxt:`Welcome to Hotel Las Vicuñas.<br/>I'm here to help with your stay.`,
     gnRunner:`Llama Runner`, gdRunner:`Run 1000m dodging altiplano cacti`,
@@ -2936,7 +3110,9 @@ const T = {
     md2:`Hard`, md2i:`9 pairs · Face + side + sitting`,
     mhMov:`MOV`, mhPar:`PAI`, mhSeg:`SEC`,
     mwTitle:`You found them all!`, mwAgain:`Play again`, mwBack:`← Back`,
-    sys:`You are the assistant for Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3,500m. ALWAYS respond in English. Warm, friendly, fun when appropriate. Use markdown and emojis.\n\nHOTEL: WiFi password: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Breakfast Mon-Fri 07:30-09:30, Sat-Sun-Holidays 08:00-10:00 | Contact +56 9 5381 1481 (phone and WhatsApp)\n\nTRANSPORT: Hotel offers pickup from Arica Airport (Chacalluta), Arica bus terminal, your accommodation or another hotel. Book via WhatsApp +56 9 5381 1481. Self-drive: 2h Route 11-CH. Bus La Paloma: 3h, departs 06:50.\n\nTOURS: Hotel runs its own tours to Lauca NP 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NEVER mention prices. Always direct to +56 9 5381 1481 for availability and bookings.\n\nALTITUDE (puna): Putre is at 3,500m. Common symptoms: headache, fatigue, shortness of breath. Tips: rest first day, lots of water, avoid alcohol 24h, eat light. Coca leaf tea helps, available at hotel. If severe, notify reception.\n\nHOTEL DOGS (German Shepherds): Sultan looks tough and territorial but is secretly a big baby who loves being called baby. Lottie lives to play, always brings sticks or toys, she is Rocky mom. Rocky is their son, lives in his own world, a bit clumsy (means no harm!), was born with a short tail and has joint issues so he walks funny like dancing. IMPORTANT: NEVER play with rocks or stones with the dogs, it breaks their teeth. Sticks and toys only.\n\nFLORA & FAUNA: Queñoa tree (Polylepis) in front of reception — highest-altitude tree in world. Wildlife: vicuñas, llamas, alpacas, guanacos, condors, 3 flamingo species, vizcachas, Andean foxes, rheas, pumas. Lauca Park has 130+ bird species. Bofedales = high-altitude wetlands, key habitat.\n\nPUTRE: Founded 1580, Aymara name = "murmur of water". Colonial church San Idelfonso (1670). Carnival in February. Food: kalapurka (volcanic stone soup), llama/alpaca meat, altiplano trout, quinoa, chuño. Climate: rainy Dec-Mar, dry rest of year. Cold nights in winter.\n\nKEY DESTINATIONS: Lake Chungará 4,517m (one of world's highest, reflects Payachata volcanoes). Parinacota Aymara village 4,390m (National Monument church). Cotacotani lagoons (volcanic network). Surire salt flat (3 flamingo species). Jurasi hot springs ~10km from Putre. Suriplaza colored mountains. Las Vicuñas Reserve 209,131 ha.\n\nIf unsure, suggest contacting reception or WhatsApp +56 9 5381 1481.`
+    md3:`⏱️ Time Attack`, md3i:`60s · -3s per error · 6 pairs`,
+    hintBtn:`💡 Hint`, timesUpTitle:`Time's up!`,
+    sys:`You are the assistant for Hotel Las Vicuñas, Baquedano 80, Putre, Chile, 3,500m. ALWAYS respond in English. Warm, friendly, fun when appropriate. Use markdown and emojis.\n\nHOTEL: WiFi password: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Breakfast Mon-Fri 07:30-09:30, Sat-Sun-Holidays 08:00-10:00 | Contact +56 9 5381 1481 (phone and WhatsApp)\n\nHOTEL SERVICES: Campfire & Stargazing — ask at reception for availability, best on clear nights (most of the year at 3,500m). Laundry service — available, ask at reception. Parking — free on-site parking available for guests.\n\nEMERGENCIES IN PUTRE: SAMU Ambulance 131 | Fire dept 132 | Carabineros (Police) 133. For any hotel-related medical emergency also contact reception: +56 9 5381 1481.\n\nTRANSPORT: Hotel offers pickup from Arica Airport (Chacalluta), Arica bus terminal, your accommodation or another hotel. Book via WhatsApp +56 9 5381 1481. Self-drive: 2h Route 11-CH. Bus La Paloma: 3h, departs 06:50.\n\nTOURS: Hotel runs its own tours to Lauca NP 45km(UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NEVER mention prices. Always direct to +56 9 5381 1481 for availability and bookings.\n\nALTITUDE (puna): Putre is at 3,500m. Common symptoms: headache, fatigue, shortness of breath. Tips: rest first day, lots of water, avoid alcohol 24h, eat light. Coca leaf tea helps, available at hotel. If severe, notify reception.\n\nHOTEL DOGS (German Shepherds): Sultan looks tough and territorial but is secretly a big baby who loves being called baby. Lottie lives to play, always brings sticks or toys, she is Rocky mom. Rocky is their son, lives in his own world, a bit clumsy (means no harm!), was born with a short tail and has joint issues so he walks funny like dancing. IMPORTANT: NEVER play with rocks or stones with the dogs, it breaks their teeth. Sticks and toys only.\n\nFLORA & FAUNA: Queñoa tree (Polylepis) in front of reception — highest-altitude tree in world. Wildlife: vicuñas, llamas, alpacas, guanacos, condors, 3 flamingo species, vizcachas, Andean foxes, rheas, pumas. Lauca Park has 130+ bird species. Bofedales = high-altitude wetlands, key habitat.\n\nPUTRE: Founded 1580, Aymara name = "murmur of water". Colonial church San Idelfonso (1670). Carnival in February. Food: kalapurka (volcanic stone soup), llama/alpaca meat, altiplano trout, quinoa, chuño. Climate: rainy Dec-Mar, dry rest of year. Cold nights in winter.\n\nKEY DESTINATIONS: Lake Chungará 4,517m (one of world's highest, reflects Payachata volcanoes). Parinacota Aymara village 4,390m (National Monument church). Cotacotani lagoons (volcanic network). Surire salt flat (3 flamingo species). Jurasi hot springs ~10km from Putre. Suriplaza colored mountains. Las Vicuñas Reserve 209,131 ha.\n\nIf unsure, suggest contacting reception or WhatsApp +56 9 5381 1481.`
   },
   fr:{
     greet: n => n ? `Bienvenue, ${n}` : `Bienvenue`,
@@ -2948,7 +3124,7 @@ const T = {
     hcFounder:`Notre Fondateur`, hcFounderSub:`Ulrich Krause Gronwald · L'histoire de l'hôtel`,
     hcFauna:`Flore & Faune`, hcFaunaSub:`Oiseaux, mammifères et plantes de l'altiplano`,
     tChat:`Assistant`, tDest:`Destinations`, tGames:`Jeux`,
-    suggs:[`Comment aller à Putre ?`,`Horaires petit-déjeuner`,`Check-in / Check-out`,`WiFi`,`Activités`,`Les chiens 🐾`,`Altitude`,`Lac Chungará`,`Parinacota`,`Salar de Surire`,`Sources thermales`,`Faune locale`,`Gastronomie`,`Histoire de Putre`,`Météo`,`Ciel nocturne ✨`,`Contact 📱`],
+    suggs:[`Comment aller à Putre ?`,`Horaires petit-déjeuner`,`Check-in / Check-out`,`WiFi`,`Activités`,`Les chiens 🐾`,`Altitude`,`Lac Chungará`,`Parinacota`,`Salar de Surire`,`Sources thermales`,`Faune locale`,`Gastronomie`,`Histoire de Putre`,`Météo`,`Ciel nocturne ✨`,`Contact 📱`,`Feu de camp & étoiles 🔥`,`Blanchisserie`,`Parking 🚗`,`Urgences 🚨`],
     km:`km depuis l'hôtel`, close:`Fermer`, ul:`VOUS`,
     wtxt:`Bienvenue à l'Hôtel Las Vicuñas.<br/>Je suis ici pour vous accompagner.`,
     gnRunner:`Llama Runner`, gdRunner:`Courez 1000m en évitant les cactus`,
@@ -2961,7 +3137,9 @@ const T = {
     md2:`Difficile`, md2i:`9 paires · Visage + profil + assis`,
     mhMov:`MOV`, mhPar:`PAI`, mhSeg:`SEC`,
     mwTitle:`Vous les avez tous trouvés !`, mwAgain:`Rejouer`, mwBack:`← Retour`,
-    sys:`Tu es l'assistant virtuel de l'Hôtel Las Vicuñas, Baquedano 80, Putre, Chili, à 3 500 m d'altitude. RÉPONDS TOUJOURS EN FRANÇAIS. Ton chaleureux et accueillant, avec humour si approprié. Utilise markdown et emojis.\n\nHÔTEL: WiFi: **9DjAq68XbD98sTf** | Check-in 14h00 | Check-out 12h00 | Petit-déjeuner Lun-Ven 07h30-09h30, Sam-Dim-Fériés 08h00-10h00 | Contact +56 9 5381 1481 (téléphone et WhatsApp)\n\nTRANSFERTS: L'hôtel assure le transfert depuis l'aéroport Chacalluta (Arica), la gare routière d'Arica, votre domicile ou un autre hôtel. Réservation via WhatsApp +56 9 5381 1481. En autonomie: voiture ~2h Route 11-CH ou Bus La Paloma 3h départ 06h50.\n\nTOURS PROPRES: L'hôtel organise ses propres excursions vers: Parc Lauca 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NE JAMAIS mentionner les prix. Toujours diriger vers +56 9 5381 1481 pour disponibilités et réservations.\n\nMAL DES MONTAGNES (puna): Putre est à 3 500m. Symptômes normaux: maux de tête, fatigue, essoufflement. Conseils: repos le 1er jour, beaucoup d'eau, pas d'alcool 24h, repas léger. Le thé de coca aide, disponible à l'hôtel. Si sévère, prévenir la réception.\n\nCHIENS DE L'HÔTEL (bergers allemands): Sultan paraît imposant et territorial mais c'est secrètement un grand bébé qui adore qu'on l'appelle bébé. Lottie vit pour jouer, apporte toujours des bâtons ou jouets, c'est la maman de Rocky. Rocky est leur fils, vit dans son monde, un peu maladroit (sans méchanceté!), né avec une queue courte et des problèmes articulaires, se déplace de façon amusante comme en dansant. IMPORTANT: NE JAMAIS jouer avec des pierres avec les chiens, ça casse les dents. Bâtons et jouets seulement.\n\nFLORE ET FAUNE: Devant la réception se trouve un queñoa (Polylepis), l'arbre poussant à la plus haute altitude du monde. Faune locale: vigognes, lamas, alpagas, guanacos, condors, 3 espèces de flamants roses, viscaches, renards des Andes, nandous, pumas. Le Parc Lauca compte plus de 130 espèces d'oiseaux. Bofedales = zones humides d'altitude, habitat clé de la faune.\n\nPUTRE: Fondé en 1580, nom aymara = "murmure de l'eau". Église coloniale San Idelfonso (1670). Carnaval en février. Gastronomie: kalapurka (soupe aux pierres volcaniques incandescentes), viande de lama/alpaga, truite d'altitude, quinoa, chuño (pomme de terre déshydratée ancestrale). Climat: pluies déc-mars, reste de l'année sec. Nuits très froides en hiver.\n\nDESTINATIONS CLÉS: Lac Chungará 4 517m (l'un des plus hauts du monde, reflète les volcans Payachatas — Parinacota 6 342m et Pomerape 6 282m). Parinacota village aymara 4 390m (église Monument National). Lagunas Cotacotani (réseau volcanique). Salar de Surire (3 espèces de flamants). Thermes de Jurasi ~10km de Putre à 4 000m. Suriplaza montagnes aux couleurs spectaculaires. Réserve Las Vicuñas 209 131 ha.\n\nSi vous ne savez pas quelque chose, suggérez de contacter la réception ou WhatsApp +56 9 5381 1481.`
+    md3:`⏱️ Contre-la-montre`, md3i:`60s · -3s par erreur · 6 paires`,
+    hintBtn:`💡 Indice`, timesUpTitle:`Temps écoulé !`,
+    sys:`Tu es l'assistant virtuel de l'Hôtel Las Vicuñas, Baquedano 80, Putre, Chili, à 3 500 m d'altitude. RÉPONDS TOUJOURS EN FRANÇAIS. Ton chaleureux et accueillant, avec humour si approprié. Utilise markdown et emojis.\n\nHÔTEL: WiFi: **9DjAq68XbD98sTf** | Check-in 14h00 | Check-out 12h00 | Petit-déjeuner Lun-Ven 07h30-09h30, Sam-Dim-Fériés 08h00-10h00 | Contact +56 9 5381 1481 (téléphone et WhatsApp)\n\nSERVICES DE L'HÔTEL: Feu de camp & observation des étoiles — demander disponibilité à la réception, idéal les nuits claires (la plupart de l'année à 3 500m). Service de blanchisserie — disponible, se renseigner à la réception. Parking — gratuit sur place pour les clients.\n\nURGENCES À PUTRE: SAMU (ambulance) 131 | Pompiers 132 | Carabiniers (police) 133. Pour toute urgence médicale liée à l'hôtel, contacter aussi la réception: +56 9 5381 1481.\n\nTRANSFERTS: L'hôtel assure le transfert depuis l'aéroport Chacalluta (Arica), la gare routière d'Arica, votre domicile ou un autre hôtel. Réservation via WhatsApp +56 9 5381 1481. En autonomie: voiture ~2h Route 11-CH ou Bus La Paloma 3h départ 06h50.\n\nTOURS PROPRES: L'hôtel organise ses propres excursions vers: Parc Lauca 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NE JAMAIS mentionner les prix. Toujours diriger vers +56 9 5381 1481 pour disponibilités et réservations.\n\nMAL DES MONTAGNES (puna): Putre est à 3 500m. Symptômes normaux: maux de tête, fatigue, essoufflement. Conseils: repos le 1er jour, beaucoup d'eau, pas d'alcool 24h, repas léger. Le thé de coca aide, disponible à l'hôtel. Si sévère, prévenir la réception.\n\nCHIENS DE L'HÔTEL (bergers allemands): Sultan paraît imposant et territorial mais c'est secrètement un grand bébé qui adore qu'on l'appelle bébé. Lottie vit pour jouer, apporte toujours des bâtons ou jouets, c'est la maman de Rocky. Rocky est leur fils, vit dans son monde, un peu maladroit (sans méchanceté!), né avec une queue courte et des problèmes articulaires, se déplace de façon amusante comme en dansant. IMPORTANT: NE JAMAIS jouer avec des pierres avec les chiens, ça casse les dents. Bâtons et jouets seulement.\n\nFLORE ET FAUNE: Devant la réception se trouve un queñoa (Polylepis), l'arbre poussant à la plus haute altitude du monde. Faune locale: vigognes, lamas, alpagas, guanacos, condors, 3 espèces de flamants roses, viscaches, renards des Andes, nandous, pumas. Le Parc Lauca compte plus de 130 espèces d'oiseaux. Bofedales = zones humides d'altitude, habitat clé de la faune.\n\nPUTRE: Fondé en 1580, nom aymara = "murmure de l'eau". Église coloniale San Idelfonso (1670). Carnaval en février. Gastronomie: kalapurka (soupe aux pierres volcaniques incandescentes), viande de lama/alpaga, truite d'altitude, quinoa, chuño (pomme de terre déshydratée ancestrale). Climat: pluies déc-mars, reste de l'année sec. Nuits très froides en hiver.\n\nDESTINATIONS CLÉS: Lac Chungará 4 517m (l'un des plus hauts du monde, reflète les volcans Payachatas — Parinacota 6 342m et Pomerape 6 282m). Parinacota village aymara 4 390m (église Monument National). Lagunas Cotacotani (réseau volcanique). Salar de Surire (3 espèces de flamants). Thermes de Jurasi ~10km de Putre à 4 000m. Suriplaza montagnes aux couleurs spectaculaires. Réserve Las Vicuñas 209 131 ha.\n\nSi vous ne savez pas quelque chose, suggérez de contacter la réception ou WhatsApp +56 9 5381 1481.`
   },
   de:{
     greet: n => n ? `Willkommen, ${n}` : `Willkommen`,
@@ -2973,7 +3151,7 @@ const T = {
     hcFounder:`Unser Gründer`, hcFounderSub:`Ulrich Krause Gronwald · Die Geschichte des Hotels`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Vögel, Säugetiere und Pflanzen des Altiplanos`,
     tChat:`Assistent`, tDest:`Reiseziele`, tGames:`Spiele`,
-    suggs:[`Wie nach Putre?`,`Frühstückszeiten`,`Check-in / Check-out`,`WLAN`,`Aktivitäten`,`Die Hunde 🐾`,`Höhenkrankheit`,`Chungará-See`,`Parinacota`,`Surire-Salzsee`,`Thermalquellen`,`Fauna`,`Lokale Küche`,`Geschichte`,`Wetter`,`Sternenhimmel ✨`,`Kontakt 📱`],
+    suggs:[`Wie nach Putre?`,`Frühstückszeiten`,`Check-in / Check-out`,`WLAN`,`Aktivitäten`,`Die Hunde 🐾`,`Höhenkrankheit`,`Chungará-See`,`Parinacota`,`Surire-Salzsee`,`Thermalquellen`,`Fauna`,`Lokale Küche`,`Geschichte`,`Wetter`,`Sternenhimmel ✨`,`Kontakt 📱`,`Lagerfeuer & Sterne 🔥`,`Wäscheservice`,`Parkplatz 🚗`,`Notfälle 🚨`],
     km:`km vom Hotel`, close:`Schließen`, ul:`SIE`,
     wtxt:`Willkommen im Hotel Las Vicuñas.<br/>Ich helfe Ihnen gerne.`,
     gnRunner:`Lama Runner`, gdRunner:`1000m laufen und Kakteen ausweichen`,
@@ -2986,7 +3164,9 @@ const T = {
     md2:`Schwer`, md2i:`9 Paare · Gesicht + Seite + sitzend`,
     mhMov:`ZÜG`, mhPar:`PAA`, mhSeg:`SEK`,
     mwTitle:`Sie haben alle gefunden!`, mwAgain:`Nochmal`, mwBack:`← Zurück`,
-    sys:`Du bist der virtuelle Assistent des Hotels Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 m ü.M. ANTWORTE IMMER AUF DEUTSCH. Warmer, freundlicher Ton, mit Humor wenn angebracht. Verwende Markdown und Emojis.\n\nHOTEL: WLAN-Passwort: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Frühstück Mo-Fr 07:30-09:30, Sa-So-Feiertage 08:00-10:00 | Kontakt +56 9 5381 1481 (Telefon und WhatsApp)\n\nTRANSFER: Das Hotel holt Gäste am Flughafen Chacalluta (Arica), Busbahnhof Arica, Ihrer Unterkunft oder einem anderen Hotel ab. Buchung via WhatsApp +56 9 5381 1481. Selbstfahrer: ~2h Route 11-CH (145 km). Bus La Paloma: 3h, Abfahrt 06:50.\n\nEIGENE TOUREN: Das Hotel organisiert eigene Touren nach: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NIEMALS Preise nennen. Für Verfügbarkeit und Buchungen immer auf +56 9 5381 1481 verweisen.\n\nHÖHENKRANKHEIT (Puna): Putre liegt auf 3.500m. Häufige Symptome: Kopfschmerzen, Müdigkeit, Kurzatmigkeit. Tipps: ersten Tag ausruhen, viel Wasser trinken, 24h keinen Alkohol, leicht essen. Kokatee hilft sehr und ist im Hotel erhältlich. Bei starken Symptomen bitte die Rezeption informieren.\n\nHOTELHUNDE (Deutsche Schäferhunde): Sultan wirkt imposant und territorial, ist aber heimlich ein großes Baby, das es liebt, Baby genannt zu werden. Lottie lebt zum Spielen, bringt immer Stöcke oder Spielzeug, sie ist Rockys Mama. Rocky ist ihr Sohn, lebt in seiner eigenen Welt, etwas tollpatschig (nicht böse!), wurde mit kurzem Schwanz geboren und hat Gelenkprobleme — läuft komisch wie tanzend. WICHTIG: NIEMALS mit Steinen mit den Hunden spielen, das bricht die Zähne. Nur Stöcke und Spielzeug.\n\nFLORA UND FAUNA: Vor der Rezeption steht ein Queñoa-Baum (Polylepis), der höchstwachsende Baum der Welt. Fauna: Vikunjas, Lamas, Alpakas, Guanakos, Kondore, 3 Flamingo-Arten, Vizkachas, Andenefüchse, Nandus, Pumas. Der Lauca-Park hat über 130 Vogelarten. Bofedales = Feuchtgebiete, wichtiger Lebensraum.\n\nPUTRE: Gegründet 1580, Aymara-Name = "Wasserrauschen". Kolonialkirche San Idelfonso (1670). Karneval im Februar. Küche: Kalapurka (Suppe mit glühenden Vulkansteinen), Lama-/Alpakafleisch, Hochlandforelle, Quinoa, Chuño (getrocknete Kartoffel). Klima: Regen Dez-März, restliches Jahr trocken. Winternächte unter Null.\n\nWICHTIGE REISEZIELE: Chungará-See 4.517m (eines der höchsten Seen der Welt, spiegelt Payachatas-Vulkane — Parinacota 6.342m und Pomerape 6.282m). Parinacota Aymara-Dorf 4.390m (Nationalmonument-Kirche). Cotacotani-Seen (Vulkansystem). Surire Salzsee (3 Flamingoarten). Jurasi-Thermalquellen ~10km von Putre. Suriplaza bunte Berglandschaft. Reservat Las Vicuñas 209.131 ha.\n\nFalls Sie etwas nicht wissen, empfehlen Sie die Rezeption oder WhatsApp +56 9 5381 1481.`
+    md3:`⏱️ Zeitrennen`, md3i:`60s · -3s pro Fehler · 6 Paare`,
+    hintBtn:`💡 Tipp`, timesUpTitle:`Zeit abgelaufen!`,
+    sys:`Du bist der virtuelle Assistent des Hotels Las Vicuñas, Baquedano 80, Putre, Chile, 3.500 m ü.M. ANTWORTE IMMER AUF DEUTSCH. Warmer, freundlicher Ton, mit Humor wenn angebracht. Verwende Markdown und Emojis.\n\nHOTEL: WLAN-Passwort: **9DjAq68XbD98sTf** | Check-in 14:00 | Check-out 12:00 | Frühstück Mo-Fr 07:30-09:30, Sa-So-Feiertage 08:00-10:00 | Kontakt +56 9 5381 1481 (Telefon und WhatsApp)\n\nHOTEL-SERVICES: Lagerfeuer & Sternenbeobachtung — Verfügbarkeit an der Rezeption erfragen, ideal an klaren Nächten (das ganze Jahr über möglich). Wäscheservice — verfügbar, an der Rezeption nachfragen. Parkplatz — kostenlos auf dem Hotelgelände für Gäste.\n\nNOTFÄLLE IN PUTRE: SAMU (Krankenwagen) 131 | Feuerwehr 132 | Carabineros (Polizei) 133. Bei medizinischen Notfällen auch die Rezeption informieren: +56 9 5381 1481.\n\nTRANSFER: Das Hotel holt Gäste am Flughafen Chacalluta (Arica), Busbahnhof Arica, Ihrer Unterkunft oder einem anderen Hotel ab. Buchung via WhatsApp +56 9 5381 1481. Selbstfahrer: ~2h Route 11-CH (145 km). Bus La Paloma: 3h, Abfahrt 06:50.\n\nEIGENE TOUREN: Das Hotel organisiert eigene Touren nach: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NIEMALS Preise nennen. Für Verfügbarkeit und Buchungen immer auf +56 9 5381 1481 verweisen.\n\nHÖHENKRANKHEIT (Puna): Putre liegt auf 3.500m. Häufige Symptome: Kopfschmerzen, Müdigkeit, Kurzatmigkeit. Tipps: ersten Tag ausruhen, viel Wasser trinken, 24h keinen Alkohol, leicht essen. Kokatee (Mate de coca) hilft sehr und ist im Hotel erhältlich. Bei starken Symptomen bitte die Rezeption informieren.\n\nHOTELHUNDE (Deutsche Schäferhunde): Sultan wirkt imposant und territorial, ist aber heimlich ein großes Baby, das es liebt, Baby genannt zu werden. Lottie lebt zum Spielen, bringt immer Stöcke oder Spielzeug, sie ist Rockys Mama. Rocky ist ihr Sohn, lebt in seiner eigenen Welt, etwas tollpatschig (nicht böse!), wurde mit kurzem Schwanz geboren und hat Gelenkprobleme — läuft komisch wie tanzend. WICHTIG: NIEMALS mit Steinen mit den Hunden spielen, das bricht die Zähne. Nur Stöcke und Spielzeug.\n\nFLORA UND FAUNA: Vor der Rezeption steht ein Queñoa-Baum (Polylepis), der höchstwachsende Baum der Welt. Fauna: Vikunjas, Lamas, Alpakas, Guanakos, Kondore, 3 Flamingo-Arten, Vizkachas, Andenefüchse, Nandus, Pumas. Der Lauca-Park hat über 130 Vogelarten. Bofedales = Feuchtgebiete, wichtiger Lebensraum.\n\nPUTRE: Gegründet 1580, Aymara-Name = "Wasserrauschen". Kolonialkirche San Idelfonso (1670). Karneval im Februar. Küche: Kalapurka (Suppe mit glühenden Vulkansteinen), Lama-/Alpakafleisch, Hochlandforelle, Quinoa, Chuño (getrocknete Kartoffel). Klima: Regen Dez-März, restliches Jahr trocken. Winternächte unter Null.\n\nWICHTIGE REISEZIELE: Chungará-See 4.517m (eines der höchsten Seen der Welt, spiegelt Payachatas-Vulkane — Parinacota 6.342m und Pomerape 6.282m). Parinacota Aymara-Dorf 4.390m (Nationalmonument-Kirche). Cotacotani-Seen (Vulkansystem). Surire Salzsee (3 Flamingoarten). Jurasi-Thermalquellen ~10km von Putre. Suriplaza bunte Berglandschaft. Reservat Las Vicuñas 209.131 ha.\n\nFalls Sie etwas nicht wissen, empfehlen Sie die Rezeption oder WhatsApp +56 9 5381 1481.`
   },
   pt:{
     greet: n => n ? `Bem-vindo/a, ${n}` : `Bem-vindo/a`,
@@ -2998,7 +3178,7 @@ const T = {
     hcFounder:`Nosso Fundador`, hcFounderSub:`Ulrich Krause Gronwald · A história do hotel`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Aves, mamíferos e plantas do altiplano`,
     tChat:`Assistente`, tDest:`Destinos`, tGames:`Jogos`,
-    suggs:[`Como chegar a Putre?`,`Horário café`,`Check-in / Check-out`,`WiFi`,`Atividades`,`Os cães 🐾`,`Altitude`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Termas`,`Fauna local`,`Gastronomia`,`História`,`Clima`,`Céu estrelado ✨`,`Contato 📱`],
+    suggs:[`Como chegar a Putre?`,`Horário café`,`Check-in / Check-out`,`WiFi`,`Atividades`,`Os cães 🐾`,`Altitude`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Termas`,`Fauna local`,`Gastronomia`,`História`,`Clima`,`Céu estrelado ✨`,`Contato 📱`,`Fogueira & estrelas 🔥`,`Lavanderia`,`Estacionamento 🚗`,`Emergências 🚨`],
     km:`km do hotel`, close:`Fechar`, ul:`VOCÊ`,
     wtxt:`Bem-vindo ao Hotel Las Vicuñas.<br/>Estou aqui para ajudá-lo.`,
     gnRunner:`Lhama Runner`, gdRunner:`Corra 1000m desviando de cactos`,
@@ -3011,7 +3191,9 @@ const T = {
     md2:`Difícil`, md2i:`9 pares · Rosto + perfil + sentado`,
     mhMov:`MOV`, mhPar:`PAR`, mhSeg:`SEG`,
     mwTitle:`Você encontrou todos!`, mwAgain:`Jogar novamente`, mwBack:`← Voltar`,
-    sys:`Você é o assistente virtual do Hotel Las Vicuñas, Baquedano 80, Putre, Chile, a 3.500m de altitude. SEMPRE responda em PORTUGUÊS. Tom caloroso e acolhedor, com bom humor quando adequado. Use markdown e emojis.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in às 14h00 | Check-out ao meio-dia (12h00) | Café da manhã Seg-Sex 07:30-09:30, Sáb-Dom-Feriados 08:00-10:00 | Contato +56 9 5381 1481 (telefone e WhatsApp)\n\nTRANSLADOS: O hotel busca hóspedes no: Aeroporto Chacalluta (Arica), Terminal de ônibus de Arica, domicílio ou outro hotel. Reservar via WhatsApp +56 9 5381 1481. Carro próprio: ~2h pela Rota 11-CH (145 km). Ônibus La Paloma: 3h, saída às 06:50.\n\nTOURS PRÓPRIOS: O hotel organiza tours para: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA mencionar preços. Sempre encaminhar para +56 9 5381 1481 para disponibilidade e reservas.\n\nALTITUDE (puna): Putre fica a 3.500m. Sintomas normais: dor de cabeça, cansaço, falta de ar. Dicas: descansar no 1º dia, beber muito água, evitar álcool por 24h, comer leve. O chá de coca ajuda muito e está disponível no hotel. Se os sintomas forem intensos, avise a recepção.\n\nCÃES DO HOTEL (pastores alemães): Sultan parece imponente e territorial, mas no fundo é um bebê enorme que adora ser chamado de bebê. Lottie vive para brincar, sempre traz paus ou brinquedos, ela é a mamãe do Rocky. Rocky é filho dos dois, vive no mundo dele, um pouco atrapalhado (sem maldade!), nasceu com rabo curto e tem problemas articulares — se move de forma engraçada como dançando. IMPORTANTE: NUNCA brincar com pedras com os cães, quebra os dentes. Apenas paus e brinquedos.\n\nFLORA E FAUNA: Em frente à recepção há uma queñoa (Polylepis), a árvore que cresce na maior altitude do mundo. Fauna: vicunhas, lhamas, alpacas, guanacos, condores, 3 espécies de flamingos, viscachas, raposas andinas, suris, pumas. O Parque Lauca tem mais de 130 espécies de aves. Bofedales = áreas úmidas de altitude, habitat essencial.\n\nPUTRE: Fundado em 1580, nome aymara = "murmúrio da água". Igreja colonial San Idelfonso (1670). Carnaval em fevereiro. Gastronomia: kalapurka (sopa feita com pedras vulcânicas incandescentes), carne de lhama/alpaca, truta de altitude, quinoa, chuño (batata desidratada ancestral). Clima: chuvas dez-mar, resto do ano seco. Noites frias no inverno.\n\nDESTINOS PRINCIPAIS: Lago Chungará 4.517m (um dos mais altos do mundo, reflete os vulcões Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota vila aymara 4.390m (Igreja Monumento Nacional). Lagunas Cotacotani (rede vulcânica). Salar de Surire (3 espécies de flamingos). Termas de Jurasi ~10km de Putre a 4.000m. Suriplaza montanhas coloridas. Reserva Las Vicuñas 209.131 ha.\n\nSe não souber algo, sugira contatar a recepção ou WhatsApp +56 9 5381 1481.`
+    md3:`⏱️ Contra o tempo`, md3i:`60s · -3s por erro · 6 pares`,
+    hintBtn:`💡 Dica`, timesUpTitle:`Tempo esgotado!`,
+    sys:`Você é o assistente virtual do Hotel Las Vicuñas, Baquedano 80, Putre, Chile, a 3.500m de altitude. SEMPRE responda em PORTUGUÊS. Tom caloroso e acolhedor, com bom humor quando adequado. Use markdown e emojis.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in às 14h00 | Check-out ao meio-dia (12h00) | Café da manhã Seg-Sex 07:30-09:30, Sáb-Dom-Feriados 08:00-10:00 | Contato +56 9 5381 1481 (telefone e WhatsApp)\n\nSERVIÇOS DO HOTEL: Fogueira & observação de estrelas — consultar disponibilidade na recepção, ideal nas noites limpas (a maioria do ano). Serviço de lavanderia — disponível, perguntar na recepção. Estacionamento — gratuito no hotel para hóspedes.\n\nEMERGÊNCIAS EM PUTRE: SAMU (ambulância) 131 | Bombeiros 132 | Carabineiros (polícia) 133. Em qualquer emergência médica relacionada ao hotel, avisar também a recepção: +56 9 5381 1481.\n\nTRANSLADOS: O hotel busca hóspedes no: Aeroporto Chacalluta (Arica), Terminal de ônibus de Arica, domicílio ou outro hotel. Reservar via WhatsApp +56 9 5381 1481. Carro próprio: ~2h pela Rota 11-CH (145 km). Ônibus La Paloma: 3h, saída às 06:50.\n\nTOURS PRÓPRIOS: O hotel organiza tours para: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NUNCA mencionar preços. Sempre encaminhar para +56 9 5381 1481 para disponibilidade e reservas.\n\nALTITUDE (puna): Putre fica a 3.500m. Sintomas normais: dor de cabeça, cansaço, falta de ar. Dicas: descansar no 1º dia, beber muito água, evitar álcool por 24h, comer leve. O chá de coca ajuda muito e está disponível no hotel. Se os sintomas forem intensos, avise a recepção.\n\nCÃES DO HOTEL (pastores alemães): Sultan parece imponente e territorial, mas no fundo é um bebê enorme que adora ser chamado de bebê. Lottie vive para brincar, sempre traz paus ou brinquedos, ela é a mamãe do Rocky. Rocky é filho dos dois, vive no mundo dele, um pouco atrapalhado (sem maldade!), nasceu com rabo curto e tem problemas articulares — se move de forma engraçada como dançando. IMPORTANTE: NUNCA brincar com pedras com os cães, quebra os dentes. Apenas paus e brinquedos.\n\nFLORA E FAUNA: Em frente à recepção há uma queñoa (Polylepis), a árvore que cresce na maior altitude do mundo. Fauna: vicunhas, lhamas, alpacas, guanacos, condores, 3 espécies de flamingos, viscachas, raposas andinas, suris, pumas. O Parque Lauca tem mais de 130 espécies de aves. Bofedales = áreas úmidas de altitude, habitat essencial.\n\nPUTRE: Fundado em 1580, nome aymara = "murmúrio da água". Igreja colonial San Idelfonso (1670). Carnaval em fevereiro. Gastronomia: kalapurka (sopa feita com pedras vulcânicas incandescentes), carne de lhama/alpaca, truta de altitude, quinoa, chuño (batata desidratada ancestral). Clima: chuvas dez-mar, resto do ano seco. Noites frias no inverno.\n\nDESTINOS PRINCIPAIS: Lago Chungará 4.517m (um dos mais altos do mundo, reflete os vulcões Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota vila aymara 4.390m (Igreja Monumento Nacional). Lagunas Cotacotani (rede vulcânica). Salar de Surire (3 espécies de flamingos). Termas de Jurasi ~10km de Putre a 4.000m. Suriplaza montanhas coloridas. Reserva Las Vicuñas 209.131 ha.\n\nSe não souber algo, sugira contatar a recepção ou WhatsApp +56 9 5381 1481.`
   },
   it:{
     greet: n => n ? `Benvenuto/a, ${n}` : `Benvenuto/a`,
@@ -3023,7 +3205,7 @@ const T = {
     hcFounder:`Il Nostro Fondatore`, hcFounderSub:`Ulrich Krause Gronwald · La storia dell'hotel`,
     hcFauna:`Flora & Fauna`, hcFaunaSub:`Uccelli, mammiferi e piante dell'altiplano`,
     tChat:`Assistente`, tDest:`Destinazioni`, tGames:`Giochi`,
-    suggs:[`Come raggiungere Putre?`,`Orari colazione`,`Check-in / Check-out`,`WiFi`,`Attività`,`I cani 🐾`,`Altitudine`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Terme`,`Fauna`,`Gastronomia`,`Storia`,`Clima`,`Cielo stellato ✨`,`Contatto 📱`],
+    suggs:[`Come raggiungere Putre?`,`Orari colazione`,`Check-in / Check-out`,`WiFi`,`Attività`,`I cani 🐾`,`Altitudine`,`Lago Chungará`,`Parinacota`,`Salar de Surire`,`Terme`,`Fauna`,`Gastronomia`,`Storia`,`Clima`,`Cielo stellato ✨`,`Contatto 📱`,`Falò & stelle 🔥`,`Lavanderia`,`Parcheggio 🚗`,`Emergenze 🚨`],
     km:`km dall'hotel`, close:`Chiudi`, ul:`LEI`,
     wtxt:`Benvenuto all'Hotel Las Vicuñas.<br/>Sono qui per aiutarti.`,
     gnRunner:`Lama Runner`, gdRunner:`Corri 1000m schivando cactus`,
@@ -3036,7 +3218,9 @@ const T = {
     md2:`Difficile`, md2i:`9 coppie · Faccia + profilo + seduto`,
     mhMov:`MOS`, mhPar:`COP`, mhSeg:`SEC`,
     mwTitle:`Hai trovato tutti!`, mwAgain:`Giocare di nuovo`, mwBack:`← Indietro`,
-    sys:`Sei l'assistente virtuale dell'Hotel Las Vicuñas, Baquedano 80, Putre, Cile, a 3.500m di altitudine. RISPONDI SEMPRE IN ITALIANO. Tono caldo e amichevole, con umorismo quando appropriato. Usa markdown ed emoji.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in alle 14:00 | Check-out alle 12:00 | Colazione Lun-Ven 07:30-09:30, Sab-Dom-Festivi 08:00-10:00 | Contatto +56 9 5381 1481 (telefono e WhatsApp)\n\nTRASFERIMENTI: L'hotel offre trasferimenti da: Aeroporto Chacalluta (Arica), terminal degli autobus di Arica, alloggio o altro hotel. Prenotare via WhatsApp +56 9 5381 1481. Auto propria: ~2h Rotta 11-CH (145 km). Bus La Paloma: 3h, partenza 06:50.\n\nTOUR PROPRI: L'hotel organizza tour propri verso: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NON menzionare MAI i prezzi. Per disponibilità e prenotazioni indirizzare sempre al +56 9 5381 1481.\n\nMAL DI MONTAGNA (puna): Putre è a 3.500m. Sintomi normali: mal di testa, stanchezza, respiro corto. Consigli: riposarsi il primo giorno, bere molta acqua, evitare alcol per 24h, mangiare leggero. Il tè di coca aiuta molto ed è disponibile in hotel. Se i sintomi sono gravi, avvisare la reception.\n\nCANI DELL'HOTEL (pastori tedeschi): Sultan sembra imponente e territoriale, ma in fondo è un bambino grande che adora essere chiamato baby. Lottie vive per giocare, porta sempre bastoni o giocattoli, è la mamma di Rocky. Rocky è il loro figlio, vive nel suo mondo, un po' goffo (senza cattiveria!), nato con una coda corta e con problemi articolari — si muove in modo buffo come ballando. IMPORTANTE: NON giocare MAI con le pietre con i cani, rompe i denti. Solo bastoni e giocattoli.\n\nFLORA E FAUNA: Davanti alla reception c'è un queñoa (Polylepis), l'albero che cresce alla più alta altitudine del mondo. Fauna: vigogne, lama, alpaca, guanaco, condor, 3 specie di fenicotteri, viscache, volpi delle Ande, nandù, puma. Il Parco Lauca ha più di 130 specie di uccelli. Bofedales = zone umide d'alta quota, habitat fondamentale.\n\nPUTRE: Fondata nel 1580, nome aymara = "mormorio dell'acqua". Chiesa coloniale San Idelfonso (1670). Carnevale in febbraio. Gastronomia: kalapurka (zuppa con pietre vulcaniche incandescenti), carne di lama/alpaca, trota d'alta quota, quinoa, chuño (patata disidratata ancestrale). Clima: piogge dic-mar, resto dell'anno secco. Notti fredde in inverno.\n\nDESTINAZIONI PRINCIPALI: Lago Chungará 4.517m (uno dei più alti al mondo, riflette i vulcani Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota villaggio aymara 4.390m (chiesa Monumento Nazionale). Lagunas Cotacotani (rete vulcanica). Salar de Surire (3 specie di fenicotteri). Terme di Jurasi ~10km da Putre a 4.000m. Suriplaza montagne colorate. Riserva Las Vicuñas 209.131 ha.\n\nSe non sa qualcosa, suggerisca di contattare la reception o WhatsApp +56 9 5381 1481.`
+    md3:`⏱️ A tempo`, md3i:`60s · -3s per errore · 6 coppie`,
+    hintBtn:`💡 Suggerimento`, timesUpTitle:`Tempo scaduto!`,
+    sys:`Sei l'assistente virtuale dell'Hotel Las Vicuñas, Baquedano 80, Putre, Cile, a 3.500m di altitudine. RISPONDI SEMPRE IN ITALIANO. Tono caldo e amichevole, con umorismo quando appropriato. Usa markdown ed emoji.\n\nHOTEL: WiFi: **9DjAq68XbD98sTf** | Check-in alle 14:00 | Check-out alle 12:00 | Colazione Lun-Ven 07:30-09:30, Sab-Dom-Festivi 08:00-10:00 | Contatto +56 9 5381 1481 (telefono e WhatsApp)\n\nSERVIZI DELL'HOTEL: Falò & osservazione delle stelle — chiedere disponibilità alla reception, ideale nelle notti limpide (la maggior parte dell'anno). Servizio lavanderia — disponibile, informarsi alla reception. Parcheggio — gratuito in loco per gli ospiti.\n\nEMERGENZE A PUTRE: SAMU (ambulanza) 131 | Vigili del fuoco 132 | Carabineros (polizia) 133. Per qualsiasi emergenza medica legata all'hotel, avvisare anche la reception: +56 9 5381 1481.\n\nTRASFERIMENTI: L'hotel offre trasferimenti da: Aeroporto Chacalluta (Arica), terminal degli autobus di Arica, alloggio o altro hotel. Prenotare via WhatsApp +56 9 5381 1481. Auto propria: ~2h Rotta 11-CH (145 km). Bus La Paloma: 3h, partenza 06:50.\n\nTOUR PROPRI: L'hotel organizza tour propri verso: Lauca NP 45km (UNESCO), Parinacota 47km, Cotacotani 52km, Chungará 55km, Suriplaza 70km, Surire 96km. NON menzionare MAI i prezzi. Per disponibilità e prenotazioni indirizzare sempre al +56 9 5381 1481.\n\nMAL DI MONTAGNA (puna): Putre è a 3.500m. Sintomi normali: mal di testa, stanchezza, respiro corto. Consigli: riposarsi il primo giorno, bere molta acqua, evitare alcol per 24h, mangiare leggero. Il tè di coca aiuta molto ed è disponibile in hotel. Se i sintomi sono gravi, avvisare la reception.\n\nCANI DELL'HOTEL (pastori tedeschi): Sultan sembra imponente e territoriale, ma in fondo è un bambino grande che adora essere chiamato baby. Lottie vive per giocare, porta sempre bastoni o giocattoli, è la mamma di Rocky. Rocky è il loro figlio, vive nel suo mondo, un po' goffo (senza cattiveria!), nato con una coda corta e con problemi articolari — si muove in modo buffo come ballando. IMPORTANTE: NON giocare MAI con le pietre con i cani, rompe i denti. Solo bastoni e giocattoli.\n\nFLORA E FAUNA: Davanti alla reception c'è un queñoa (Polylepis), l'albero che cresce alla più alta altitudine del mondo. Fauna: vigogne, lama, alpaca, guanaco, condor, 3 specie di fenicotteri, viscache, volpi delle Ande, nandù, puma. Il Parco Lauca ha più di 130 specie di uccelli. Bofedales = zone umide d'alta quota, habitat fondamentale.\n\nPUTRE: Fondata nel 1580, nome aymara = "mormorio dell'acqua". Chiesa coloniale San Idelfonso (1670). Carnevale in febbraio. Gastronomia: kalapurka (zuppa con pietre vulcaniche incandescenti), carne di lama/alpaca, trota d'alta quota, quinoa, chuño (patata disidratata ancestrale). Clima: piogge dic-mar, resto dell'anno secco. Notti fredde in inverno.\n\nDESTINAZIONI PRINCIPALI: Lago Chungará 4.517m (uno dei più alti al mondo, riflette i vulcani Payachatas — Parinacota 6.342m e Pomerape 6.282m). Parinacota villaggio aymara 4.390m (chiesa Monumento Nazionale). Lagunas Cotacotani (rete vulcanica). Salar de Surire (3 specie di fenicotteri). Terme di Jurasi ~10km da Putre a 4.000m. Suriplaza montagne colorate. Riserva Las Vicuñas 209.131 ha.\n\nSe non sa qualcosa, suggerisca di contattare la reception o WhatsApp +56 9 5381 1481.`
   },
   zh:{
     greet: n => n ? `欢迎，${n}` : `欢迎`,
@@ -3048,7 +3232,7 @@ const T = {
     hcFounder:`创始人`, hcFounderSub:`乌尔里希·克劳斯·格隆瓦尔德 · 酒店的历史`,
     hcFauna:`动植物`, hcFaunaSub:`高原的鸟类、哺乳动物和植物`,
     tChat:`助手`, tDest:`目的地`, tGames:`游戏`,
-    suggs:[`如何前往普特雷？`,`早餐时间`,`入住/退房时间`,`WiFi密码`,`附近活动`,`酒店狗狗🐾`,`高原反应`,`春加拉湖`,`帕里纳科塔`,`苏里雷盐沼`,`温泉`,`当地动物`,`当地美食`,`普特雷历史`,`气候`,`星空✨`,`联系我们📱`],
+    suggs:[`如何前往普特雷？`,`早餐时间`,`入住/退房时间`,`WiFi密码`,`附近活动`,`酒店狗狗🐾`,`高原反应`,`春加拉湖`,`帕里纳科塔`,`苏里雷盐沼`,`温泉`,`当地动物`,`当地美食`,`普特雷历史`,`气候`,`星空✨`,`联系我们📱`,`篝火观星🔥`,`洗衣服务`,`停车场🚗`,`紧急情况🚨`],
     km:`公里（距酒店）`, close:`关闭`, ul:`您`,
     wtxt:`欢迎来到拉斯维库尼亚斯酒店。<br/>我在这里帮助您安排住宿。`,
     gnRunner:`羊驼快跑`, gdRunner:`跑1000米躲避高原仙人掌`,
@@ -3061,7 +3245,9 @@ const T = {
     md2:`困难`, md2i:`9对 · 正面+侧面+坐着`,
     mhMov:`步数`, mhPar:`配对`, mhSeg:`秒`,
     mwTitle:`你找到了所有的！`, mwAgain:`再玩一次`, mwBack:`← 返回`,
-    sys:`您是拉斯维库尼亚斯酒店的虚拟助手，地址：智利普特雷市巴克达诺街80号，海拔3500米。请始终用中文回答。语气温暖友好，适时幽默。使用markdown和表情符号。\n\n酒店信息：WiFi密码：**9DjAq68XbD98sTf** | 入住时间：14:00 | 退房时间：12:00 | 早餐时间：周一至周五 07:30-09:30，周末及节假日 08:00-10:00 | 联系方式：+56 9 5381 1481（电话和WhatsApp）\n\n接送服务：酒店提供从以下地点接送：阿里卡查卡鲁塔机场、阿里卡汽车站、您的住处或其他酒店。请通过WhatsApp +56 9 5381 1481 预约。自驾：沿11-CH号公路约2小时（145公里）。La Paloma巴士：3小时，06:50出发。\n\n酒店自营旅游：酒店自办前往以下地点的旅游：劳卡国家公园45公里（联合国教科文组织），帕里纳科塔47公里，科塔科塔尼52公里，春加拉55公里，苏里普拉萨70公里，苏里雷96公里。绝不提及价格。预约和详情请联系 +56 9 5381 1481。\n\n高原反应（puna）：普特雷海拔3500米。常见症状：头痛、疲劳、呼吸急促。建议：第一天充分休息，大量喝水，24小时内避免饮酒，饮食清淡。古柯茶很有帮助，酒店提供。如症状严重，请通知前台。\n\n酒店狗狗（德国牧羊犬）：苏丹看起来威严有地盘感，但其实是个大宝宝，最喜欢被叫做宝宝。洛蒂活在游戏里，总是带着树枝或玩具，她是洛基的妈妈。洛基是他们的儿子，活在自己的世界里，有点笨手笨脚（无恶意），天生短尾巴且有关节问题，走路像在跳舞，很可爱。重要提示：绝对不要用石头和狗玩耍，会弄坏牙齿。只能用树枝和玩具。\n\n动植物：前台前方有一棵奎诺阿树（Polylepis），是世界上生长在最高海拔的树木。当地动物：小羊驼（vicuña）、骆马、羊驼、原驼、安第斯秃鹰、3种火烈鸟、毛丝鼠、安第斯狐狸、美洲鸵、美洲狮。劳卡国家公园有130多种鸟类。Bofedales = 高原湿地，重要栖息地。\n\n普特雷小镇：1580年建城，艾马拉语名称意为"水的低语"。圣伊德丰索殖民教堂（1670年）。二月狂欢节。美食：卡拉普尔卡汤（用炽热火山石烹制的传统汤），骆马/羊驼肉，高原鳟鱼，藜麦，冻干土豆（chuño）。气候：12月至3月为雨季，其余月份干燥晴朗。冬季夜晚零度以下。\n\n重要景点：春加拉湖，海拔4517米（世界最高湖之一，倒映帕亚查塔斯火山群——帕里纳科塔火山6342米和波梅拉佩火山6282米）。帕里纳科塔艾马拉村落，海拔4390米（国家历史纪念物教堂）。科塔科塔尼火山湖群。苏里雷盐沼（3种火烈鸟）。胡拉西温泉，距普特雷约10公里，海拔4000米。苏里普拉萨彩色山地。拉斯维库尼亚斯自然保护区，面积209131公顷。\n\n如不确定，请建议联系前台或WhatsApp +56 9 5381 1481。`
+    md3:`⏱️ 限时挑战`, md3i:`60秒 · 每次错误-3秒 · 6对`,
+    hintBtn:`💡 提示`, timesUpTitle:`时间到！`,
+    sys:`您是拉斯维库尼亚斯酒店的虚拟助手，地址：智利普特雷市巴克达诺街80号，海拔3500米。请始终用中文回答。语气温暖友好，适时幽默。使用markdown和表情符号。\n\n酒店信息：WiFi密码：**9DjAq68XbD98sTf** | 入住时间：14:00 | 退房时间：12:00 | 早餐时间：周一至周五 07:30-09:30，周末及节假日 08:00-10:00 | 联系方式：+56 9 5381 1481（电话和WhatsApp）\n\n酒店服务：篝火观星——请向前台询问是否可以安排，晴朗夜晚最佳（全年大部分时间均可）。洗衣服务——可提供，请向前台询问。停车场——酒店内免费停车，欢迎自驾客人使用。\n\n普特雷紧急电话：SAMU（救护车）131 | 消防队 132 | 卡拉比内罗斯（警察）133。如有与酒店相关的医疗紧急情况，请同时通知前台：+56 9 5381 1481。\n\n接送服务：酒店提供从以下地点接送：阿里卡查卡鲁塔机场、阿里卡汽车站、您的住处或其他酒店。请通过WhatsApp +56 9 5381 1481 预约。自驾：沿11-CH号公路约2小时（145公里）。La Paloma巴士：3小时，06:50出发。\n\n酒店自营旅游：酒店自办前往以下地点的旅游：劳卡国家公园45公里（联合国教科文组织），帕里纳科塔47公里，科塔科塔尼52公里，春加拉55公里，苏里普拉萨70公里，苏里雷96公里。绝不提及价格。预约和详情请联系 +56 9 5381 1481。\n\n高原反应（puna）：普特雷海拔3500米。常见症状：头痛、疲劳、呼吸急促。建议：第一天充分休息，大量喝水，24小时内避免饮酒，饮食清淡。古柯茶很有帮助，酒店提供。如症状严重，请通知前台。\n\n酒店狗狗（德国牧羊犬）：苏丹（Sultan）看起来威严有地盘感，但其实是个大宝宝，最喜欢被叫做宝宝。洛蒂（Lottie）活在游戏里，总是带着树枝或玩具，她是洛基（Rocky）的妈妈。洛基是他们的儿子，活在自己的世界里，有点笨手笨脚（无恶意），天生短尾巴且有关节问题，走路像在跳舞，很可爱。重要提示：绝对不要用石头和狗玩耍，会弄坏牙齿。只能用树枝和玩具。\n\n动植物：前台前方有一棵奎诺阿树（Polylepis），是世界上生长在最高海拔的树木。当地动物：小羊驼（vicuña）、骆马、羊驼、原驼、安第斯秃鹰、3种火烈鸟、毛丝鼠、安第斯狐狸、美洲鸵、美洲狮。劳卡国家公园有130多种鸟类。Bofedales = 高原湿地，重要栖息地。\n\n普特雷小镇：1580年建城，艾马拉语名称意为"水的低语"。圣伊德丰索殖民教堂（1670年）。二月狂欢节。美食：卡拉普尔卡汤（用炽热火山石烹制的传统汤），骆马/羊驼肉，高原鳟鱼，藜麦，冻干土豆（chuño）。气候：12月至3月为雨季，其余月份干燥晴朗。冬季夜晚零度以下。\n\n重要景点：春加拉湖，海拔4517米（世界最高湖之一，倒映帕亚查塔斯火山群——帕里纳科塔火山6342米和波梅拉佩火山6282米）。帕里纳科塔艾马拉村落，海拔4390米（国家历史纪念物教堂）。科塔科塔尼火山湖群。苏里雷盐沼（3种火烈鸟）。胡拉西温泉，距普特雷约10公里，海拔4000米。苏里普拉萨彩色山地。拉斯维库尼亚斯自然保护区，面积209131公顷。\n\n如不确定，请建议联系前台或WhatsApp +56 9 5381 1481。`
   }
 };
 
@@ -3116,6 +3302,10 @@ function applyLang(l) {
   document.getElementById('md-1-info').textContent = t.md1i;
   document.getElementById('md-2-name').textContent = t.md2;
   document.getElementById('md-2-info').textContent = t.md2i;
+  var md3n = document.getElementById('md-3-name'); if(md3n && t.md3) md3n.textContent = t.md3;
+  var md3i = document.getElementById('md-3-info'); if(md3i && t.md3i) md3i.textContent = t.md3i;
+  var hintB = document.getElementById('mem-hint-btn'); if(hintB && t.hintBtn) hintB.textContent = t.hintBtn;
+  var tsTitle = document.querySelector('#mem-timesup [data-ts-title]'); if(tsTitle && t.timesUpTitle) tsTitle.textContent = t.timesUpTitle;
   document.getElementById('mh-moves-lbl').textContent = t.mhMov;
   document.getElementById('mh-pairs-lbl').textContent = t.mhPar;
   document.getElementById('mh-time-lbl').textContent = t.mhSeg;
@@ -3147,6 +3337,7 @@ function renderSuggs() {
     b.onclick=()=>sendSugg(s); c.appendChild(b);
   }); c.style.display='flex';
 }
+
 
 // ── DESTINATIONS ──
 const DESTS = [
@@ -3365,7 +3556,10 @@ const KB = {
     {k:['queñoa','arbol','polylepis','flora','planta'],r:'🌳 Frente a la recepción tenemos una **queñoa** (Polylepis) en perfectas condiciones. Es el árbol que crece a **mayor altitud en el mundo**. ¡No dejes de verla!'},
     {k:['fauna','animal','vicuña','flamenco','condor','vizcacha','zorro','suri','puma','guanaco'],r:'🦙 En el altiplano puedes ver: **vicuñas**, **llamas**, **alpacas**, **guanacos**, **cóndores**, **3 especies de flamencos**, **vizcachas**, **zorros andinos**, **suris** y ocasionalmente **pumas**. ¡Más de 130 especies de aves en el Parque Lauca!'},
     {k:['bofedal','humedal'],r:'💧 Los **bofedales** son humedales de altura que actúan como esponjas naturales, creando oasis de vida. Son el hábitat de flamencos, taguas y numerosas aves. El Bofedal Parinacota es especialmente impresionante.'},
-    {k:['emergencia','medico','hospital','cesfam','urgencia','accidente'],r:'🚑 **CESFAM (Centro de Salud Familiar)** disponible 24/7. Teléfono: **+56 9 5381 1481**. Para emergencias graves, contacta inmediatamente.'},
+    {k:['emergencia','medico','hospital','cesfam','urgencia','accidente','ambulancia','bombero','carabinero','policia','samu'],r:'🚨 **Emergencias en Putre:**\n- 🚑 **SAMU** (ambulancia): **131**\n- 🚒 **Bomberos**: **132**\n- 👮 **Carabineros**: **133**\n- 🏨 **Hotel** (recepción): **+56 9 5381 1481**'},
+    {k:['lavanderia','lavado','ropa','lavar'],r:'👕 **Lavandería** disponible en el hotel. Consulta horarios y precios en recepción: **+56 9 5381 1481**'},
+    {k:['estacionamiento','parking','aparcar','auto','vehiculo','carro'],r:'🚗 Contamos con **estacionamiento gratuito** dentro del hotel. Espacio disponible para todos los huéspedes.'},
+    {k:['fogata','hoguera','fuego','estrellas','astronomia','noche'],r:'🔥✨ ¡El hotel organiza **fogatas con observación estelar**! A 3.500 msnm, sin contaminación lumínica, el cielo nocturno es extraordinario. Consulta disponibilidad en recepción.'},
     {k:['combustible','gasolina','bencina','diesel','tanque'],r:'⛽😅 ¡Te quedaste sin gasolina! Comunícate con nosotros: **+56 9 5381 1481** (No vendemos, pero te ayudamos a conseguir). ¡Somos del altiplano, no de una gasolinera!'},
     {k:['mañana','clima'],r:'🌤️ **Mañana en Putre:** Día 18°C - Soleado · Noche -8°C - Muy fría · Viento Moderado. Buen día para excursiones.'},
     {k:['hoy','clima'],r:'☀️ **Hoy en Putre:** Día 16°C - Soleado · Noche -12°C - Muy fría · Viento Moderado. Protección solar recomendada.'},
@@ -3408,7 +3602,10 @@ const KB = {
     {k:['tree','queñoa','polylepis','flora','plant'],r:'🌳 Right in front of reception stands a **queñoa tree** (Polylepis), the highest-altitude tree in the world!'},
     {k:['fauna','animal','vicuna','flamingo','condor','puma','guanaco'],r:'🦙 Altiplano wildlife: **vicuñas**, **llamas**, **alpacas**, **guanacos**, **condors**, **3 flamingo species**, **vizcachas**, **Andean foxes**, **rheas** and occasional **pumas**. Over 130 bird species in Lauca National Park!'},
     {k:['wetland','bofedal'],r:'💧 **Bofedales** are high-altitude wetlands creating oases of life in the altiplano. Home to flamingos, giant coots and many birds. The Parinacota Bofedal is stunning.'},
-    {k:['emergency','doctor','hospital','cesfam','urgent','accident','ambulance'],r:'🚑 **CESFAM (Family Health Center)** available 24/7. Phone: **+56 9 5381 1481**. For serious emergencies, contact immediately.'},
+    {k:['emergency','doctor','hospital','cesfam','urgent','accident','ambulance','fire','police','carabineros','samu'],r:'🚨 **Emergencies in Putre:**\n- 🚑 **SAMU** (ambulance): **131**\n- 🚒 **Fire dept**: **132**\n- 👮 **Carabineros** (Police): **133**\n- 🏨 **Hotel** (reception): **+56 9 5381 1481**'},
+    {k:['laundry','washing','clothes','wash'],r:'👕 **Laundry service** available at the hotel. Ask at reception for hours and details: **+56 9 5381 1481**'},
+    {k:['parking','park','car','vehicle'],r:'🚗 We have **free on-site parking** for all guests.'},
+    {k:['campfire','bonfire','stargazing','stars','fire'],r:'🔥✨ The hotel organises **campfire & stargazing sessions**! At 3,500m with zero light pollution, the night sky is extraordinary. Ask at reception for availability.'},
   ],
   fr:[
     {k:['adresse','localisation','où est','où se trouve'],r:'📍 **Baquedano 80, Putre**, Région d\'Arica y Parinacota, Chili. À 3 500m sur l\'altiplano.'},
@@ -3432,7 +3629,10 @@ const KB = {
     {k:['etoiles','ciel','nuit','astronomie'],r:'✨ Le ciel nocturne de Putre est **exceptionnel** — la Voie Lactée est visible à l\'œil nu en saison sèche.'},
     {k:['gastronomie','nourriture','manger','lama','quinoa','truite'],r:'🍲 Gastronomie locale :\n- **Kalapurka** — soupe aux pierres volcaniques\n- **Viande de lama/alpaga** · **Truite d\'altitude** · **Quinoa** · **Chuño**'},
     {k:['faune','animal','vigogne','flamant','condor'],r:'🦙 Faune : **vigognes**, **lamas**, **condors**, **3 espèces de flamants**, **renards des Andes**, **nandous**. Plus de 130 espèces d\'oiseaux dans le Parc Lauca !'},
-    {k:['urgence','medecin','hopital','cesfam','ambulance','accident'],r:'🚑 **CESFAM (Centre de Santé Familiale)** disponible 24h/24. Téléphone : **+56 9 5381 1481**. Pour les urgences graves, contactez immédiatement.'},
+    {k:['urgence','medecin','hopital','cesfam','ambulance','accident','pompiers','police','carabineros','samu'],r:'🚨 **Urgences à Putre :**\n- 🚑 **SAMU** (ambulance) : **131**\n- 🚒 **Pompiers** : **132**\n- 👮 **Carabineros** (police) : **133**\n- 🏨 **Hôtel** (réception) : **+56 9 5381 1481**'},
+    {k:['blanchisserie','lavage','linge','laver'],r:'👕 **Service de blanchisserie** disponible. Renseignez-vous à la réception : **+56 9 5381 1481**'},
+    {k:['parking','voiture','stationner','garer'],r:'🚗 **Parking gratuit** sur place pour tous les clients.'},
+    {k:['feu de camp','feu','etoiles','astronomie','nuit'],r:'🔥✨ L\'hôtel organise des **soirées feu de camp & observation des étoiles**. À 3 500m, le ciel est exceptionnel. Demandez à la réception.'},
   ],
   de:[
     {k:['adresse','wo ist','wo befindet sich','lage'],r:'📍 **Baquedano 80, Putre**, Region Arica y Parinacota, Chile. Auf 3.500m im Altiplano.'},
@@ -3456,7 +3656,10 @@ const KB = {
     {k:['sterne','sternenhimmel','nacht','astronomie'],r:'✨ Putes Sternenhimmel ist **außergewöhnlich** — die Milchstraße in der Trockenzeit sichtbar.'},
     {k:['essen','kuche','küche','lama','quinoa','forelle'],r:'🍲 Lokale Küche:\n- **Kalapurka** — Suppe mit Vulkansteinen\n- **Lama-/Alpakafleisch** · **Forelle** · **Quinoa** · **Chuño**'},
     {k:['fauna','tier','vikuna','vikunja','flamingo','kondor'],r:'🦙 Tierwelt: **Vikunjas**, **Lamas**, **Kondore**, **3 Flamingo-Arten**, **Andenefüchse**. Über 130 Vogelarten im Lauca-Park!'},
-    {k:['notfall','arzt','krankenhaus','cesfam','ambulanz','unfall'],r:'🚑 **CESFAM (Gesundheitszentrum)** rund um die Uhr verfügbar. Telefon: **+56 9 5381 1481**. Bei schweren Notfällen sofort kontaktieren.'},
+    {k:['notfall','arzt','krankenhaus','cesfam','ambulanz','unfall','feuerwehr','polizei','samu'],r:'🚨 **Notfallnummern in Putre:**\n- 🚑 **SAMU** (Krankenwagen): **131**\n- 🚒 **Feuerwehr**: **132**\n- 👮 **Carabineros** (Polizei): **133**\n- 🏨 **Hotel** (Rezeption): **+56 9 5381 1481**'},
+    {k:['wasche','wäsche','wäscheservice','kleidung','waschen'],r:'👕 **Wäscheservice** im Hotel verfügbar. Bitte an der Rezeption nachfragen: **+56 9 5381 1481**'},
+    {k:['parkplatz','parken','auto','fahrzeug'],r:'🚗 **Kostenloser Parkplatz** auf dem Hotelgelände für alle Gäste.'},
+    {k:['lagerfeuer','feuer','sterne','sternenhimmel','astronomie'],r:'🔥✨ Das Hotel veranstaltet **Lagerfeuer & Sternenbeobachtung**! Auf 3.500m ist der Nachthimmel außergewöhnlich. Bitte an der Rezeption nach Verfügbarkeit fragen.'},
   ],
   pt:[
     {k:['endereco','endereço','localização','onde fica','onde esta'],r:'📍 **Baquedano 80, Putre**, Região de Arica y Parinacota, Chile. A 3.500m no altiplano.'},
@@ -3480,7 +3683,10 @@ const KB = {
     {k:['estrelas','ceu','céu','noite'],r:'✨ O céu noturno de Putre é **excepcional** — Via Láctea visível a olho nu na temporada seca.'},
     {k:['comida','gastronomia','lhama','quinoa','truta'],r:'🍲 Gastronomia:\n- **Kalapurka** · **Carne de lhama/alpaca** · **Truta** · **Quinoa** · **Chuño**'},
     {k:['fauna','animal','vicunha','flamingo','condor'],r:'🦙 Fauna: **vicunhas**, **lhamas**, **condores**, **3 espécies de flamingos**. Mais de 130 espécies de aves no Parque Lauca!'},
-    {k:['emergencia','medico','hospital','cesfam','urgencia','acidente','ambulancia'],r:'🚑 **CESFAM (Centro de Saúde Familiar)** disponível 24/7. Telefone: **+56 9 5381 1481**. Para emergências graves, contate imediatamente.'},
+    {k:['emergencia','medico','hospital','cesfam','urgencia','acidente','ambulancia','bombeiro','policia','samu'],r:'🚨 **Emergências em Putre:**\n- 🚑 **SAMU** (ambulância): **131**\n- 🚒 **Bombeiros**: **132**\n- 👮 **Carabineros** (polícia): **133**\n- 🏨 **Hotel** (recepção): **+56 9 5381 1481**'},
+    {k:['lavanderia','lavagem','roupa','lavar'],r:'👕 **Serviço de lavanderia** disponível. Pergunte na recepção: **+56 9 5381 1481**'},
+    {k:['estacionamento','parking','carro','veiculo','veículo'],r:'🚗 **Estacionamento gratuito** no hotel para todos os hóspedes.'},
+    {k:['fogueira','fogueiro','estrelas','astronomia','noite'],r:'🔥✨ O hotel organiza **fogueiras com observação de estrelas**! A 3.500m o céu é extraordinário. Consulte disponibilidade na recepção.'},
   ],
   it:[
     {k:['indirizzo','dove','dov\'\u00e8','dove si trova','posizione'],r:'📍 **Baquedano 80, Putre**, Regione di Arica y Parinacota, Cile. A 3.500m sull\'altiplano.'},
@@ -3504,7 +3710,10 @@ const KB = {
     {k:['stelle','cielo','notte'],r:'✨ Il cielo notturno di Putre è **eccezionale** — la Via Lattea è visibile ad occhio nudo.'},
     {k:['cibo','gastronomia','lama','quinoa','trota'],r:'🍲 Gastronomia:\n- **Kalapurka** · **Carne di lama/alpaca** · **Trota** · **Quinoa** · **Chuño**'},
     {k:['fauna','animale','vigogna','fenicottero','condor'],r:'🦙 Fauna: **vigogne**, **lama**, **condor**, **3 specie di fenicotteri**. Oltre 130 specie di uccelli nel Parco Lauca!'},
-    {k:['emergenza','medico','ospedale','cesfam','urgenza','incidente','ambulanza'],r:'🚑 **CESFAM (Centro Sanitario Familiare)** disponibile 24/7. Telefono: **+56 9 5381 1481**. Per emergenze gravi, contattare immediatamente.'},
+    {k:['emergenza','medico','ospedale','cesfam','urgenza','incidente','ambulanza','pompieri','polizia','samu'],r:'🚨 **Emergenze a Putre:**\n- 🚑 **SAMU** (ambulanza): **131**\n- 🚒 **Vigili del fuoco**: **132**\n- 👮 **Carabineros** (polizia): **133**\n- 🏨 **Hotel** (reception): **+56 9 5381 1481**'},
+    {k:['lavanderia','lavaggio','vestiti','lavare'],r:'👕 **Servizio lavanderia** disponibile. Chiedere alla reception: **+56 9 5381 1481**'},
+    {k:['parcheggio','parcheggiare','auto','veicolo'],r:'🚗 **Parcheggio gratuito** in loco per tutti gli ospiti.'},
+    {k:['falò','fuoco','stelle','astronomia','notte'],r:'🔥✨ L\'hotel organizza **serate con falò e osservazione delle stelle**! A 3.500m il cielo è straordinario. Chiedere disponibilità alla reception.'},
   ],
   zh:[
     {k:['地址','在哪里','位置','酒店地址'],r:'📍 **巴克达诺街80号，普特雷**，智利阿里卡和帕里纳科塔地区。海拒3500米的高原。'},
@@ -3528,7 +3737,10 @@ const KB = {
     {k:['星空','星星','夜空','天文'],r:'✨ 普特雷夜空**极为壮观** — 干季可以肉眼看到银河。'},
     {k:['美食','饮食','食物','骆马','藜麦','鳟鱼'],r:'🍲 当地美食：**卡拉普尔卡汤**（火山石烹制）· **骆马/羊驼肉** · **高原鳟鱼** · **藜麦** · **冻干土豆**'},
     {k:['动物','野生','小羊驼','火烈鸟','秃鹰'],r:'🦙 野生动物：**小羊驼**、**骆马**、**安第斯秃鹰**、**3种火烈鸟**。劳卡公园130多种鸟类！'},
-    {k:['紧急','医生','医院','cesfam','急诊','事故','救护车'],r:'🚑 **CESFAM（家庭卫生中心）**24/7可用。电话：**+56 9 5381 1481**。如有严重紧急情况，请立即联系。'},
+    {k:['紧急','医生','医院','cesfam','急诊','事故','救护车','消防','警察','samu','131','132','133'],r:'🚨 **普特雷紧急电话：**\n- 🚑 **SAMU**（救护车）：**131**\n- 🚒 **消防队**：**132**\n- 👮 **卡拉比内罗斯**（警察）：**133**\n- 🏨 **酒店**（前台）：**+56 9 5381 1481**'},
+    {k:['洗衣','洗衣服','衣服'],r:'👕 酒店提供**洗衣服务**。请向前台询问详情：**+56 9 5381 1481**'},
+    {k:['停车','停车场','停车位','汽车','车'],r:'🚗 酒店内有**免费停车场**，所有住客均可使用。'},
+    {k:['篝火','星空','星星','夜空','天文','观星'],r:'🔥✨ 酒店举办**篝火观星活动**！海拔3500米，空气清澈，夜空无与伦比。请向前台咨询可用日期。'},
   ]
 };
 const KB_DEFAULT = {
@@ -3638,9 +3850,12 @@ async function send() {
     // permanently falls back to KB responses.
     if(chatHist.length && chatHist[chatHist.length-1].role==='user') chatHist.pop();
     showTyp(false); addMsg('bot',findKB(txt));
+  } finally {
+    // BUG FIX: Use finally so button always re-enables even if an unexpected
+    // exception escapes the catch block (e.g. addMsg throws, DOM not ready, etc.)
+    document.getElementById('bsn').disabled=false;
+    document.getElementById('inp').focus();
   }
-  document.getElementById('bsn').disabled=false;
-  document.getElementById('inp').focus();
 }
 function sendSugg(t){document.getElementById('inp').value=t;send();}
 function clearMsgs(){const c=document.getElementById('msgs');while(c.children.length>1)c.removeChild(c.lastChild);renderSuggs();}
@@ -3649,20 +3864,115 @@ document.getElementById('inp').addEventListener('input',function(){this.style.he
 document.getElementById('inp').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
 
 // ── GAME LAUNCHERS ──
+// ── GAME CARD BEST SCORES ──
+function updateGameCardBadges(){
+  // Runner: show best score across all completed levels
+  const runnerEl = document.getElementById('gc-badge-runner');
+  if(runnerEl){
+    const completed5 = (typeof completed !== 'undefined') ? completed : [];
+    const scores = (typeof bestScores !== 'undefined') ? bestScores : [];
+    const anyDone = completed5.some(function(c){ return c; });
+    if(anyDone){
+      const best = Math.max.apply(null, scores.filter(function(_,i){ return completed5[i]; }));
+      const levsDone = completed5.filter(Boolean).length;
+      runnerEl.textContent = levsDone+'/5 niveles · Récord ⭐'+best;
+    } else {
+      runnerEl.textContent = '3 niveles · ⭐ Stars · 🛡️ Shields · Cinemática final';
+    }
+  }
+  // Memory: show best move count across difficulties
+  const memEl = document.getElementById('gc-badge-memory');
+  if(memEl){
+    const keys = ['memBest_0','memBest_1','memBest_2'];
+    const bests = keys.map(function(k){ return parseInt(localStorage.getItem(k)||'0'); }).filter(function(v){ return v>0; });
+    if(bests.length){
+      const bestMov = Math.min.apply(null, bests);
+      memEl.textContent = bests.length+'/3 dificultades · Récord 🏅'+bestMov+' mov';
+    } else {
+      memEl.textContent = '3 dificultades · Los pastores del hotel';
+    }
+  }
+}
+
 function openRunner() {
+  updateGameCardBadges();
   goTo('s-runner');
   setTimeout(()=>{if(typeof openLlamaRunner==='function') openLlamaRunner();},120);
 }
 function openMemory() {
+  updateGameCardBadges();
   goTo('s-memory');
   document.getElementById('mem-start').style.display='flex';
   document.getElementById('mem-board-wrap').style.display='none';
   document.getElementById('mem-hud').style.display='none';
   document.getElementById('mem-win').classList.remove('show');
+  lbRenderStart();
 }
 function closeMemory() { clearMemory(); goBack(); }
 
+
 /// ── FAUNA SCREEN ──
+
+// ── FAUNA MODAL ──
+function openFfModal(card) {
+  const name    = card.querySelector('.fc-name')?.textContent   || '';
+  const sci     = card.querySelector('.fc-common')?.textContent || '';
+  const desc    = card.querySelector('.fc-desc')?.textContent   || '';
+  const badge   = card.querySelector('.fc-badge')?.textContent  || '';
+  const photoEl = card.querySelector('.fc-photo');
+  const imgEl   = photoEl?.querySelector('img');
+  const em      = photoEl?.dataset.em || '🌿';
+
+  document.getElementById('ff-modal-name').textContent = name;
+  document.getElementById('ff-modal-sci').textContent  = sci;
+  document.getElementById('ff-modal-desc').textContent = desc;
+  // Show category badge as cat label
+  const catEl = document.getElementById('ff-modal-cat');
+  if (catEl) catEl.textContent = badge;
+
+  // Image: use loaded photo or emoji placeholder
+  const imgBox  = document.getElementById('ff-modal-imgbox');
+  const placeholder = document.getElementById('ff-modal-placeholder');
+  if (imgEl && imgEl.src) {
+    placeholder.style.display = 'none';
+    // Clone img so it fills modal
+    imgBox.innerHTML = '';
+    const clone = document.createElement('img');
+    clone.src = imgEl.src; clone.alt = name;
+    clone.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    imgBox.appendChild(clone);
+  } else {
+    imgBox.innerHTML = '';
+    const ph = document.createElement('span');
+    ph.id = 'ff-modal-placeholder'; ph.textContent = em;
+    ph.style.cssText = 'font-size:3rem;';
+    imgBox.appendChild(ph);
+  }
+
+  // Update close button language
+  const closeBtn = document.getElementById('ff-modal-close-btn');
+  if (closeBtn) {
+    const closeLabels = {es:'Cerrar',en:'Close',fr:'Fermer',de:'Schließen',pt:'Fechar',it:'Chiudi',zh:'关闭'};
+    closeBtn.textContent = closeLabels[lang] || 'Cerrar';
+  }
+
+  document.getElementById('ff-modal-bg').classList.add('open');
+}
+function closeFfModal() {
+  document.getElementById('ff-modal-bg').classList.remove('open');
+}
+
+// Wire click handlers on all fauna cards (called after screen is shown)
+function initFaunaCardClicks() {
+  document.querySelectorAll('.fauna-card').forEach(function(card) {
+    if (!card.dataset.modalReady) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function() { openFfModal(card); });
+      card.dataset.modalReady = '1';
+    }
+  });
+}
+
 
 // High-quality fauna images from CDN
 const FAUNA_IMAGES = {
@@ -3708,7 +4018,7 @@ function showFaunaTab(tab, btn){
   document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
   document.getElementById('fpanel-'+tab).classList.add('active');
   if(btn) btn.classList.add('active');
-  setTimeout(loadFaunaPhotos, 100);
+  setTimeout(function(){ loadFaunaPhotos(); initFaunaCardClicks(); }, 100);
 }
 
 // Mini fauna chatbot
@@ -3780,6 +4090,8 @@ function findFaunaKB(q){
 document.getElementById('fauna-inp').addEventListener('keydown',function(e){
   if(e.key==='Enter'){e.preventDefault();sendFauna();}
 });
+
+
 const TOURS_DATA = {
   excursiones: [
     {
@@ -4021,6 +4333,7 @@ function renderTours() {
 renderSuggs();
 renderDests();
 renderTours();
+
 </script>
 
 <script>
@@ -4311,11 +4624,12 @@ function spawnStar(){
   const yRange = GH - H*0.42;
   const rnd = Math.random();
   let type;
-  if     (rnd < 0.07) type = 'life';    // 7% extra life
+  if     (rnd < 0.07) type = 'life';    // 7%  extra life
   else if(rnd < 0.17) type = 'coca';    // 10% coca leaf (slow-mo)
-  else if(rnd < 0.28) type = 'vicuna';  // 11% vicuña coin (big score)
-  else if(rnd < 0.42) type = 'shield';  // 14% shield
-  else                type = 'star';    // 58% star
+  else if(rnd < 0.27) type = 'vicuna';  // 10% vicuña coin (big score)
+  else if(rnd < 0.38) type = 'shield';  // 11% shield
+  else if(rnd < 0.46) type = 'magnet';  // 8%  magnet (attract all stars)
+  else                type = 'star';    // 54% star
   collectibles.push({
     x: W + sz,
     y: H*0.18 + Math.random()*yRange,
@@ -4386,6 +4700,33 @@ function drawStar(c, s){
       c.beginPath(); c.ellipse(-sz*.2,-sz*.4,sz*.15,sz*.08,-0.5,0,Math.PI*2); c.fill();
       break;
 
+    case 'magnet':
+      // Magnet shape — two curved poles with field lines
+      c.fillStyle='#e03080'; c.strokeStyle='#fff'; c.lineWidth=1.5;
+      // U-shape magnet body
+      c.beginPath();
+      c.arc(0, sz*.1, sz*.38, Math.PI, 0, false);
+      c.lineTo(sz*.38, sz*.6);
+      c.lineTo(sz*.2, sz*.6);
+      c.lineTo(sz*.2, sz*.15);
+      c.arc(0, sz*.1, sz*.2, 0, Math.PI, true);
+      c.lineTo(-sz*.38, sz*.6);
+      c.lineTo(-sz*.2, sz*.6);  // removed extra lineTo
+      c.closePath(); c.fill(); c.stroke();
+      // North pole red tip
+      c.fillStyle='#ff2244';
+      c.fillRect(-sz*.38, sz*.45, sz*.18, sz*.2);
+      // South pole blue tip
+      c.fillStyle='#2244ff';
+      c.fillRect(sz*.2, sz*.45, sz*.18, sz*.2);
+      // Field lines glow
+      c.strokeStyle='rgba(255,120,220,0.5)'; c.lineWidth=0.8;
+      for(let i=0;i<3;i++){
+        const r = sz*(0.5+i*0.2);
+        c.beginPath(); c.arc(0, sz*.1, r, Math.PI*1.1, Math.PI*1.9); c.stroke();
+      }
+      break;
+
     default: // star
       c.fillStyle='#FFD700'; c.strokeStyle='#DAA520'; c.lineWidth=1.5;
       c.beginPath();
@@ -4412,28 +4753,47 @@ function collectHitTest(lx, ly, lw, lh){
         case 'shield':
           shieldActive=true; shieldTimer=200;
           showScreenMsg('🛡️ ¡Escudo!');
+          sfxCollectShield();
+          addScorePopup(sx+ssz/2, sy, '🛡️');
           pcolor='rgba(74,143,196,';
           break;
         case 'coca':
-          slowmoTimer=220; // ~3.6s of slow-mo
+          slowmoTimer=220;
           showScreenMsg('🌿 ¡Slow-Mo!');
+          sfxCollectCoca();
+          addScorePopup(sx+ssz/2, sy, '🌿');
           pcolor='rgba(60,180,80,';
           break;
         case 'vicuna': {
           const pts=50*Math.max(1,combo);
           score+=pts;
           showScreenMsg('🦙 +'+pts+' pts!');
+          sfxCollectStar();
+          addScorePopup(sx+ssz/2, sy, '+'+pts);
           pcolor='rgba(200,160,0,';
           break;
         }
+        case 'magnet':
+          magnetActive=true; magnetTimer=MAGNET_DURATION;
+          showScreenMsg('🧲 ¡Imán!');
+          sfxCollectShield();
+          addScorePopup(sx+ssz/2, sy, '🧲');
+          pcolor='rgba(220,50,150,';
+          break;
         case 'life':
           if(lives < MAX_LIVES){ lives++; updateLivesHUD(); }
           showScreenMsg('❤️ +1 Vida!');
+          sfxCollectShield();
+          addScorePopup(sx+ssz/2, sy, '❤️');
           pcolor='rgba(220,50,80,';
           break;
-        default: // star
-          score += 10*Math.max(1,combo);
+        default: { // star
+          const pts2 = 10*Math.max(1,combo);
+          score += pts2;
           showScreenMsg(combo>2?'⭐ x'+combo+'!':'⭐ +10');
+          sfxCollectStar();
+          addScorePopup(sx+ssz/2, sy, combo>1 ? 'x'+combo+' ⭐':'⭐ +10');
+        }
       }
       // Particles
       for(let j=0;j<10;j++){
@@ -4444,7 +4804,6 @@ function collectHitTest(lx, ly, lw, lh){
         });
       }
       collectibles.splice(i,1);
-      try{memSound('match');}catch(e){}
       return true;
     }
   }
@@ -4454,6 +4813,12 @@ function collectHitTest(lx, ly, lw, lh){
 // Shield system
 let shieldActive = false;
 let shieldTimer = 0;
+
+// Magnet system
+let magnetActive = false;
+let magnetTimer = 0;
+const MAGNET_DURATION = 240; // ~4s at 60fps
+const MAGNET_RANGE = 0; // set after resize, based on W
 
 function showScreenMsg(msg){
   screenMsg = msg;
@@ -4474,6 +4839,110 @@ function drawScreenMsg(c){
   c.lineWidth = 3;
   c.strokeText(screenMsg, W*0.5, H*0.35 - yOff);
   c.fillText(screenMsg, W*0.5, H*0.35 - yOff);
+  c.restore();
+}
+
+// ── COMBO FIRE BAR ──
+const _fireParticles = [];
+let _fireFrame = 0;
+function drawComboBar(c){
+  _fireFrame++;
+  const barW = W * 0.28;
+  const barH = H * 0.022;
+  const bx = W * 0.5 - barW*0.5;
+  const by = H * 0.06;
+
+  // Score (bottom right of canvas)
+  if(score > 0){
+    c.save();
+    c.font = 'bold '+(W*0.03)+'px Jost,sans-serif';
+    c.textAlign = 'right';
+    c.fillStyle = '#FFD700';
+    c.fillText('⭐ '+score, W-12, GH+20);
+    c.restore();
+  }
+
+  // No bar if combo < 2
+  if(combo < 2) return;
+
+  const intensity = Math.min(combo / 8, 1); // max visual at 8 combo
+  const fillW = Math.min(combo / 10, 1) * barW;
+
+  c.save();
+
+  // Bar background
+  c.globalAlpha = 0.55;
+  c.fillStyle = 'rgba(30,10,0,0.7)';
+  roundRect(c, bx-2, by-2, barW+4, barH+4, barH*0.5+2);
+  c.fill();
+
+  // Bar fill gradient — yellow → orange → red based on intensity
+  const bg = c.createLinearGradient(bx, by, bx+fillW, by);
+  bg.addColorStop(0,   `hsl(${50-intensity*50},100%,60%)`);
+  bg.addColorStop(0.6, `hsl(${30-intensity*30},100%,55%)`);
+  bg.addColorStop(1,   `hsl(${10},100%,50%)`);
+  c.globalAlpha = 0.9;
+  c.fillStyle = bg;
+  roundRect(c, bx, by, fillW, barH, barH*0.5);
+  c.fill();
+
+  // Fire particles along the bar top edge
+  if(Math.random() < 0.4 + intensity*0.5){
+    for(let i=0;i<2;i++){
+      _fireParticles.push({
+        x: bx + Math.random()*fillW,
+        y: by,
+        vx: (Math.random()-0.5)*1.5,
+        vy: -(0.8 + Math.random()*1.5 + intensity),
+        life: 0.7 + Math.random()*0.5,
+        sz: 2 + Math.random()*3 * intensity
+      });
+    }
+  }
+
+  // Draw fire particles
+  c.globalAlpha = 1;
+  for(let i=_fireParticles.length-1; i>=0; i--){
+    const fp = _fireParticles[i];
+    fp.x += fp.vx; fp.y += fp.vy; fp.life -= 0.04;
+    if(fp.life <= 0){ _fireParticles.splice(i,1); continue; }
+    const hue = 30 + (1-fp.life)*20;
+    c.globalAlpha = fp.life * 0.9;
+    c.fillStyle = `hsl(${hue},100%,65%)`;
+    c.beginPath();
+    c.arc(fp.x, fp.y, fp.sz * fp.life, 0, Math.PI*2);
+    c.fill();
+  }
+
+  // Combo label
+  c.globalAlpha = 1;
+  c.font = `bold ${W*0.028}px Jost,sans-serif`;
+  c.textAlign = 'center';
+  const pulse = 1 + Math.sin(_fireFrame*0.18)*0.08*intensity;
+  c.save();
+  c.translate(bx + barW*0.5, by - barH*0.4);
+  c.scale(pulse, pulse);
+  const comboColor = combo>=8?'#ff2222': combo>=5?'#ff6600':'#FFD700';
+  c.fillStyle = comboColor;
+  c.strokeStyle = 'rgba(0,0,0,0.6)';
+  c.lineWidth = 2.5;
+  c.strokeText('🔥 x'+combo, 0, 0);
+  c.fillText('🔥 x'+combo, 0, 0);
+  c.restore();
+
+  // Magnet timer indicator
+  if(magnetActive){
+    const mt = magnetTimer/MAGNET_DURATION;
+    c.globalAlpha = 0.85;
+    c.fillStyle = 'rgba(30,10,0,0.6)';
+    roundRect(c, bx, by+barH+5, barW*mt, barH*0.65, 3);
+    c.fill();
+    c.fillStyle = `hsl(${310 + mt*30},100%,60%)`;
+    c.font = `bold ${W*0.018}px Jost,sans-serif`;
+    c.textAlign = 'left';
+    c.fillText('🧲 '+Math.ceil(magnetTimer/60)+'s', bx+4, by+barH+5+barH*0.55);
+  }
+
   c.restore();
 }
 
@@ -4881,6 +5350,15 @@ function tick(){
   if(typeof _wmc==='undefined')window._wmc=0;
   if(++_wmc%600===0){try{ctx.save();ctx.globalAlpha=1/255;ctx.fillStyle='rgb(72,76,86)';ctx.fillRect(W-4,H-4,2,2);ctx.restore();}catch(e){}}
 
+  // ── Screen shake ──
+  var _didShake = false;
+  if(_shakeTimer > 0){
+    var sx=(Math.random()-0.5)*_shakeAmt*2, sy=(Math.random()-0.5)*_shakeAmt;
+    ctx.save(); ctx.translate(sx,sy);
+    _shakeTimer--; if(_shakeTimer<=0)_shakeAmt=0;
+    _didShake = true;
+  }
+
   // Speed ramp: accelerates from 80% to speedRamp% over the level
   const rampProgress = Math.min(1, pixelsTraveled / totalPixels);
   const rampMult = 0.80 + (diff.speedRamp - 0.80) * rampProgress;
@@ -4895,6 +5373,9 @@ function tick(){
   // draw bg
   BG.draw(ctx);
 
+  // ── Weather (rain / dust) ──
+  drawWeather(ctx);
+
   // spawn cactus
   spawnTimer++;
   if(spawnTimer >= nextSpawn){ spawnCactus(); spawnTimer=0; }
@@ -4907,6 +5388,34 @@ function tick(){
 
   // shield countdown
   if(shieldActive){ shieldTimer--; if(shieldTimer<=0) shieldActive=false; }
+
+  // magnet countdown + attraction
+  if(magnetActive){
+    magnetTimer--; if(magnetTimer<=0) magnetActive=false;
+    const magnetRange = W * 0.35;
+    const lcx = llama.x + llama.w*0.5;
+    const lcy = llama.y + llama.h*0.5;
+    collectibles.forEach(s=>{
+      const dx = lcx - (s.x + s.sz*0.5);
+      const dy = lcy - (s.y + s.sz*0.5);
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < magnetRange && dist > 1){
+        const pull = Math.min(6, 120/dist);
+        s.x += dx/dist * pull;
+        s.y += dy/dist * pull;
+      }
+    });
+    // Draw magnet field aura around llama
+    ctx.save();
+    ctx.strokeStyle = `rgba(220,50,150,${0.15 + 0.1*Math.sin(magnetTimer*0.15)})`;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.ellipse(llama.x+llama.w/2, llama.y+llama.h/2, W*0.35, H*0.28, 0, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
 
   // combo decay
   if(comboTimer > 0) comboTimer--;
@@ -4952,9 +5461,20 @@ function tick(){
   }
 
   // draw llama (blink when invincible)
+  // ── Llama trail (combo ≥ 5) ──
+  updateTrail();
+  drawTrail(ctx);
   if(invincible <= 0 || Math.floor(invincible/8)%2===0){
     llama.draw(ctx);
   }
+
+  // ── Speed lines + near-miss ──
+  drawSpeedLines(ctx);
+  checkNearMiss();
+  drawScorePopups(ctx);
+
+  // ── Close screen shake transform ──
+  if(_didShake) ctx.restore();
 
   // shield glow
   if(shieldActive){
@@ -4993,19 +5513,8 @@ function tick(){
   // but hitTest() uses a 30%/15% inset reduced box. Use same reduced box here for consistency.
   collectHitTest(llama.x+llama.w*0.3, llama.y+llama.h*0.15, llama.w*0.5, llama.h*0.78);
 
-  // draw score + combo
-  if(score > 0 || combo > 0){
-    ctx.save();
-    ctx.font = 'bold '+(W*0.03)+'px Jost, sans-serif';
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#FFD700';
-    ctx.fillText('⭐ '+score, W-12, GH+20);
-    if(combo > 1){
-      ctx.fillStyle = combo>4?'#ff4444':'#FFD700';
-      ctx.fillText('x'+combo, W-12, GH+38);
-    }
-    ctx.restore();
-  }
+  // ── COMBO FIRE BAR + MAGNET INDICATOR ──
+  drawComboBar(ctx);
 
   // screen messages
   drawScreenMsg(ctx);
@@ -5032,7 +5541,7 @@ function tick(){
   // Invincibility blink
   if(invincible > 0){ invincible--; }
 
-  // Distance milestones
+  // Distance milestones — message + particle burst
   const track = diff.track;
   const msCheck = Math.round(track/4);
   [msCheck, msCheck*2, msCheck*3].forEach(m=>{
@@ -5040,6 +5549,23 @@ function tick(){
       _milestone[m] = true;
       const pct2 = Math.round(m/track*100);
       showScreenMsg(pct2+'% '+diff.icon+' ¡Vamos!');
+      // Burst of particles from top and sides
+      const burstColors = ['rgba(255,215,0,','rgba(196,149,106,','rgba(255,120,50,','rgba(255,255,180,'];
+      for(let b=0;b<40;b++){
+        const angle = (b/40)*Math.PI*2;
+        const spd = 3+Math.random()*5;
+        particles.push({
+          x: W*0.5 + (Math.random()-0.5)*W*0.3,
+          y: H*0.35 + (Math.random()-0.5)*H*0.15,
+          vx: Math.cos(angle)*spd*(0.5+Math.random()),
+          vy: Math.sin(angle)*spd*(0.5+Math.random()) - 3,
+          life: 1,
+          size: 4+Math.random()*6,
+          color: burstColors[Math.floor(Math.random()*burstColors.length)]
+        });
+      }
+      // Fanfare tone
+      sfxWin();
     }
   });
 
@@ -5048,6 +5574,8 @@ function tick(){
     if(shieldActive){
       shieldActive=false; shieldTimer=0;
       showScreenMsg('🛡️ ¡Salvado!');
+      sfxCollectShield();
+      triggerShake(4, 8);
       for(let i=obstacles.length-1;i>=0;i--){
         const o=obstacles[i]; const pad=4;
         if(llama.x+llama.w-pad>o.x && llama.x+pad<o.x+o.w && llama.y+llama.h-pad>o.y){
@@ -5056,14 +5584,21 @@ function tick(){
       }
     } else if(lives > 0){
       lives--;
+      sfxHit();
+      triggerShake(8, 14);
+      if(navigator.vibrate) navigator.vibrate([40,30,40]);
       updateLivesHUD();
-      invincible = 110; // ~1.8s
-      obstacles.length = 0; // clear nearby danger
+      invincible = 110;
+      obstacles.length = 0;
       showScreenMsg('💔 -1 Vida '+(lives>0?'❤️'.repeat(lives):'¡Última oportunidad!'));
     } else {
       gameState='dead';
+      sfxDeath();
+      triggerShake(12, 18);
+      if(navigator.vibrate) navigator.vibrate([60,40,80,40,100]);
       if(score > bestScores[selectedDiff]) bestScores[selectedDiff]=score;
       showOverlay('dead', meters);
+      if(_didShake) ctx.restore();
       return;
     }
   }
@@ -5076,6 +5611,8 @@ function tick(){
       combo++;
       comboTimer = 120;
       score += 5 * combo;
+      sfxCombo(combo);
+      addScorePopup(llama.x + llama.w*0.5, llama.y, combo > 1 ? 'x'+combo+' +'+5*combo : '+5');
       if(combo >= 3){
         const idx = Math.min(combo-3, COMBO_MSGS.length-1);
         showScreenMsg(COMBO_MSGS[idx]);
@@ -5086,7 +5623,9 @@ function tick(){
   // WIN
   if(meters >= diff.track){
     gameState='win';
+    sfxWin();
     if(score > bestScores[selectedDiff]) bestScores[selectedDiff]=score;
+    if(_didShake) ctx.restore();
     if(isFinalLevel){
       startCinematic();
     } else {
@@ -5193,10 +5732,17 @@ function initGame(){
   collectTimer = 60;
   shieldActive = false; shieldTimer = 0;
   slowmoTimer = 0;
+  magnetActive = false; magnetTimer = 0;
+  _fireParticles.length = 0; _fireFrame = 0;
   invincible = 0;
   lives = MAX_LIVES;
   screenMsg = ''; screenMsgTimer = 0;
   spawnTimer = 80;
+  _shakeTimer = 0; _shakeAmt = 0;
+  _scorePopups.length = 0;
+  _llamaTrail.length = 0;
+  initWeather();
+  initSpeedLines();
   if(typeof _milestone==='undefined') window._milestone={};
   _milestone = {};
   BG.init();
@@ -5233,10 +5779,229 @@ function backToMenu(){
   const sc=document.getElementById('sc-start');
   sc.classList.remove('off','gone');
   updateDiffUI();
+  updateGameCardBadges();
 }
 
 // ── PAUSE / RESUME ──
 let gamePaused=false;
+
+// ════════════════════════════════════════════════════════════════
+// WEB AUDIO ENGINE
+// ════════════════════════════════════════════════════════════════
+let _audioCtx = null;
+function _getAC(){
+  if(!_audioCtx){
+    try{ _audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+  }
+  return _audioCtx;
+}
+function _playTone(freq, type, dur, vol, delay){
+  try{
+    const ac = _getAC(); if(!ac) return;
+    if(ac.state==='suspended') ac.resume();
+    delay = delay||0;
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.type = type||'sine';
+    osc.frequency.setValueAtTime(freq, ac.currentTime+delay);
+    gain.gain.setValueAtTime(Math.min(vol||0.15, 0.4), ac.currentTime+delay);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime+delay+dur+0.01);
+    osc.start(ac.currentTime+delay);
+    osc.stop(ac.currentTime+delay+dur+0.05);
+  }catch(e){}
+}
+function sfxJump(){
+  _playTone(340,'sine',0.1,0.15);
+  _playTone(500,'sine',0.07,0.1,0.07);
+}
+function sfxCollectStar(){
+  _playTone(660,'sine',0.07,0.18);
+  _playTone(880,'sine',0.06,0.14,0.06);
+  _playTone(1100,'sine',0.05,0.1,0.12);
+}
+function sfxCollectShield(){
+  _playTone(200,'sawtooth',0.05,0.12);
+  _playTone(400,'square',0.06,0.14,0.04);
+  _playTone(660,'sine',0.08,0.18,0.09);
+}
+function sfxCollectCoca(){
+  _playTone(330,'sine',0.06,0.15);
+  _playTone(440,'sine',0.08,0.15,0.05);
+  _playTone(330,'sine',0.06,0.1,0.12);
+}
+function sfxHit(){
+  _playTone(180,'sawtooth',0.12,0.35);
+  _playTone(90,'square',0.08,0.25,0.08);
+}
+function sfxDeath(){
+  _playTone(220,'sawtooth',0.12,0.3);
+  _playTone(150,'sawtooth',0.15,0.25,0.1);
+  _playTone(80,'square',0.18,0.2,0.22);
+}
+function sfxWin(){
+  [440,550,660,880].forEach(function(f,i){ _playTone(f,'sine',0.18,0.18,i*0.13); });
+}
+function sfxCombo(n){
+  var f = 200+Math.min(n,8)*70;
+  _playTone(f,'square',0.05,0.12);
+  _playTone(f*1.5,'sine',0.05,0.09,0.04);
+}
+function sfxNearMiss(){
+  _playTone(800,'sine',0.04,0.12);
+  _playTone(1000,'sine',0.04,0.08,0.04);
+}
+
+// ════════════════════════════════════════════════════════════════
+// SCREEN SHAKE
+// ════════════════════════════════════════════════════════════════
+let _shakeTimer = 0, _shakeAmt = 0;
+function triggerShake(amt, dur){ _shakeAmt = amt; _shakeTimer = dur; }
+
+// ════════════════════════════════════════════════════════════════
+// WEATHER SYSTEM
+// ════════════════════════════════════════════════════════════════
+var _weatherParts = [];
+function initWeather(){
+  _weatherParts = [];
+  var sky = (diff && diff.sky)||'morning';
+  if(sky==='dawn'||sky==='night'){
+    // rain drops
+    for(var i=0;i<70;i++) _weatherParts.push({x:Math.random(),y:Math.random(),spd:2.5+Math.random()*3,len:5+Math.random()*8,a:0.25+Math.random()*0.35});
+  } else if(sky==='sunset'){
+    // dust motes
+    for(var i=0;i<45;i++) _weatherParts.push({x:Math.random(),y:0.5+Math.random()*0.5,spd:0.5+Math.random()*1.2,sz:1+Math.random()*2.5,a:0.1+Math.random()*0.2});
+  }
+}
+function drawWeather(c){
+  if(!_weatherParts.length) return;
+  var sky = (diff && diff.sky)||'morning';
+  c.save();
+  if(sky==='dawn'||sky==='night'){
+    c.strokeStyle='rgba(180,210,255,1)'; c.lineWidth=1;
+    _weatherParts.forEach(function(p){
+      p.y += p.spd/H; p.x -= p.spd*0.25/W;
+      if(p.y>1){p.y=0; p.x=Math.random();}
+      if(p.x<0) p.x=1;
+      c.globalAlpha = p.a;
+      c.beginPath();
+      c.moveTo(p.x*W, p.y*H);
+      c.lineTo(p.x*W - p.len*0.2, p.y*H + p.len);
+      c.stroke();
+    });
+  } else if(sky==='sunset'){
+    _weatherParts.forEach(function(p){
+      p.x += p.spd*0.8/W; p.y -= p.spd*0.25/H;
+      if(p.x>1){p.x=0; p.y=0.5+Math.random()*0.5;}
+      if(p.y<0.3) p.y=0.5+Math.random()*0.5;
+      c.globalAlpha = p.a;
+      c.fillStyle='rgba(210,175,110,1)';
+      c.beginPath(); c.arc(p.x*W, p.y*H, p.sz, 0, Math.PI*2); c.fill();
+    });
+  }
+  c.restore();
+}
+
+// ════════════════════════════════════════════════════════════════
+// SPEED LINES
+// ════════════════════════════════════════════════════════════════
+var _speedLines = [];
+function initSpeedLines(){
+  _speedLines = [];
+  for(var i=0;i<18;i++) _speedLines.push({y:Math.random(),len:0.05+Math.random()*0.1,a:0.2+Math.random()*0.4,phase:Math.random()*Math.PI*2});
+}
+function drawSpeedLines(c){
+  var sky = (diff && diff.sky)||'morning';
+  var strength = 0;
+  if(combo >= 4) strength = Math.min(1,(combo-3)*0.22);
+  if(sky==='night') strength = Math.max(strength, 0.45);
+  if(strength <= 0) return;
+  c.save();
+  _speedLines.forEach(function(sl){
+    sl.phase += 0.04; sl.y += 0.0025; if(sl.y>1) sl.y = Math.random()*0.15;
+    var alpha = sl.a * strength;
+    c.globalAlpha = alpha;
+    c.strokeStyle = 'rgba(255,255,255,1)';
+    c.lineWidth = 1;
+    var startX = W * (0.02 + Math.abs(Math.sin(sl.phase))*0.08);
+    c.beginPath();
+    c.moveTo(startX, sl.y*H);
+    c.lineTo(startX + sl.len*W, sl.y*H);
+    c.stroke();
+  });
+  c.restore();
+}
+
+// ════════════════════════════════════════════════════════════════
+// LLAMA TRAIL (ghost frames at high combo)
+// ════════════════════════════════════════════════════════════════
+var _llamaTrail = [];
+function updateTrail(){
+  if(combo >= 5){
+    _llamaTrail.push({x:llama.x, y:llama.y, w:llama.w, h:llama.h});
+    if(_llamaTrail.length > 3) _llamaTrail.shift();
+  } else {
+    _llamaTrail.length = 0;
+  }
+}
+function drawTrail(c){
+  _llamaTrail.forEach(function(t, i){
+    var alpha = (i+1)/_llamaTrail.length * 0.22;
+    c.save();
+    c.globalAlpha = alpha;
+    c.fillStyle = '#C49A6C';
+    roundRect(c, t.x+t.w*0.15, t.y+t.h*0.38, t.w*0.7, t.h*0.45, t.w*0.12);
+    c.fill();
+    c.restore();
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+// SCORE POPUPS (float-up text)
+// ════════════════════════════════════════════════════════════════
+var _scorePopups = [];
+function addScorePopup(x, y, txt){
+  _scorePopups.push({x:x, y:y, txt:txt, life:1.0, vy:-1.8});
+}
+function drawScorePopups(c){
+  for(var i=_scorePopups.length-1; i>=0; i--){
+    var p = _scorePopups[i];
+    p.y += p.vy; p.vy *= 0.93; p.life -= 0.022;
+    if(p.life <= 0){ _scorePopups.splice(i,1); continue; }
+    c.save();
+    c.globalAlpha = p.life;
+    c.font = 'bold '+(W*0.033)+'px Jost,sans-serif';
+    c.textAlign = 'center';
+    c.strokeStyle = 'rgba(40,20,5,0.7)';
+    c.lineWidth = 3;
+    c.fillStyle = '#FFD700';
+    c.strokeText(p.txt, p.x, p.y);
+    c.fillText(p.txt, p.x, p.y);
+    c.restore();
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// NEAR-MISS DETECTION
+// ════════════════════════════════════════════════════════════════
+function checkNearMiss(){
+  var lx = llama.x + llama.w*0.32;
+  obstacles.forEach(function(o){
+    if(!o._nearMiss && o.x+o.w < lx && o.x+o.w > lx-10){
+      o._nearMiss = true;
+      sfxNearMiss();
+      showScreenMsg('😤 ¡Cerca!');
+      for(var i=0;i<8;i++){
+        particles.push({
+          x: lx, y: llama.y+llama.h*0.5,
+          vx:(Math.random()-0.5)*5, vy:-(Math.random()*3+1),
+          life:1, size:2+Math.random()*3, color:'rgba(255,220,80,'
+        });
+      }
+    }
+  });
+}
+
 function togglePause(){
   if(gameState!=='running'&&!gamePaused) return;
   const btn=document.getElementById('hud-pause');
@@ -5250,8 +6015,6 @@ function togglePause(){
     gameLoop=requestAnimationFrame(tick);
   }
 }
-
-
 
 
 // goBack removed - defined in global nav IIFE
@@ -5294,6 +6057,8 @@ function doJump(){
   if(gameState==='running'){
     const now=Date.now();
     llama.jump();
+    sfxJump();
+    if(navigator.vibrate) navigator.vibrate(25);
     if(now-lastJumpTime<300) addDust(llama.x+llama.w/2, llama.y+llama.h);
     lastJumpTime=now;
   }
@@ -5309,7 +6074,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 document.getElementById('cv').addEventListener('click', doJump);
-document.getElementById('cv').addEventListener('touchstart',e=>{e.preventDefault();doJump();},{passive:false});
+document.getElementById('cv').addEventListener('touchstart',e=>{e.preventDefault(); _getAC(); doJump();},{passive:false});
 window.addEventListener('resize', ()=>{ if(gameState==='running') resize(); });
 
 // ════════════════════════════════════════════════════════════════
@@ -5688,20 +6453,7 @@ function drawCinematic(){
 function easeOut(t){ return 1-(1-t)*(1-t); }
 
 // ════════════════════════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════════════════════════
-function roundRect(c,x,y,w,h,r){
-  c.beginPath();
-  c.moveTo(x+r,y);
-  c.lineTo(x+w-r,y); c.quadraticCurveTo(x+w,y,x+w,y+r);
-  c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
-  c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y);
-  c.closePath();
-}
-
-// ════════════════════════════════════════════════════════════════
-// INIT
+// INIT  (roundRect is defined earlier in this block)
 // ════════════════════════════════════════════════════════════════
 updateDiffUI();
 resize();
@@ -5710,20 +6462,15 @@ window.addEventListener('resize', resize);
 // ══ LLAMA RUNNER INTEGRATION ══
 function openLlamaRunner(){
   document.getElementById('game-container').classList.add('game-open');
-  document.getElementById('games-screen').classList.remove('visible');
-  // resize game canvas
   if(typeof resize === 'function') setTimeout(resize, 50);
 }
 function closeLlamaRunner(){
   document.getElementById('game-container').classList.remove('game-open');
-  document.getElementById('games-screen').classList.add('visible');
-  // stop any running game loop
   if(typeof cancelAnimationFrame !== 'undefined' && typeof gameLoop !== 'undefined'){
     cancelAnimationFrame(gameLoop);
   }
   if(typeof gameState !== 'undefined') gameState='idle';
 }
-
 
 
 // ══ RUNNER PATCH ══
@@ -5751,6 +6498,7 @@ function closeLlamaRunner(){
     if(prev) { const el=document.getElementById(prev); if(el) el.classList.remove('hidden','slide-left'); }
   };
 })();
+
 </script>
 
 <script>
@@ -5954,12 +6702,20 @@ const MEM_DIFFS = [
     {dog:'lottie',view:'face'},{dog:'lottie',view:'side'},{dog:'lottie',view:'sit'},
     {dog:'sultan',view:'face'},{dog:'sultan',view:'side'},{dog:'sultan',view:'sit'},
     {dog:'rocky',view:'face'},{dog:'rocky',view:'side'},{dog:'rocky',view:'sit'}
+  ]},
+  // Countdown: 6 pairs, 60s limit, -3s per error
+  {pairs:6, cols:'cols4', countdown:true, countdownSecs:60, cardTypes:[
+    {dog:'lottie',view:'face'},{dog:'lottie',view:'side'},
+    {dog:'sultan',view:'face'},{dog:'sultan',view:'side'},
+    {dog:'rocky',view:'face'},{dog:'rocky',view:'side'}
   ]}
 ];
 
 let memDeck=[], memFlipped=[], memMatched=new Set(), memLocked=false;
 let memMoves=0, memPairs=0, memTotalPairs=0, memTimer=null, memSeconds=0, memDiffIdx=0;
 let memAudioCtx=null;
+let memCountdownMode=false, memCountdownLeft=0, memCountdownTimer=null;
+let memWildcardPending=false; // true when 3-streak bonus triggers
 
 function memShuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 
@@ -5977,14 +6733,84 @@ function memSound(type){
   }catch(e){}
 }
 
-// ═══ CONFETTI ═══
-function memConfetti(){
+// ═══ DOG FACTS DATABASE ═══
+const DOG_FACTS = {
+  lottie: [
+    '🐾 Lottie siempre duerme con una pata encima de su juguete favorito.',
+    '🐾 Lottie es la más rápida del hotel — nadie la alcanza en el jardín.',
+    '🐾 A Lottie le encanta acompañar a los huéspedes a desayunar.',
+    '🐾 Lottie reconoce el sonido de la camioneta del hotel desde 500 metros.',
+    '🐾 El collar rojo de Lottie fue un regalo del primer huésped del hotel.',
+  ],
+  sultan: [
+    '👑 Sultán es el más grande y tranquilo — le llaman "el guardián del altiplano".',
+    '👑 Sultán ama los días nublados. Le pone filosófico.',
+    '👑 El collar azul de Sultán combina exactamente con el cielo de Putre a las 6am.',
+    '👑 Sultán duerme frente a la puerta principal todas las noches sin falta.',
+    '👑 Sultán nunca ladra — solo mira fijamente hasta que entiendes el mensaje.',
+  ],
+  rocky: [
+    '🐕 Rocky tiene tres colores en la nariz y ninguno es el mismo.',
+    '🐕 Rocky derrumbó la pila de facturas de recepción dos veces... en el mismo mes.',
+    '🐕 El badge de patita de Rocky lo ganó por encontrar las llaves del jeep en el pasto.',
+    '🐕 Rocky corre en círculos exactamente 7 veces antes de dormir. Siempre 7.',
+    '🐕 Rocky aprendió a abrir la nevera. Por eso ahora tiene cerrojo.',
+  ]
+};
+const _dogFactIdx = {lottie:0, sultan:0, rocky:0};
+function getNextDogFact(dog){
+  const facts = DOG_FACTS[dog] || DOG_FACTS.lottie;
+  const idx = _dogFactIdx[dog] || 0;
+  _dogFactIdx[dog] = (idx + 1) % facts.length;
+  return facts[idx];
+}
+function showDogFact(dog){
+  var el = document.getElementById('mem-fact-bubble');
+  if(!el) return;
+  const colors = {lottie:'#cc2200', sultan:'#0066cc', rocky:'#c09060'};
+  const names = {lottie:'Lottie', sultan:'Sultán', rocky:'Rocky'};
+  const color = colors[dog]||'#C4956A';
+  const name = names[dog]||dog;
+  el.innerHTML = '<span class="fact-dog" style="color:'+color+'">'+name+'</span>' + getNextDogFact(dog);
+  el.style.display = 'block';
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = 'factFadeIn .3s ease';
+  clearTimeout(el._factTimer);
+  el._factTimer = setTimeout(function(){ el.style.display = 'none'; }, 3000);
+}
+
+// ═══ MEM SCORE FLOAT ═══
+function showMemScoreFloat(elCard, pts){
+  if(!elCard) return;
+  const rect = elCard.getBoundingClientRect();
+  const board = document.getElementById('mem-board-wrap');
+  if(!board) return;
+  const bRect = board.getBoundingClientRect();
+  const div = document.createElement('div');
+  div.className = 'mem-score-float';
+  div.textContent = pts > 0 ? '+'+pts : '🎉';
+  div.style.left = (rect.left - bRect.left + rect.width/2 - 20) + 'px';
+  div.style.top  = (rect.top  - bRect.top  + rect.height/3) + 'px';
+  board.style.position = 'relative';
+  board.appendChild(div);
+  setTimeout(function(){ div.remove(); }, 950);
+}
+
+// ═══ CONFETTI (per-dog color) ═══
+function memConfetti(dog){
   const canvas=document.getElementById('mem-confetti');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
   const W=canvas.width=(canvas.parentElement && canvas.parentElement.clientWidth)||400;
   const H=canvas.height=(canvas.parentElement && canvas.parentElement.clientHeight)||600;
-  const colors=['#cc2200','#0066cc','#ffcc00','#c8a97a','#4ea065','#e8d4b0','#ff6b35'];
+  // Per-dog palettes
+  const palettes = {
+    lottie: ['#cc2200','#ff6644','#ffcc00','#ff9966','#fff'],
+    sultan: ['#0066cc','#4499ff','#ffcc00','#88ccff','#fff'],
+    rocky:  ['#c09060','#ff9933','#ffcc00','#e8d4b0','#cc2200'],
+  };
+  const colors = palettes[dog] || ['#cc2200','#0066cc','#ffcc00','#c8a97a','#4ea065','#e8d4b0','#ff6b35'];
   const pieces=[];
   for(let i=0;i<120;i++) pieces.push({x:Math.random()*W,y:Math.random()*H*-1,w:Math.random()*8+4,h:Math.random()*6+3,c:colors[Math.floor(Math.random()*colors.length)],vx:(Math.random()-.5)*3,vy:Math.random()*3+2,r:Math.random()*360,rv:(Math.random()-.5)*8});
   let frames=0;
@@ -6003,23 +6829,223 @@ function memConfetti(){
   draw();
 }
 
-// ═══ START GAME ═══
+// ═══ HINT SYSTEM ═══
+let memWrongGuesses = 0;
+let _hintUsed = false;
+function showHintIfReady(){
+  const btn = document.getElementById('mem-hint-btn');
+  if(btn && memWrongGuesses >= 10 && !_hintUsed){
+    const t = (typeof T!=='undefined'&&T[lang])?T[lang]:{};
+    btn.textContent = t.hintBtn || '💡 Pista';
+    btn.style.display = 'block';
+  }
+}
+function useMemHint(){
+  if(_hintUsed) return;
+  _hintUsed = true;
+  const btn = document.getElementById('mem-hint-btn');
+  if(btn) btn.style.display = 'none';
+  // Find first unmatched pair
+  const unmatched = [];
+  for(let i=0;i<memDeck.length;i++) if(!memMatched.has(i)) unmatched.push(i);
+  // Find a matching pair among unmatched
+  for(let i=0;i<unmatched.length;i++){
+    for(let j=i+1;j<unmatched.length;j++){
+      const a=unmatched[i], b=unmatched[j];
+      if(memDeck[a].dog===memDeck[b].dog && memDeck[a].view===memDeck[b].view){
+        // Briefly reveal both cards
+        memLocked = true;
+        const elA = document.querySelector('.mem-card[data-idx="'+a+'"]');
+        const elB = document.querySelector('.mem-card[data-idx="'+b+'"]');
+        if(elA) elA.classList.add('flipped');
+        if(elB) elB.classList.add('flipped');
+        setTimeout(function(){
+          if(elA) elA.classList.remove('flipped');
+          if(elB) elB.classList.remove('flipped');
+          memLocked = false;
+        }, 1400);
+        return;
+      }
+    }
+  }
+}
+
+
+
+// ═══ LEADERBOARD (localStorage top-3 per difficulty) ═══
+function lbKey(d){ return 'memLB_'+d; }
+function lbLoad(d){
+  try{ return JSON.parse(localStorage.getItem(lbKey(d))||'[]'); }catch(e){ return []; }
+}
+function lbSave(d, entries){ localStorage.setItem(lbKey(d), JSON.stringify(entries.slice(0,3))); }
+function lbTryAdd(d, name, moves, secs){
+  const entries = lbLoad(d);
+  entries.push({name: name||'Huésped', moves, secs});
+  entries.sort(function(a,b){ return a.moves!==b.moves ? a.moves-b.moves : a.secs-b.secs; });
+  lbSave(d, entries);
+  return entries;
+}
+function lbRender(d){
+  const el = document.getElementById('mw-lb');
+  if(!el) return;
+  const entries = lbLoad(d);
+  if(!entries.length){ el.innerHTML=''; return; }
+  const t = (typeof T!=='undefined' && T[lang]) ? T[lang] : {};
+  const diffNames = [t.md0||'Fácil', t.md1||'Normal', t.md2||'Difícil', t.md3||'⏱️ Contrarreloj'];
+  const medals = ['🥇','🥈','🥉'];
+  el.innerHTML = '<div style="font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(196,149,106,.5);margin-bottom:4px;">Récords · '+(diffNames[d]||'')+'</div>'
+    + entries.slice(0,3).map(function(e,i){
+        return medals[i]+' <b style="color:#FFF8F0">'+e.name+'</b> — '+e.moves+' mov · '+e.secs+'s';
+      }).join('<br>');
+}
+function lbRenderStart(){
+  const el = document.getElementById('mem-lb-inner');
+  if(!el) return;
+  const t = (typeof T!=='undefined' && T[lang]) ? T[lang] : {};
+  const icons = ['🌿','🌵','🏔️','⏱️'];
+  const diffNames = [
+    icons[0]+' '+(t.md0||'Fácil'),
+    icons[1]+' '+(t.md1||'Normal'),
+    icons[2]+' '+(t.md2||'Difícil'),
+    icons[3]+' '+(t.md3||'Contrarreloj')
+  ];
+  const medals = ['🥇','🥈','🥉'];
+  let html = '';
+  for(let d=0;d<4;d++){
+    const entries = lbLoad(d);
+    if(!entries.length) continue;
+    html += '<div class="mem-lb-section"><div class="mem-lb-title">'+diffNames[d]+'</div>';
+    entries.slice(0,3).forEach(function(e,i){
+      html += '<div class="mem-lb-row"><span class="mem-lb-rank">'+medals[i]+'</span><span class="mem-lb-name">'+e.name+'</span><span class="mem-lb-score">'+e.moves+' mov</span></div>';
+    });
+    html += '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// ═══ WILDCARD BONUS (3 consecutive pairs without error) ═══
+function triggerWildcard(){
+  memWildcardPending = false;
+  document.querySelectorAll('.mem-card.matched').forEach(function(el){
+    const f = document.createElement('div');
+    f.className = 'mem-wildcard-flash';
+    el.appendChild(f);
+    setTimeout(function(){ f.remove(); }, 800);
+  });
+  memSound('win');
+  const popup = document.getElementById('mem-streak-popup');
+  if(popup){
+    popup.textContent = '🌟 ¡COMBO BONUS! +150';
+    popup.style.display='block';
+    popup.style.animation='none'; void popup.offsetWidth;
+    popup.style.animation='streakPop 1.2s ease-out forwards';
+    setTimeout(function(){ popup.style.display='none'; }, 1200);
+  }
+}
+
+// ═══ COUNTDOWN TIMER ═══
+function startCountdownTimer(secs){
+  memCountdownLeft = secs;
+  updateCountdownHUD();
+  if(memCountdownTimer) clearInterval(memCountdownTimer);
+  memCountdownTimer = setInterval(function(){
+    memCountdownLeft--;
+    updateCountdownHUD();
+    if(memCountdownLeft <= 0){ clearInterval(memCountdownTimer); showMemTimesUp(); }
+  }, 1000);
+}
+function updateCountdownHUD(){
+  const el = document.getElementById('mh-time');
+  if(!el) return;
+  el.textContent = memCountdownLeft;
+  if(memCountdownLeft <= 15) el.classList.add('danger');
+  else el.classList.remove('danger');
+}
+function penalizeCountdown(){
+  if(!memCountdownMode) return;
+  memCountdownLeft = Math.max(0, memCountdownLeft - 3);
+  updateCountdownHUD();
+  const hud = document.getElementById('mem-hud');
+  if(hud){ hud.style.background='rgba(180,20,20,.4)'; setTimeout(function(){ hud.style.background=''; },300); }
+  if(memCountdownLeft <= 0){ clearInterval(memCountdownTimer); showMemTimesUp(); }
+}
+function showMemTimesUp(){
+  if(memTimer) clearInterval(memTimer);
+  if(memCountdownTimer) clearInterval(memCountdownTimer);
+  memSound('error');
+  // Translate timesup title
+  const tsTitle = document.querySelector('#mem-timesup [data-ts-title]');
+  if(tsTitle){ const t=(typeof T!=='undefined'&&T[lang])?T[lang]:{}; tsTitle.textContent = t.timesUpTitle||'¡Tiempo!'; }
+  // Translate sub text
+  const t2 = (typeof T!=='undefined'&&T[lang])?T[lang]:{};
+  const pairsWord = t2.mhPar||'par'; const movWord = t2.mhMov||'mov';
+  const sub = document.getElementById('mem-timesup-sub');
+  if(sub) sub.textContent = memPairs+'/'+memTotalPairs+' '+pairsWord+' · '+memMoves+' '+movWord;
+  // Translate buttons
+  const btnAgain = document.querySelector('#mem-timesup .mem-win-btn.primary');
+  const btnBack  = document.querySelector('#mem-timesup .mem-win-btn.secondary');
+  if(btnAgain && t2.mwAgain) btnAgain.textContent = t2.mwAgain;
+  if(btnBack  && t2.mwBack)  btnBack.textContent  = t2.mwBack;
+  const ts = document.getElementById('mem-timesup');
+  if(ts) ts.classList.add('show');
+}
+
+// ═══ PER-DOG MATCH CHORDS ═══
+// Lottie = C major (C5-E5-G5), Sultán = G major (G4-B4-D5), Rocky = E minor (E4-G4-B4)
+function memDogChord(dog){
+  try{
+    if(!memAudioCtx) memAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(memAudioCtx.state==='suspended') memAudioCtx.resume();
+    const ac = memAudioCtx;
+    const chords = {
+      lottie: [523.25, 659.25, 783.99],   // C5 E5 G5
+      sultan: [392.00, 493.88, 587.33],   // G4 B4 D5
+      rocky:  [329.63, 392.00, 493.88]    // E4 G4 B4
+    };
+    const freqs = chords[dog] || chords.lottie;
+    freqs.forEach(function(freq, i){
+      const osc = ac.createOscillator();
+      const gain = ac.createGain();
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ac.currentTime + i*0.04);
+      gain.gain.linearRampToValueAtTime(0.09, ac.currentTime + i*0.04 + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + i*0.04 + 0.4);
+      osc.start(ac.currentTime + i*0.04);
+      osc.stop(ac.currentTime + i*0.04 + 0.42);
+    });
+  }catch(e){}
+}
+
+
 function startMemory(d){
   memDiffIdx=d;
   const cfg=MEM_DIFFS[d];
   memTotalPairs=cfg.pairs;
+  memCountdownMode = !!cfg.countdown;
+  memWildcardPending = false;
   // Duplicate each card type into pairs
   memDeck=memShuffle([...cfg.cardTypes,...cfg.cardTypes]);
   memFlipped=[]; memMatched=new Set();
   memLocked=true; memMoves=0; memPairs=0; memSeconds=0;
+  memStreak=0; memWrongGuesses=0; _hintUsed=false;
+  // Hide overlays
+  var _fb=document.getElementById('mem-fact-bubble'); if(_fb) _fb.style.display='none';
+  var _hb=document.getElementById('mem-hint-btn'); if(_hb) _hb.style.display='none';
+  var _ts=document.getElementById('mem-timesup'); if(_ts) _ts.classList.remove('show');
   document.getElementById('mem-start').style.display='none';
   document.getElementById('mem-board-wrap').style.display='flex';
   document.getElementById('mem-win').classList.remove('show');
   document.getElementById('mem-hud').style.display='flex';
+  // Show countdown-specific HUD label
+  const timeLbl = document.getElementById('mh-time-lbl');
+  if(timeLbl) timeLbl.textContent = memCountdownMode ? 'SEG⏱' : 'SEG';
   updateMemHUD(); renderMemBoard(cfg);
   if(memTimer) clearInterval(memTimer);
+  if(memCountdownTimer) clearInterval(memCountdownTimer);
 
-  // Peek: show all cards for 1.5s then flip back
+  // Peek then start
   setTimeout(()=>{
     document.querySelectorAll('.mem-card').forEach(c=>c.classList.add('peek'));
     setTimeout(()=>{
@@ -6027,7 +7053,11 @@ function startMemory(d){
       setTimeout(()=>{
         document.querySelectorAll('.mem-card').forEach(c=>c.classList.remove('peek-back'));
         memLocked=false;
-        memTimer=setInterval(()=>{memSeconds++;document.getElementById('mh-time').textContent=memSeconds;},1000);
+        if(memCountdownMode){
+          startCountdownTimer(cfg.countdownSecs||60);
+        } else {
+          memTimer=setInterval(()=>{memSeconds++;document.getElementById('mh-time').textContent=memSeconds;},1000);
+        }
       },600);
     },1500);
   },300);
@@ -6083,16 +7113,26 @@ function checkMemMatch(){
   if(cardA.dog===cardB.dog && cardA.view===cardB.view){
     // MATCH!
     memStreak++;
-    memSound('match');
+    memDogChord(cardA.dog);
     memMatched.add(a);memMatched.add(b);memPairs++;
     const elA=document.querySelector('.mem-card[data-idx="'+a+'"]');
     const elB=document.querySelector('.mem-card[data-idx="'+b+'"]');
     if(elA){elA.classList.add('matched','match-pop');}
     if(elB){elB.classList.add('matched','match-pop');}
-    // Streak flash on board
-    if(memStreak >= 2) {
+    // Score float
+    const pts = 50 * Math.max(1, memStreak);
+    showMemScoreFloat(elA, pts);
+    // Dog fact bubble
+    showDogFact(cardA.dog);
+    // Wildcard bonus at streak of 3
+    if(memStreak === 3){
+      memWildcardPending = true;
+      setTimeout(triggerWildcard, 500);
+    }
+    // Streak flash
+    if(memStreak >= 2){
       [elA, elB].forEach(el => {
-        if(el) {
+        if(el){
           const flash = document.createElement('div');
           flash.className = 'mem-streak-flash';
           el.appendChild(flash);
@@ -6104,9 +7144,12 @@ function checkMemMatch(){
     memFlipped=[];memLocked=false;updateMemHUD();
     if(memPairs>=memTotalPairs) setTimeout(showMemWin,600);
   } else {
-    // MISMATCH — reset streak, shake then flip back
+    // MISMATCH
     memStreak = 0;
+    memWrongGuesses++;
+    showHintIfReady();
     memSound('error');
+    penalizeCountdown(); // -3s if countdown mode
     const elA=document.querySelector('.mem-card[data-idx="'+a+'"]');
     const elB=document.querySelector('.mem-card[data-idx="'+b+'"]');
     if(elA) elA.classList.add('shake');
@@ -6136,7 +7179,11 @@ function getMemStars(){
 function showMemWin(){
   if(memTimer) clearInterval(memTimer);
   memSound('win');
-  memConfetti();
+  // Pick confetti color based on last matched dog (memDeck indices in memMatched)
+  const dogTally = {lottie:0, sultan:0, rocky:0};
+  memMatched.forEach(function(i){ const d = memDeck[i]; if(d) dogTally[d.dog] = (dogTally[d.dog]||0)+1; });
+  const topDog = Object.keys(dogTally).reduce(function(a,b){ return dogTally[a]>=dogTally[b]?a:b; }, 'lottie');
+  memConfetti(topDog);
 
   const t=T[lang]||T.es;
   const stars=getMemStars();
@@ -6163,78 +7210,46 @@ function showMemWin(){
   if(memMoves<prev){
     localStorage.setItem(key,''+memMoves);
     if(bestEl) bestEl.textContent='🎉 '+(newRecordTxt[lang]||newRecordTxt.en);
+    if(typeof updateGameCardBadges==='function') updateGameCardBadges();
   } else {
     if(bestEl) bestEl.textContent=(bestScoreTxt[lang]||bestScoreTxt.en)+prev+' '+(t.mhMov||'mov');
   }
 
+  // Save to leaderboard + render
+  const playerName = (typeof guestName!=='undefined' && guestName) ? guestName : 'Huésped';
+  const timeForLB = memCountdownMode ? (MEM_DIFFS[memDiffIdx].countdownSecs||60) - memCountdownLeft : memSeconds;
+  lbTryAdd(memDiffIdx, playerName, memMoves, timeForLB);
+  lbRender(memDiffIdx);
+
   document.getElementById('mem-win').classList.add('show');
 }
 
-function memWinAgain(){document.getElementById('mem-win').classList.remove('show');startMemory(memDiffIdx);}
+function memWinAgain(){
+  document.getElementById('mem-win').classList.remove('show');
+  var ts=document.getElementById('mem-timesup'); if(ts) ts.classList.remove('show');
+  startMemory(memDiffIdx);
+}
 
 function clearMemory(){
   if(memTimer) clearInterval(memTimer);
+  if(memCountdownTimer) clearInterval(memCountdownTimer);
+  memCountdownMode=false; memCountdownLeft=0;
   memFlipped=[];memMatched=new Set();memLocked=false;memMoves=0;memPairs=0;memSeconds=0;
-  memStreak=0;
+  memStreak=0; memWrongGuesses=0; _hintUsed=false; memWildcardPending=false;
+  _dogFactIdx.lottie=0; _dogFactIdx.sultan=0; _dogFactIdx.rocky=0;
+  var fb = document.getElementById('mem-fact-bubble'); if(fb) fb.style.display='none';
+  var hb = document.getElementById('mem-hint-btn'); if(hb) hb.style.display='none';
+  var ts = document.getElementById('mem-timesup'); if(ts) ts.classList.remove('show');
+  var tEl = document.getElementById('mh-time'); if(tEl) tEl.classList.remove('danger');
   document.getElementById('mem-start').style.display='flex';
   document.getElementById('mem-board-wrap').style.display='none';
   document.getElementById('mem-hud').style.display='none';
   document.getElementById('mem-win').classList.remove('show');
-}
-function closeMemory() { clearMemory(); goBack(); }
-
-// ── FAUNA SCREEN ──
-
-
-
-
-
-function loadFaunaPhotos() {
-  var _wm = {
-    "fp-flamenco":"Andean_flamingo",
-    "fp-condor":"Andean_condor",
-    "fp-suri":"Darwin's rhea",
-    "fp-tagua":"Horned_coot",
-    "fp-vicuna":"Vicuña",
-    "fp-vizcacha":"Southern_viscacha",
-    "fp-zorro":"Culpeo",
-    "fp-taruca":"Taruca",
-    "fp-quenoa":"Polylepis",
-    "fp-llareta":"Azorella_compacta",
-    "fp-cactus":"Browningia_candelaris",
-    "fp-paja":"Cortaderia"
-  };
-  Object.keys(_wm).forEach(function(divId) {
-    var div = document.getElementById(divId);
-    if(!div || div.getAttribute('data-loaded')) return;
-    div.setAttribute('data-loaded','1');
-    (async function() {
-      var url = FAUNA_IMAGES[divId] || await fetchWikiThumb(_wm[divId]);
-      if(url) {
-        var img = document.createElement('img');
-        img.alt = divId;
-        img.onload = function() { div.innerHTML=''; div.appendChild(img); };
-        img.src = url;
-        img.style.cssText = 'width:100%;height:160px;object-fit:cover;display:block;transition:transform .3s;background:#F5F0EA';
-      }
-    })();
-  });
+  lbRenderStart(); // refresh leaderboard on start screen
 }
 
-function showFaunaTab(tab, btn){
-  document.querySelectorAll('.fauna-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('fpanel-'+tab).classList.add('active');
-  if(btn) btn.classList.add('active');
-  setTimeout(loadFaunaPhotos, 100);
-}
 </script>
 
-
-
-
-
-<!-- ══ CODE PROTECTION ══ -->
 <script>
 // ═══ HOTEL LAS VICUÑAS — PASSENGER HUB ═══
 // © Hotel Las Vicuñas, Putre, Chile
@@ -6322,7 +7337,7 @@ function showFaunaTab(tab, btn){
   });
 
 })();
-</script>
 
+</script>
 </body>
 </html>
